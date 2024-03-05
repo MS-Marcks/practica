@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'jest-angular';
+
+  onClickButton(): void {
+    console.log("hola");
+  }
 }

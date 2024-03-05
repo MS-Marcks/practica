@@ -1,1 +1,79 @@
-<p>register works!</p>
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card" style="width: 500px;">
+    <div class="card-header">
+      <h1>Registrarse</h1>
+      <pichincha-divider></pichincha-divider>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="registerForm">
+        <div class="form-group">
+          <pichincha-input state="{{status.name.state}}" label="Nombre del usuario" formControlName="name"
+            placeholder="Ej. makoto" error-helper="Nombre de usuario es requerido"
+            is-optional="false"></pichincha-input>
+        </div>
+        <div class="form-group">
+          <pichincha-input state="{{status.email.state}}" label="Correo electronico" formControlName="email"
+            placeholder="Ej. name@example.com" type="email" is-optional="false"></pichincha-input>
+          <pichincha-input-message *ngIf="status.email.required" info-message="" error-message="Correo es requerido"
+            state="error" single-line="false"></pichincha-input-message>
+          <pichincha-input-message *ngIf="status.email.email" info-message=""
+            error-message="Formato del correo no válido" state="error" single-line="false"></pichincha-input-message>
+        </div>
+        <div class="form-group">
+          <pichincha-input state="{{status.password.state}}" label="Contraseña" formControlName="password"
+            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"></pichincha-input>
+          <pichincha-input-message *ngIf="status.password.required" info-message=""
+            error-message="Contraseña es requerido" state="error" single-line="false"></pichincha-input-message>
+          <pichincha-input-message *ngIf="status.password.password_invalid_format" info-message=""
+            error-message="Contraseña no cumple con los requisitos" state="error"
+            single-line="false"></pichincha-input-message>
+        </div>
+        <div class="form-group">
+          <pichincha-input state="{{status.rePassword.state}}" label="Confirmar contraseña" formControlName="rePassword"
+            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"></pichincha-input>
+          <pichincha-input-message *ngIf="status.rePassword.required" info-message=""
+            error-message="Contraseña es requerido" state="error" single-line="false"></pichincha-input-message>
+          <pichincha-input-message *ngIf="status.rePassword.compare" info-message=""
+            error-message="Contraseña no coinciden" state="error" single-line="false"></pichincha-input-message>
+        </div>
+        <h2>Categorias</h2>
+        <div class="form-group">
+          <pichincha-check-box id-element="categoryInterest-1" value="1" (clickCheck)="getCategoryInterest($event)"
+            text="Anime"></pichincha-check-box>
+        </div>
+        <div class="form-group">
+          <pichincha-check-box id-element="categoryInterest-2" value="2" (clickCheck)="getCategoryInterest($event)"
+            text="Ciencia Ficción"></pichincha-check-box>
+        </div>
+        <div class="form-group">
+          <pichincha-check-box id-element="categoryInterest-3" value="3" (clickCheck)="getCategoryInterest($event)"
+            text="Novelas"></pichincha-check-box>
+        </div>
+        <div class="form-group">
+          <pichincha-check-box id-element="categoryInterest-4" value="4" (clickCheck)="getCategoryInterest($event)"
+            text="Drama"></pichincha-check-box>
+        </div>
+        <div class="form-group">
+          <pichincha-check-box id-element="categoryInterest-5" value="5" (clickCheck)="getCategoryInterest($event)"
+            text="Inteligencía artificial"></pichincha-check-box>
+        </div>
+        <div class="form-group">
+          <pichincha-input-message *ngIf="status.categoryInterest.required" info-message=""
+            error-message="Debe seleccionar al menos 3 categorías" state="error"
+            single-line="false"></pichincha-input-message>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-around align-items-center">
+        <div>
+          <a routerLink="/auth/login">Iniciar sesión</a>
+        </div>
+        <div>
+          <pichincha-button (clickEvent)="onSubmit()" size="large" label="Registrar"></pichincha-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

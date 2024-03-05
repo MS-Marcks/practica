@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PichinchaDesignSystemModule } from '@pichincha/ds-angular';
+
+import { PichinchaReactiveControlsModule } from '@pichincha/ds-angular'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { PichinchaDesignSystemModule } from '@pichincha/ds-angular';
+
 
 @NgModule({
   declarations: [
@@ -13,7 +18,10 @@ import { PichinchaDesignSystemModule } from '@pichincha/ds-angular';
   imports: [
     CommonModule,
     AuthenticationRoutingModule,
-    PichinchaDesignSystemModule
+    PichinchaDesignSystemModule,
+    PichinchaReactiveControlsModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AuthenticationModule { }

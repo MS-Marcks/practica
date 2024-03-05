@@ -1,9 +1,10 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {InputValueAcessorDirective} from "./directives/input-value-accessor.directive";
+import { PichinchaDesignSystemModule } from '@pichincha/ds-angular';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { InputValueAcessorDirective } from "./directives/input-value-accessor.directive";
 
 @NgModule({
   declarations: [
@@ -12,11 +13,11 @@ import {InputValueAcessorDirective} from "./directives/input-value-accessor.dire
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    PichinchaDesignSystemModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

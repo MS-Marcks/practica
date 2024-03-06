@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RegisterUserService } from 'src/app/core/services/authentication/register-user.service';
 import { SpecialValidations } from 'src/app/core/validators/special-validations';
 import { RegisterUser } from 'src/app/shared/interfaces/register-user';
+import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
 
 @Component({
   selector: 'auth-register',
@@ -62,12 +63,7 @@ export class RegisterComponent {
   }
 
   async onSubmit(): Promise<void> {
-    this.getFormValidationErrors();
-
-    if (!this.registerForm.valid) {
-      this.registerForm.markAllAsTouched();
-      return;
-    }
+    GetFormValidationErrors.Errors(this.registerForm, this.states);
 
     if (this.inputCheckedCategoryInterest.length < 3) {
       this.states["categoryInterest"].state = "error";
@@ -75,12 +71,21 @@ export class RegisterComponent {
       return;
     }
 
+    if (this.registerForm.value.password !== this.registerForm.value.rePassword) {
+      this.states["rePassword"].state = "error";
+      this.states["rePassword"].compare = true;
+      return;
+    }
+
+    if (!this.registerForm.valid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
+
     try {
       const isExistUser = await this.service.isExistName(this.registerForm.value.name);
       if (isExistUser.exists) {
-        this.alert.type = "error";
-        this.alert.description = "El usuario ya existe";
-        this.alert.show = true;
+        this.setValueAlert("success", "El usuario ya existe");
         return;
       }
 
@@ -94,7 +99,9 @@ export class RegisterComponent {
       const response = await this.service.Post(body);
       if (response.message === "Created user") {
         this.setValueAlert("success", "El usuario se creo correctamente");
+
         this.registerForm.reset();
+
         this.inputCheckedCategoryInterest = [];
       }
 
@@ -103,33 +110,6 @@ export class RegisterComponent {
     }
   }
 
-  getFormValidationErrors() {
-    Object.keys(this.registerForm.controls).forEach(key => {
-      const controlErrors: any = this.registerForm.get(key)?.errors;
-      Object.keys(this.states[key]).forEach(keyError => {
-        if (keyError === "state") {
-          this.states[key].state = "";
-        } else {
-          this.states[key][keyError] = false;
-        }
-      });
-      if (controlErrors === null) {
-        return;
-      }
-      Object.keys(controlErrors).forEach(keyError => {
-        this.states[key].state = "error";
-        this.states[key][keyError] = true;
-      });
-    });
-
-    if (this.registerForm.value.password !== this.registerForm.value.rePassword) {
-      this.states["rePassword"].state = "error";
-      this.states["rePassword"].compare = true;
-    }
-
-    this.states["categoryInterest"].state = "";
-    this.states["categoryInterest"].required = false;
-  }
 
   getCategoryInterest(e: Event) {
     const { detail } = e as unknown as CustomEvent;
@@ -149,6 +129,7 @@ export class RegisterComponent {
     this.alert.description = message;
     this.alert.show = true;
   }
+
   handleClickCloseEvent() {
     this.alert.show = false;
   }

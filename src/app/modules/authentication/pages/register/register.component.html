@@ -6,8 +6,8 @@
       <pichincha-divider></pichincha-divider>
     </div>
     <div class="card-body">
-      <pichincha-alerts [type]="type" [description]="description" [show]="show" [autoClose]="autoClose"
-        [closeTime]="closeTime" (clickCloseEvent)="handleClickCloseEvent()">
+      <pichincha-alerts [type]="alert.type" [description]="alert.description" [show]="alert.show"
+        [autoClose]="alert.autoClose" [closeTime]="alert.closeTime" (clickCloseEvent)="handleClickCloseEvent()">
       </pichincha-alerts>
       <form [formGroup]="registerForm">
         <div class="form-group">

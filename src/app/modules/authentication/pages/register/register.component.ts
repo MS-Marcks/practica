@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RegisterUserService } from 'src/app/core/services/authentication/register-user.service';
 import { SpecialValidations } from 'src/app/core/validators/special-validations';
-import { registerUser } from 'src/app/shared/interfaces/registerUser';
+import { RegisterUser } from 'src/app/shared/interfaces/register-user';
 
 @Component({
   selector: 'auth-register',
@@ -81,7 +81,7 @@ export class RegisterComponent {
         return;
       }
 
-      const body: registerUser = {
+      const body: RegisterUser = {
         name: this.registerForm.value.name,
         email: this.registerForm.value.email,
         password: this.registerForm.value.password,

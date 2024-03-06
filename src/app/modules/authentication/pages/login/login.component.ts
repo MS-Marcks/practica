@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginUserService } from 'src/app/core/services/authentication/login-user.service';
 import { LoginUser } from 'src/app/shared/interfaces/login-user';
 import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
+import { ResetForm } from 'src/app/shared/utils/reset-form';
 
 @Component({
   selector: 'auth-login',
@@ -44,6 +45,8 @@ export class LoginComponent {
   }
 
   async onSubmit(): Promise<void> {
+    this.loginForm.reset();
+    this.loginForm.setErrors(null);
     GetFormValidationErrors.Errors(this.loginForm, this.states);
 
     if (!this.loginForm.valid) {
@@ -58,6 +61,8 @@ export class LoginComponent {
       }
       const response = await this.service.login(body);
       this.service.saveToken(response);
+      ResetForm.reset(this.loginForm);
+
     } catch (error: any) {
       if (error.status === 401) {
         this.setValueAlert("error", error.error.message);

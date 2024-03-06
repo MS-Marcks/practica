@@ -1,1 +1,36 @@
-<p>login works!</p>
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="card" style="width: 500px;">
+    <div class="card-header">
+      <h1>Iniciar sesión</h1>
+      <pichincha-divider></pichincha-divider>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="loginForm">
+        <div class="form-group">
+          <pichincha-input state="{{states.email.state}}" label="Correo electronico" formControlName="email"
+            placeholder="Ej. name@example.com" type="email" is-optional="false"></pichincha-input>
+          <pichincha-input-message *ngIf="states.email.required" info-message="" error-message="Correo es requerido"
+            state="error" single-line="false"></pichincha-input-message>
+          <pichincha-input-message *ngIf="states.email.email" info-message=""
+            error-message="Formato del correo no válido" state="error" single-line="false"></pichincha-input-message>
+        </div>
+        <div class="form-group">
+          <pichincha-input state="{{states.password.state}}" label="Contraseña" formControlName="password"
+            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"
+            error-helper="Contraseña es requerida"></pichincha-input>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-around align-items-center">
+        <div>
+          <a routerLink="/auth/register">Registrate aquí</a>
+        </div>
+        <div>
+          <pichincha-button (clickEvent)="onSubmit()" size="large" label="Iniciar Sesión"></pichincha-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

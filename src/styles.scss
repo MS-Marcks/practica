@@ -3,7 +3,9 @@
 @import url(./assets/css/bootstrap-grid.min.css);
 @import url(@pichincha/ds-core/dist/ds-core/ds-core.css);
 
-
+* {
+  margin: 0px;
+}
 
 .card {
   position: relative;
@@ -18,7 +20,7 @@
 }
 
 .card-body {
-  padding: 12px;
+  padding: 0px 12px 12px 12px;
 }
 
 .card-header {

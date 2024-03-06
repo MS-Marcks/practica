@@ -11,7 +11,7 @@ export class RegisterComponent {
 
   registerForm!: FormGroup;
   inputCheckedCategoryInterest: any = [];
-  status: any = {
+  states: any = {
     "name": {
       state: "",
       required: false
@@ -64,35 +64,35 @@ export class RegisterComponent {
   getFormValidationErrors() {
     Object.keys(this.registerForm.controls).forEach(key => {
       const controlErrors: any = this.registerForm.get(key)?.errors;
-      Object.keys(this.status[key]).forEach(keyError => {
+      Object.keys(this.states[key]).forEach(keyError => {
         if (keyError === "state") {
-          this.status[key].state = "";
+          this.states[key].state = "";
         } else {
-          this.status[key][keyError] = false;
+          this.states[key][keyError] = false;
         }
       });
       if (controlErrors === null) {
         return;
       }
       Object.keys(controlErrors).forEach(keyError => {
-        this.status[key].state = "error";
-        this.status[key][keyError] = true;
+        this.states[key].state = "error";
+        this.states[key][keyError] = true;
       });
     });
 
     if (this.registerForm.value.password !== this.registerForm.value.rePassword) {
-      this.status["rePassword"].state = "error";
-      this.status["rePassword"].compare = true;
+      this.states["rePassword"].state = "error";
+      this.states["rePassword"].compare = true;
     }
 
     if (this.inputCheckedCategoryInterest.length < 3) {
-      this.status["categoryInterest"].state = "error";
-      this.status["categoryInterest"].required = true;
+      this.states["categoryInterest"].state = "error";
+      this.states["categoryInterest"].required = true;
       return;
     }
 
-    this.status["categoryInterest"].state = "";
-    this.status["categoryInterest"].required = false;
+    this.states["categoryInterest"].state = "";
+    this.states["categoryInterest"].required = false;
   }
 
   getCategoryInterest(e: Event) {

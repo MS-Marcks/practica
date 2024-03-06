@@ -7,33 +7,33 @@
     <div class="card-body">
       <form [formGroup]="registerForm">
         <div class="form-group">
-          <pichincha-input state="{{status.name.state}}" label="Nombre del usuario" formControlName="name"
+          <pichincha-input state="{{states.name.state}}" label="Nombre del usuario" formControlName="name"
             placeholder="Ej. makoto" error-helper="Nombre de usuario es requerido"
             is-optional="false"></pichincha-input>
         </div>
         <div class="form-group">
-          <pichincha-input state="{{status.email.state}}" label="Correo electronico" formControlName="email"
+          <pichincha-input state="{{states.email.state}}" label="Correo electronico" formControlName="email"
             placeholder="Ej. name@example.com" type="email" is-optional="false"></pichincha-input>
-          <pichincha-input-message *ngIf="status.email.required" info-message="" error-message="Correo es requerido"
+          <pichincha-input-message *ngIf="states.email.required" info-message="" error-message="Correo es requerido"
             state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="status.email.email" info-message=""
+          <pichincha-input-message *ngIf="states.email.email" info-message=""
             error-message="Formato del correo no válido" state="error" single-line="false"></pichincha-input-message>
         </div>
         <div class="form-group">
-          <pichincha-input state="{{status.password.state}}" label="Contraseña" formControlName="password"
+          <pichincha-input state="{{states.password.state}}" label="Contraseña" formControlName="password"
             type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"></pichincha-input>
-          <pichincha-input-message *ngIf="status.password.required" info-message=""
+          <pichincha-input-message *ngIf="states.password.required" info-message=""
             error-message="Contraseña es requerido" state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="status.password.password_invalid_format" info-message=""
+          <pichincha-input-message *ngIf="states.password.password_invalid_format" info-message=""
             error-message="Contraseña no cumple con los requisitos" state="error"
             single-line="false"></pichincha-input-message>
         </div>
         <div class="form-group">
-          <pichincha-input state="{{status.rePassword.state}}" label="Confirmar contraseña" formControlName="rePassword"
+          <pichincha-input state="{{states.rePassword.state}}" label="Confirmar contraseña" formControlName="rePassword"
             type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"></pichincha-input>
-          <pichincha-input-message *ngIf="status.rePassword.required" info-message=""
+          <pichincha-input-message *ngIf="states.rePassword.required" info-message=""
             error-message="Contraseña es requerido" state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="status.rePassword.compare" info-message=""
+          <pichincha-input-message *ngIf="states.rePassword.compare" info-message=""
             error-message="Contraseña no coinciden" state="error" single-line="false"></pichincha-input-message>
         </div>
         <h2>Categorias</h2>
@@ -58,7 +58,7 @@
             text="Inteligencía artificial"></pichincha-check-box>
         </div>
         <div class="form-group">
-          <pichincha-input-message *ngIf="status.categoryInterest.required" info-message=""
+          <pichincha-input-message *ngIf="states.categoryInterest.required" info-message=""
             error-message="Debe seleccionar al menos 3 categorías" state="error"
             single-line="false"></pichincha-input-message>
         </div>

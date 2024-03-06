@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginUserService } from 'src/app/core/services/authentication/login-user.service';
+import { SpecialValidations } from 'src/app/core/validators/special-validations';
 import { LoginUser } from 'src/app/shared/interfaces/login-user';
 import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
 import { ResetForm } from 'src/app/shared/utils/reset-form';
@@ -40,13 +41,11 @@ export class LoginComponent {
   buildForm(): void {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]]
+      password: [null, [Validators.required, Validators.min(8), SpecialValidations.password]]
     });
   }
 
   async onSubmit(): Promise<void> {
-    this.loginForm.reset();
-    this.loginForm.setErrors(null);
     GetFormValidationErrors.Errors(this.loginForm, this.states);
 
     if (!this.loginForm.valid) {

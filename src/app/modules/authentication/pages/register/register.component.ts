@@ -4,6 +4,7 @@ import { RegisterUserService } from 'src/app/core/services/authentication/regist
 import { SpecialValidations } from 'src/app/core/validators/special-validations';
 import { RegisterUser } from 'src/app/shared/interfaces/register-user';
 import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
+import { ResetForm } from 'src/app/shared/utils/reset-form';
 
 @Component({
   selector: 'auth-register',
@@ -14,6 +15,7 @@ export class RegisterComponent {
 
   registerForm!: FormGroup;
   inputCheckedCategoryInterest: any = [];
+  categorySelected: boolean[] = [false, false, false, false, false];
   states: any = {
     "name": {
       state: "",
@@ -85,7 +87,7 @@ export class RegisterComponent {
     try {
       const isExistUser = await this.service.isExistName(this.registerForm.value.name);
       if (isExistUser.exists) {
-        this.setValueAlert("success", "El usuario ya existe");
+        this.setValueAlert("error", "El usuario ya existe");
         return;
       }
 
@@ -99,10 +101,10 @@ export class RegisterComponent {
       const response = await this.service.Post(body);
       if (response.message === "Created user") {
         this.setValueAlert("success", "El usuario se creo correctamente");
-
-        this.registerForm.reset();
-
+        ResetForm.reset(this.registerForm);
         this.inputCheckedCategoryInterest = [];
+        this.categorySelected = [false, false, false, false, false];
+
       }
 
     } catch (error: any) {
@@ -110,15 +112,15 @@ export class RegisterComponent {
     }
   }
 
-
   getCategoryInterest(e: Event) {
     const { detail } = e as unknown as CustomEvent;
 
     if (detail.checked === true) {
       this.inputCheckedCategoryInterest.push(detail.value);
+      this.categorySelected[parseInt(detail.value) - 1] = true;
       return;
     }
-
+    this.categorySelected[parseInt(detail.value) - 1] = false;
     this.inputCheckedCategoryInterest = this.inputCheckedCategoryInterest.filter((e: any) => {
       return e !== detail.value;
     })
@@ -130,7 +132,8 @@ export class RegisterComponent {
     this.alert.show = true;
   }
 
-  handleClickCloseEvent() {
+  handleClickCloseEvent(): void {
     this.alert.show = false;
   }
+
 }

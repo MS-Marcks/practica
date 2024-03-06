@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { RegisterUserService } from 'src/app/core/services/authentication/register-user.service';
 import { SpecialValidations } from 'src/app/core/validators/special-validations';
+import { registerUser } from 'src/app/shared/interfaces/registerUser';
 
 @Component({
   selector: 'auth-register',
@@ -37,16 +39,22 @@ export class RegisterComponent {
     }
   }
 
-  constructor(private fb: FormBuilder) {
+  type = "error"
+  description = ""
+  show = false
+  autoClose = true
+  closeTime = 5000
+
+  constructor(private fb: FormBuilder, private service: RegisterUserService) {
     this.buildForm();
   }
 
   buildForm(): void {
     this.registerForm = this.fb.group({
-      name: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.minLength(8), SpecialValidations.password("password")]],
-      rePassword: [null, [Validators.required, Validators.minLength(8)]]
+      name: ["g", Validators.required],
+      email: ["g@gmail.com", [Validators.required, Validators.email]],
+      password: ["Dd@12343434", [Validators.required, Validators.minLength(8), SpecialValidations.password("password")]],
+      rePassword: ["Dd@12343434", [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -58,7 +66,42 @@ export class RegisterComponent {
       return;
     }
 
-    console.log("correct");
+    if (this.inputCheckedCategoryInterest.length < 3) {
+      this.states["categoryInterest"].state = "error";
+      this.states["categoryInterest"].required = true;
+      return;
+    }
+
+    try {
+      const isExistUser = await this.service.isExistName(this.registerForm.value.name);
+      if (isExistUser.exists) {
+        this.type = "error";
+        this.description = "El usuario ya existe";
+        this.show = true;
+        return;
+      }
+
+      const body: registerUser = {
+        name: this.registerForm.value.name,
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+        category: this.inputCheckedCategoryInterest
+      }
+
+      const response = await this.service.Post(body);
+      if (response.message === "Created user") {
+        this.type = "success";
+        this.description = "El usuario se creo correctamente";
+        this.show = true;
+        this.registerForm.reset();
+        this.inputCheckedCategoryInterest = [];
+      }
+
+    } catch (error: any) {
+      this.type = "error";
+      this.description = "Ops... Ocurrio un problema";
+      this.show = true;
+    }
   }
 
   getFormValidationErrors() {
@@ -85,12 +128,6 @@ export class RegisterComponent {
       this.states["rePassword"].compare = true;
     }
 
-    if (this.inputCheckedCategoryInterest.length < 3) {
-      this.states["categoryInterest"].state = "error";
-      this.states["categoryInterest"].required = true;
-      return;
-    }
-
     this.states["categoryInterest"].state = "";
     this.states["categoryInterest"].required = false;
   }
@@ -99,11 +136,16 @@ export class RegisterComponent {
     const { detail } = e as unknown as CustomEvent;
 
     if (detail.checked === true) {
-      this.inputCheckedCategoryInterest.push(detail);
+      this.inputCheckedCategoryInterest.push(detail.value);
       return;
     }
+
     this.inputCheckedCategoryInterest = this.inputCheckedCategoryInterest.filter((e: any) => {
-      return e.value !== detail.value;
+      return e !== detail.value;
     })
+  }
+
+  handleClickCloseEvent() {
+    this.show = false;
   }
 }

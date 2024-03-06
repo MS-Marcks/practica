@@ -22,7 +22,8 @@ export class LoginComponent {
     },
     "password": {
       state: "",
-      required: false
+      required: false,
+      password_invalid_format: false
     }
   }
 

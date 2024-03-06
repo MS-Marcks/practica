@@ -5,6 +5,9 @@
       <pichincha-divider></pichincha-divider>
     </div>
     <div class="card-body">
+      <pichincha-alerts [type]="alert.type" [description]="alert.description" [show]="alert.show"
+        [autoClose]="alert.autoClose" [closeTime]="alert.closeTime" (clickCloseEvent)="handleClickCloseEvent()">
+      </pichincha-alerts>
       <form [formGroup]="loginForm">
         <div class="form-group">
           <pichincha-input state="{{states.email.state}}" label="Correo electronico" formControlName="email"

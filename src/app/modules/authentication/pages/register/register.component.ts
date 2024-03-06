@@ -39,11 +39,14 @@ export class RegisterComponent {
     }
   }
 
-  type = "error"
-  description = ""
-  show = false
-  autoClose = true
-  closeTime = 5000
+  alert = {
+    type: "error",
+    description: "",
+    show: false,
+    autoClose: true,
+    closeTime: 5000
+  }
+
 
   constructor(private fb: FormBuilder, private service: RegisterUserService) {
     this.buildForm();
@@ -75,9 +78,9 @@ export class RegisterComponent {
     try {
       const isExistUser = await this.service.isExistName(this.registerForm.value.name);
       if (isExistUser.exists) {
-        this.type = "error";
-        this.description = "El usuario ya existe";
-        this.show = true;
+        this.alert.type = "error";
+        this.alert.description = "El usuario ya existe";
+        this.alert.show = true;
         return;
       }
 
@@ -90,17 +93,13 @@ export class RegisterComponent {
 
       const response = await this.service.Post(body);
       if (response.message === "Created user") {
-        this.type = "success";
-        this.description = "El usuario se creo correctamente";
-        this.show = true;
+        this.setValueAlert("success", "El usuario se creo correctamente");
         this.registerForm.reset();
         this.inputCheckedCategoryInterest = [];
       }
 
     } catch (error: any) {
-      this.type = "error";
-      this.description = "Ops... Ocurrio un problema";
-      this.show = true;
+      this.setValueAlert("error", "Ops... Ocurrio un problema");
     }
   }
 
@@ -145,7 +144,12 @@ export class RegisterComponent {
     })
   }
 
+  setValueAlert(alertType: string, message: string): void {
+    this.alert.type = alertType;
+    this.alert.description = message;
+    this.alert.show = true;
+  }
   handleClickCloseEvent() {
-    this.show = false;
+    this.alert.show = false;
   }
 }

@@ -2,21 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PichinchaDesignSystemModule } from '@pichincha/ds-angular';
 
-import { BookshelfComponent } from './pages/bookshelf/bookshelf.component';
+import { BookShelfComponent } from './pages/book-shelf/book-shelf.component';
 import { CoversComponent } from 'src/app/shared/component/covers/covers.component';
 import { LibraryComponent } from './library.component';
 import { LibraryRoutingModule } from './library-routing.module';
-import { SearchInputComponent } from '../../shared/component/search-input/search-input.component';
+import { SearchPanelComponent } from '../../shared/component/search-panel/search-panel.component';
 
 @NgModule({
   declarations: [
     LibraryComponent,
-    BookshelfComponent
+    BookShelfComponent
   ],
   imports: [
     CommonModule,
     CoversComponent,
-    SearchInputComponent,
+    SearchPanelComponent,
     PichinchaDesignSystemModule,
     LibraryRoutingModule
   ],

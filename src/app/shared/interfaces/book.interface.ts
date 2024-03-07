@@ -7,4 +7,5 @@ export interface Book {
     image: string,
     url: string,
     userRegister: string,
+    idCategory: number
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { categoriesInterest } from 'src/app/configs/category-interest';
 import { RegisterUserService } from 'src/app/core/services/authentication/register-user.service';
 import { SpecialValidations } from 'src/app/core/validators/special-validations';
 import { RegisterUser } from 'src/app/shared/interfaces/register-user';
@@ -15,7 +16,7 @@ export class RegisterComponent {
 
   registerForm!: FormGroup;
   inputCheckedCategoryInterest: any = [];
-  categorySelected: boolean[] = [false, false, false, false, false];
+  categorySelected = [...categoriesInterest];
   states: any = {
     "name": {
       state: "",
@@ -65,6 +66,7 @@ export class RegisterComponent {
   }
 
   async onSubmit(): Promise<void> {
+    console.log(this.inputCheckedCategoryInterest);
     GetFormValidationErrors.Errors(this.registerForm, this.states);
 
     if (this.inputCheckedCategoryInterest.length < 3) {
@@ -103,8 +105,7 @@ export class RegisterComponent {
         this.setValueAlert("success", "El usuario se creo correctamente");
         ResetForm.reset(this.registerForm);
         this.inputCheckedCategoryInterest = [];
-        this.categorySelected = [false, false, false, false, false];
-
+        this.categorySelected = [...categoriesInterest];
       }
 
     } catch (error: any) {
@@ -112,17 +113,17 @@ export class RegisterComponent {
     }
   }
 
-  getCategoryInterest(e: Event) {
+  getCategoryInterest(e: Event, index: number) {
     const { detail } = e as unknown as CustomEvent;
 
     if (detail.checked === true) {
-      this.inputCheckedCategoryInterest.push(detail.value);
-      this.categorySelected[parseInt(detail.value) - 1] = true;
+      this.inputCheckedCategoryInterest.push((index + 1));
+      this.categorySelected[index].value = true;
       return;
     }
-    this.categorySelected[parseInt(detail.value) - 1] = false;
+    this.categorySelected[index].value = false;
     this.inputCheckedCategoryInterest = this.inputCheckedCategoryInterest.filter((e: any) => {
-      return e !== detail.value;
+      return e !== (index + 1);
     })
   }
 

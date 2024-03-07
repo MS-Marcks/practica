@@ -7,11 +7,13 @@ import { CoversComponent } from 'src/app/shared/component/covers/covers.componen
 import { LibraryComponent } from './library.component';
 import { LibraryRoutingModule } from './library-routing.module';
 import { SearchPanelComponent } from '../../shared/component/search-panel/search-panel.component';
+import { BookComponent } from './pages/book/book.component';
 
 @NgModule({
   declarations: [
     LibraryComponent,
-    BookShelfComponent
+    BookShelfComponent,
+    BookComponent
   ],
   imports: [
     CommonModule,

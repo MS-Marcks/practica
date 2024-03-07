@@ -12,6 +12,6 @@
       (filter)="onSearchDropdown($event)" searchType="dropdown"></shared-search-panel>
   </div>
   <div class="bookshelf__body">
-    <shared-covers *ngFor="let book of booksShow; trackBy: trackByFn" [data]="book"></shared-covers>
+    <shared-covers (click)="onViewBook(book)" *ngFor="let book of booksShow; trackBy: trackByFn" [data]="book"></shared-covers>
   </div>
 </div>

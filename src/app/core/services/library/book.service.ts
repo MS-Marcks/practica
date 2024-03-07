@@ -17,4 +17,8 @@ export class BookService {
     return lastValueFrom(this.http.get<Book[]>(`${this.urlbase}/owner/${owner}`).pipe());
   }
 
+  async getBook(id: string): Promise<Book> {
+    return lastValueFrom(this.http.get<Book>(`${this.urlbase}/${id}`).pipe());
+  }
+
 }

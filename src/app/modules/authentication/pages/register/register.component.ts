@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { categoriesInterest } from 'src/app/configs/category-interest';
 import { RegisterUserService } from 'src/app/core/services/authentication/register-user.service';
 import { SpecialValidations } from 'src/app/core/validators/special-validations';
-import { RegisterUser } from 'src/app/shared/interfaces/register-user';
+import { RegisterUser } from 'src/app/shared/interfaces/register-user.interface';
 import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
 import { ResetForm } from 'src/app/shared/utils/reset-form';
 
@@ -66,7 +66,6 @@ export class RegisterComponent {
   }
 
   async onSubmit(): Promise<void> {
-    console.log(this.inputCheckedCategoryInterest);
     GetFormValidationErrors.Errors(this.registerForm, this.states);
 
     if (this.inputCheckedCategoryInterest.length < 3) {

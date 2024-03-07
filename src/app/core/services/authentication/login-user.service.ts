@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { User } from 'src/app/shared/interfaces/user';
-import { LoginUser } from 'src/app/shared/interfaces/login-user';
+import { User } from 'src/app/shared/interfaces/user.interface';
+import { LoginUser } from 'src/app/shared/interfaces/login-user.interface';
 import { lastValueFrom } from 'rxjs';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class LoginUserService {
 
-  urlbase: string = `${environment.URLBASE}users`;
+  private urlbase: string = `${environment.URLBASE}users`;
 
   constructor(private http: HttpClient) { }
 
@@ -19,8 +19,7 @@ export class LoginUserService {
   }
 
   saveToken(user: User) {
-    localStorage.setItem("access_token", user.access_token);
-    localStorage.setItem("tokenType", user.tokenType);
+    localStorage.setItem("user", JSON.stringify(user));
   }
 
 }

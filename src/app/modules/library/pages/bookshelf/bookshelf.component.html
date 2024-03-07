@@ -1,2 +1,14 @@
-<p>bookshelf works!</p>
-<shared-covers></shared-covers>
+<div class="bookshelf">
+  <div class="bookshelf__header flex__display flex__justify-content-space-between">
+    <h1>Tus libros</h1>
+    <div>
+      <pichincha-button variant="secondary" label="Agregar Libro"></pichincha-button>
+    </div>
+  </div>
+  <div class="bookshelf__options">
+    <shared-search-input [dataSource]="books" target="title" placeholder="Ej. Angular , React" (filter)="onSearchInput($event)"></shared-search-input>
+  </div>
+  <div class="bookshelf__body">
+    <shared-covers *ngFor="let book of booksShow" [data]="book"></shared-covers>
+  </div>
+</div>

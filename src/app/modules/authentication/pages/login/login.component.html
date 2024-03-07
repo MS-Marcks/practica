@@ -9,7 +9,7 @@
         [autoClose]="alert.autoClose" [closeTime]="alert.closeTime" (clickCloseEvent)="handleClickCloseEvent()">
       </pichincha-alerts>
       <form [formGroup]="loginForm">
-        <div class="form-group">
+        <div class="form__group">
           <pichincha-input state="{{states.email.state}}" label="Correo electronico" formControlName="email"
             placeholder="Ej. name@example.com" type="email" is-optional="false"></pichincha-input>
           <pichincha-input-message *ngIf="states.email.required" info-message="" error-message="Correo es requerido"
@@ -17,7 +17,7 @@
           <pichincha-input-message *ngIf="states.email.email" info-message=""
             error-message="Formato del correo no válido" state="error" single-line="false"></pichincha-input-message>
         </div>
-        <div class="form-group">
+        <div class="form__group">
           <pichincha-input state="{{states.password.state}}" label="Contraseña" formControlName="password"
             type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"></pichincha-input>
           <pichincha-input-message *ngIf="states.password.required" info-message=""

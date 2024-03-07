@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Book } from '../../interfaces/book.interface';
 
 @Component({
   selector: 'shared-covers',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   standalone: true
 })
 export class CoversComponent {
-
+  @Input("data") data!: Book;
 }

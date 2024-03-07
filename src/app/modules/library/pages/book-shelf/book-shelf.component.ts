@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BookService } from 'src/app/core/services/library/book.service';
 import { CategoryService } from 'src/app/core/services/library/category.service';
 import { Book } from 'src/app/shared/interfaces/book.interface';
@@ -20,7 +21,9 @@ export class BookShelfComponent implements OnInit {
 
   categories!: Category[];
 
-  constructor(private bookService: BookService, private categoryService: CategoryService) {
+  constructor(private bookService: BookService,
+    private categoryService: CategoryService,
+    private router: Router) {
     this.user = JSON.parse(localStorage.getItem("user") || "[]");
   }
 
@@ -42,6 +45,10 @@ export class BookShelfComponent implements OnInit {
       const response = await this.categoryService.getCategories();
       this.categories = response;
     } catch (error) { }
+  }
+
+  onViewBook(book: Book): void {
+    this.router.navigate(["admin/books/view/" + book.id]);
   }
 
   onSearchInput(event: any): void {

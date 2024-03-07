@@ -40,30 +40,9 @@
             error-message="Contraseña no coinciden" state="error" single-line="false"></pichincha-input-message>
         </div>
         <h2>Categorias</h2>
-        <div class="form-group">
-          <pichincha-check-box [checked]="categorySelected[0]" id-element="categoryInterest-1" value="1"
-            (clickCheck)="getCategoryInterest($event)" text="Anime"></pichincha-check-box>
-        </div>
-        <div class="form-group">
-          <pichincha-check-box [checked]="categorySelected[1]"  id-element="categoryInterest-2" value="2" (clickCheck)="getCategoryInterest($event)"
-            text="Ciencia Ficción"></pichincha-check-box>
-        </div>
-        <div class="form-group">
-          <pichincha-check-box [checked]="categorySelected[2]" id-element="categoryInterest-3" value="3" (clickCheck)="getCategoryInterest($event)"
-            text="Novelas"></pichincha-check-box>
-        </div>
-        <div class="form-group">
-          <pichincha-check-box [checked]="categorySelected[3]" id-element="categoryInterest-4" value="4" (clickCheck)="getCategoryInterest($event)"
-            text="Drama"></pichincha-check-box>
-        </div>
-        <div class="form-group">
-          <pichincha-check-box [checked]="categorySelected[4]" id-element="categoryInterest-5" value="5" (clickCheck)="getCategoryInterest($event)"
-            text="Inteligencía artificial"></pichincha-check-box>
-        </div>
-        <div class="form-group">
-          <pichincha-input-message *ngIf="states.categoryInterest.required" info-message=""
-            error-message="Debe seleccionar al menos 3 categorías" state="error"
-            single-line="false"></pichincha-input-message>
+        <div class="form-group" *ngFor="let item of categorySelected; let i=index">
+          <pichincha-check-box [checked]="item.value" idElement="categoryInterest-{{i}}" value="{{i+1}}"
+            (clickCheck)="getCategoryInterest($event,i)" text="{{item.label}}"></pichincha-check-box>
         </div>
       </form>
     </div>

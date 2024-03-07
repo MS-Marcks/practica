@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { PichinchaDesignSystemModule } from '@pichincha/ds-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -14,8 +13,7 @@ import { PrincipalInterceptorService } from './core/interceptors/principal.inter
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
-    PichinchaDesignSystemModule
+    AppRoutingModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

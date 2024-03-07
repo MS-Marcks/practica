@@ -4,6 +4,7 @@ import { LibraryComponent } from './library.component';
 import { BookshelfComponent } from './pages/bookshelf/bookshelf.component';
 
 const routes: Routes = [
+  { path: "", redirectTo: "books", pathMatch: "full" },
   {
     path: "", component: LibraryComponent,
     children: [

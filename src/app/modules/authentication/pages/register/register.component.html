@@ -40,7 +40,7 @@
             error-message="Contraseña no coinciden" state="error" single-line="false"></pichincha-input-message>
         </div>
         <h2>Categorias</h2>
-        <div class="form__group" *ngFor="let item of categorySelected; let i=index">
+        <div class="form__group" *ngFor="let item of categorySelected; let i=index; trackBy: trackByFn">
           <pichincha-check-box [checked]="item.value" idElement="categoryInterest-{{i}}" value="{{i+1}}"
             (clickCheck)="getCategoryInterest($event,i)" text="{{item.label}}"></pichincha-check-box>
         </div>

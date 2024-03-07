@@ -136,4 +136,8 @@ export class RegisterComponent {
     this.alert.show = false;
   }
 
+  trackByFn(index: number) {
+    return index;
+  }
+
 }

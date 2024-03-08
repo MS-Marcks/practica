@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Book } from 'src/app/shared/interfaces/book.interface';
 
 @Component({
   selector: 'app-book',
@@ -8,11 +9,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BookComponent implements OnInit {
 
+  book!: Book;
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.data.subscribe(({ book }) => {
-      console.log(book);
+      this.book = book;
     });
+  }
+  loadImage(event: any): void {
+    console.log(event);
   }
 }

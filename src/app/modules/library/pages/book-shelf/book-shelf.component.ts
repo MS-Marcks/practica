@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BookService } from 'src/app/core/services/library/book.service';
-import { CategoryService } from 'src/app/core/services/library/category.service';
-import { Book } from 'src/app/shared/interfaces/book.interface';
-import { Category } from 'src/app/shared/interfaces/category.interface';
-import { User } from 'src/app/shared/interfaces/user.interface';
+import { BookService } from '../../services/book.service';
+import { CategoryService } from '../../services/category.service';
+import { Book } from '../../interfaces/book.interface';
+import { Category } from '../../interfaces/category.interface';
+import { User } from '../../../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'library-book-shelf',

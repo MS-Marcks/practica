@@ -1,6 +1,6 @@
 import { inject } from "@angular/core";
 import { ResolveFn, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { BookService } from "../services/library/book.service";
+import { BookService } from "../services/book.service";
 
 export const BookResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot
 ) => {

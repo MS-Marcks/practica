@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { categoriesInterest } from 'src/app/configs/category-interest';
-import { RegisterUserService } from 'src/app/core/services/authentication/register-user.service';
-import { SpecialValidations } from 'src/app/core/validators/special-validations';
-import { RegisterUser } from 'src/app/shared/interfaces/register-user.interface';
-import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
-import { ResetForm } from 'src/app/shared/utils/reset-form';
+import { categoriesInterest } from '../../configs/category-interest';
+import { RegisterUserService } from '../../services/register-user.service';
+import { SpecialValidations } from '../../../../shared/validators/special-validations';
+import { RegisterUser } from '../../interfaces/register-user.interface';
+import { GetFormValidationErrors } from '../../../../shared/utils/get-form-validation-errors';
+import { ResetForm } from '../../../../shared/utils/reset-form';
 
 @Component({
   selector: 'auth-register',

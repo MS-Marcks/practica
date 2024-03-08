@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { User } from 'src/app/shared/interfaces/user.interface';
-import { LoginUser } from 'src/app/shared/interfaces/login-user.interface';
+import { environment } from '../../../../environments/environment';
+import { User } from '../../../shared/interfaces/user.interface';
+import { LoginUser } from '../../../shared/interfaces/login-user.interface';
 import { lastValueFrom } from 'rxjs';
 
 @Injectable({

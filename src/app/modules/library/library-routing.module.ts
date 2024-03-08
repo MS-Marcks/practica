@@ -4,8 +4,7 @@ import { LibraryComponent } from './library.component';
 import { BookShelfComponent } from './pages/book-shelf/book-shelf.component';
 import { BookComponent } from './pages/book/book.component';
 
-
-import { BookResolver } from 'src/app/core/resolvers/book.resolver';
+import { BookResolver } from './resolvers/book.resolver';
 
 const routes: Routes = [
   { path: "", redirectTo: "books", pathMatch: "full" },

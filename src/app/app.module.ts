@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { PrincipalInterceptorService } from './core/interceptors/principal.interceptor.service';
+import { PrincipalInterceptorService } from './shared/interceptors/principal.interceptor.service';
 
 @NgModule({
   declarations: [

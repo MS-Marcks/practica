@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Book } from 'src/app/shared/interfaces/book.interface';
+import { Book } from '../../interfaces/book.interface';
 
 @Component({
   selector: 'app-book',
@@ -17,6 +17,7 @@ export class BookComponent implements OnInit {
       this.book = book;
     });
   }
+
   loadImage(event: any): void {
     console.log(event);
   }

@@ -12,7 +12,7 @@
         <div class="form__group">
           <pichincha-input state="{{states.email.state}}" label="Correo electronico" formControlName="email"
             placeholder="Ej. name@example.com" type="email" is-optional="false"></pichincha-input>
-          <pichincha-input-message *ngIf="states.email.required" info-message="" error-message="Correo es requerido"
+          <pichincha-input-message id="username-help" *ngIf="states.email.required" info-message="" error-message="Correo es requerido"
             state="error" single-line="false"></pichincha-input-message>
           <pichincha-input-message *ngIf="states.email.email" info-message=""
             error-message="Formato del correo no válido" state="error" single-line="false"></pichincha-input-message>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
-import { Book } from 'src/app/shared/interfaces/book.interface';
+import { Book } from 'src/app/modules/library/interfaces/book.interface';
 
 @Injectable({
   providedIn: 'root'

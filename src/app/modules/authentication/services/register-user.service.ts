@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { BaseEndpointService } from '../../abstract/base-endpoint.service';
-import { RegisterUser } from 'src/app/shared/interfaces/register-user.interface';
+import { BaseEndpointService } from '../../../shared/abstract/base-endpoint.service';
+import { RegisterUser } from '../interfaces/register-user.interface';
 import { lastValueFrom } from 'rxjs';
 
 @Injectable({

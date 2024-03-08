@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Book } from '../../interfaces/book.interface';
+import { Book } from 'src/app/shared/interfaces/book.interface';
 
 @Component({
-  selector: 'shared-covers',
+  selector: 'library-covers',
   templateUrl: './covers.component.html',
   styleUrls: ['./covers.component.scss'],
   standalone: true

@@ -50,7 +50,7 @@ export class LoginComponent {
   async onSubmit(): Promise<void> {
     GetFormValidationErrors.Errors(this.loginForm, this.states);
 
-    if (!this.loginForm.valid) {
+    if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }

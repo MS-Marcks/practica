@@ -91,7 +91,7 @@ export class RegisterComponent {
       return;
     }
 
-    if (!this.registerForm.valid) {
+    if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       return;
     }

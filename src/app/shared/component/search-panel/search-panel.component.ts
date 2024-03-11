@@ -42,7 +42,7 @@ export class SearchPanelComponent {
 
   onChange(): void {
     try {
-      if (!this.form.valid) {
+      if (this.form.invalid) {
         this.filter.emit(this.dataSource);
         return;
       };

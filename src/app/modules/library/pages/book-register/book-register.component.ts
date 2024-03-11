@@ -101,7 +101,7 @@ export class BookRegisterComponent {
       return;
     }
 
-    if (!this.bookRegisterForm.valid) {
+    if (this.bookRegisterForm.invalid) {
       this.bookRegisterForm.markAllAsTouched();
       return;
     }

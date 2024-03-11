@@ -79,7 +79,7 @@ export class RegisterComponent {
     });
   }
 
-  async onSubmit(): Promise<void> {
+  submit(): void {
     GetFormValidationErrors.Errors(this.registerForm, this.states);
 
     if (this.registerForm.invalid) {
@@ -125,7 +125,7 @@ export class RegisterComponent {
     }
   }
 
-  getCategoryInterest(e: Event, index: number) {
+  getCategoryInterest(e: Event, index: number): void {
     const { detail } = e as unknown as CustomEvent;
 
     if (detail.checked === true) {
@@ -149,7 +149,7 @@ export class RegisterComponent {
     this.alert.show = false;
   }
 
-  trackByFn(index: number) {
+  trackByFn(index: number): number {
     return index;
   }
 

@@ -40,7 +40,7 @@ export class SearchPanelComponent {
     });
   }
 
-  onChange(): void {
+  change(): void {
     try {
       if (this.form.invalid) {
         this.filter.emit(this.dataSource);
@@ -59,7 +59,7 @@ export class SearchPanelComponent {
     }
   }
 
-  trackByFn(index: number) {
+  trackByFn(index: number):number {
     return index;
   }
 }

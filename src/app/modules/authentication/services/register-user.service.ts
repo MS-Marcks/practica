@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { RegisterUser } from '../interfaces/register-user.interface';
 import { Observable } from 'rxjs';
+import { ExtraRegister } from '../interfaces/extra-register.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,12 @@ export class RegisterUserService {
   constructor(private http: HttpClient) {
   }
 
-  isExistName(name: string): Observable<any> {
-    return this.http.get<any>(`${this.urlbase}/exist-name/${name}`).pipe();
+  isExistName(name: string): Observable<ExtraRegister> {
+    return this.http.get<ExtraRegister>(`${this.urlbase}/exist-name/${name}`).pipe();
   }
 
-  registerUser(user: RegisterUser): Observable<any> {
-    return this.http.post<any>(`${this.urlbase}/`, user).pipe();
+  registerUser(user: RegisterUser): Observable<ExtraRegister> {
+    return this.http.post<ExtraRegister>(`${this.urlbase}/`, user).pipe();
   }
 
 }

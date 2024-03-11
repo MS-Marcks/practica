@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
+import { RouterModule } from '@angular/router';
 
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,10 +9,9 @@ import { BookService } from '../../services/book.service';
 import { SpecialValidations } from 'src/app/shared/validators/special-validations';
 import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
 import { Book } from '../../interfaces/book.interface';
-import { User } from 'src/app/shared/interfaces/user.interface';
-import { ResetForm } from 'src/app/shared/utils/reset-form';
-import { RouterModule } from '@angular/router';
-import { UserService } from 'src/app/shared/services/user.service';
+import { User } from '../../../../shared/interfaces/user.interface';
+import { ResetForm } from '../../../../shared/utils/reset-form';
+import { UserService } from '../../../../shared/services/user.service';
 
 @Component({
   templateUrl: './book-register.component.html',
@@ -34,7 +34,7 @@ export class BookRegisterComponent {
   categorySelected = [...CATEGORIESINTEREST];
   inputCheckedCategoryInterest: any = [];
 
-  states: any = {
+  states = {
     "title": {
       state: "",
       required: false
@@ -92,7 +92,7 @@ export class BookRegisterComponent {
     });
   }
 
-  onSubmit(): void {
+  submit(): void {
     GetFormValidationErrors.Errors(this.bookRegisterForm, this.states);
 
     if (this.inputCheckedCategoryInterest.length < 3) {
@@ -137,7 +137,7 @@ export class BookRegisterComponent {
     } catch (error: any) { }
   }
 
-  getCategoryInterest(e: Event, index: number) {
+  getCategoryInterest(e: Event, index: number): void {
     const { detail } = e as unknown as CustomEvent;
 
     if (detail.checked === true) {
@@ -157,11 +157,11 @@ export class BookRegisterComponent {
     this.alert.show = true;
   }
 
-  handleClickCloseEvent() {
+  handleClickCloseEvent(): void {
     this.alert.show = false;
   }
 
-  trackByFn(index: number) {
+  trackByFn(index: number): number {
     return index;
   }
 

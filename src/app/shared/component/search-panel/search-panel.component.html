@@ -1,10 +1,10 @@
 <form [formGroup]="form">
   <ng-container *ngIf="searchType === 'text'; else elseSearch">
     <input type="text" value="" class="search" placeholder="{{placeholder}}" formControlName="text"
-      (keyup)="onChange()">
+      (keyup)="change()">
   </ng-container>
   <ng-template #elseSearch>
-    <select class="search" (change)="onChange()" formControlName="text">
+    <select class="search" (change)="change()" formControlName="text">
       <option value="">{{placeholder}}</option>
       <option value="" *ngFor="let item of dropdown;let i = index; trackBy: trackByFn" value="{{item[dropdownValue]}}">
         {{item[dropdownLabel]}}</option>

@@ -47,7 +47,7 @@ export class LoginComponent {
     });
   }
 
-  async onSubmit(): Promise<void> {
+  submit(): void {
     GetFormValidationErrors.Errors(this.loginForm, this.states);
 
     if (this.loginForm.invalid) {
@@ -83,7 +83,7 @@ export class LoginComponent {
     this.alert.show = true;
   }
 
-  handleClickCloseEvent() {
+  handleClickCloseEvent(): void {
     this.alert.show = false;
   }
 

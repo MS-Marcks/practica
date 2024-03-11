@@ -7,6 +7,7 @@ import { User } from '../interfaces/user.interface';
 export class UserService {
 
   constructor() { }
+
   getUserCurrent(): User {
     return JSON.parse(localStorage.getItem("user") || "[]")
   }

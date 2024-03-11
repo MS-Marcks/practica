@@ -17,7 +17,6 @@ export class BookShelfComponent implements OnInit {
   private categoryService: CategoryService = inject(CategoryService)
   private userService: UserService = inject(UserService)
 
-
   user: User;
   books!: Book[];
   booksSearch: Book[] = [];
@@ -54,29 +53,29 @@ export class BookShelfComponent implements OnInit {
     } catch (error) { }
   }
 
-  onViewBook(book: Book): void {
+  viewBook(book: Book): void {
     this.router.navigate(["admin/books/view/" + book.id]);
   }
 
-  onSearchInput(event: any): void {
+  searchInput(event: any): void {
     if (this.booksDropdown.length === 0 && event.length === this.books.length) {
       this.booksShow = [...this.books];
       return;
     }
     if (event.length === this.books.length) {
       this.booksSearch = [];
-      this.onFilter(this.booksDropdown);
+      this.filter(this.booksDropdown);
       return;
     }
     this.booksSearch = event;
     if (this.booksDropdown.length === 0) {
-      this.onFilter(this.booksSearch);
+      this.filter(this.booksSearch);
       return;
     }
     this.booksShow = [...this.books.filter((element: any) => this.booksSearch.includes(element) && this.booksDropdown.includes(element))];
   }
 
-  onSearchDropdown(event: any): void {
+  searchDropdown(event: any): void {
     if (event.length === this.books.length && this.booksSearch.length === 0) {
       this.booksShow = [...this.books];
       return;
@@ -84,22 +83,22 @@ export class BookShelfComponent implements OnInit {
 
     if (event.length === this.books.length) {
       this.booksDropdown = [];
-      this.onFilter(this.booksSearch);
+      this.filter(this.booksSearch);
       return;
     }
     this.booksDropdown = event;
     if (this.booksSearch.length === 0) {
-      this.onFilter(this.booksDropdown);
+      this.filter(this.booksDropdown);
       return;
     }
     this.booksShow = [...this.books.filter((element: any) => this.booksSearch.includes(element) && this.booksDropdown.includes(element))];
   }
 
-  onFilter(array: any): void {
+  filter(array: any): void {
     this.booksShow = [...this.books.filter((element: any) => array.includes(element))];
   }
 
-  trackByFn(index: number, item: Book) {
+  trackByFn(index: number, item: Book): string | undefined {
     return item.id;
   }
 }

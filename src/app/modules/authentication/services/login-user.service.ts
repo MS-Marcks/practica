@@ -18,7 +18,7 @@ export class LoginUserService {
     return this.http.post<User>(this.urlbase + "/login", body).pipe();
   }
 
-  saveToken(user: User) {
+  saveToken(user: User): void {
     localStorage.setItem("user", JSON.stringify(user));
   }
 

@@ -13,6 +13,10 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
+  async bookRegister(book: Book): Promise<Book> {
+    return lastValueFrom(this.http.post<Book>(`${this.urlbase}`, book).pipe());
+  }
+
   async getBooks(owner: string): Promise<Book[]> {
     return lastValueFrom(this.http.get<Book[]>(`${this.urlbase}/owner/${owner}`).pipe());
   }

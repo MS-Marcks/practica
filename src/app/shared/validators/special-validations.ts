@@ -10,4 +10,11 @@ export class SpecialValidations {
     return { [`password_invalid_format`]: true };
   };
 
+  static url(control: AbstractControl): any {
+    if (!control?.value) return;
+    const urlRegex = /^https:\/\/[^ "]+$/;
+    const isURL = urlRegex.test(control?.value);
+    if (isURL) return null;
+    return { [`url_invalid_format`]: true };
+  }
 }

@@ -5,6 +5,7 @@ import { CategoryService } from '../../services/category.service';
 import { Book } from '../../interfaces/book.interface';
 import { Category } from '../../interfaces/category.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   templateUrl: './book-shelf.component.html',
@@ -14,6 +15,8 @@ export class BookShelfComponent implements OnInit {
 
   private bookService: BookService = inject(BookService)
   private categoryService: CategoryService = inject(CategoryService)
+  private userService: UserService = inject(UserService)
+
 
   user: User;
   books!: Book[];
@@ -24,7 +27,7 @@ export class BookShelfComponent implements OnInit {
   categories!: Category[];
 
   constructor(private router: Router) {
-    this.user = JSON.parse(localStorage.getItem("user") || "[]");
+    this.user = this.userService.getUserCurrent()
   }
 
   ngOnInit(): void {

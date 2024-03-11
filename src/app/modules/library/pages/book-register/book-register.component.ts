@@ -11,6 +11,7 @@ import { Book } from '../../interfaces/book.interface';
 import { User } from 'src/app/shared/interfaces/user.interface';
 import { ResetForm } from 'src/app/shared/utils/reset-form';
 import { RouterModule } from '@angular/router';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   templateUrl: './book-register.component.html',
@@ -28,6 +29,7 @@ export class BookRegisterComponent {
 
   bookRegisterForm!: FormGroup;
   private bookService: BookService = inject(BookService);
+  private userService: UserService = inject(UserService);
 
   categorySelected = [...CATEGORIESINTEREST];
   inputCheckedCategoryInterest: any = [];
@@ -76,8 +78,7 @@ export class BookRegisterComponent {
 
   constructor(private fb: FormBuilder) {
     this.buildForm();
-    this.user = JSON.parse(localStorage.getItem("user") || "[]");
-
+    this.user = this.userService.getUserCurrent();
   }
 
   buildForm(): void {

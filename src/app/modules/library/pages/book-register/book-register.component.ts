@@ -107,13 +107,13 @@ export class BookRegisterComponent {
 
     try {
       const body: Book = {
-        title: this.bookRegisterForm.value.title,
-        author: this.bookRegisterForm.value.author,
-        url: this.bookRegisterForm.value.url,
-        image: this.bookRegisterForm.value.image,
-        summary: this.bookRegisterForm.value.summary,
+        title: this.bookRegisterForm.getRawValue().title,
+        author: this.bookRegisterForm.getRawValue().author,
+        url: this.bookRegisterForm.getRawValue().url,
+        image: this.bookRegisterForm.getRawValue().image,
+        summary: this.bookRegisterForm.getRawValue().summary,
         idCategory: this.categorySelected.filter((e) => e.value === true).map(e => e.label),
-        publish: this.bookRegisterForm.value.publish,
+        publish: this.bookRegisterForm.getRawValue().publish,
         userRegister: this.user.user.userId
       }
 

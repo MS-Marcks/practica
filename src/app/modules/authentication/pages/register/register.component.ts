@@ -85,7 +85,7 @@ export class RegisterComponent {
       return;
     }
 
-    if (this.registerForm.value.password !== this.registerForm.value.rePassword) {
+    if (this.registerForm.getRawValue().password !== this.registerForm.getRawValue().rePassword) {
       this.states["rePassword"].state = "error";
       this.states["rePassword"].compare = true;
       return;
@@ -97,16 +97,16 @@ export class RegisterComponent {
     }
 
     try {
-      const isExistUser = await this.registerUserService.isExistName(this.registerForm.value.name);
+      const isExistUser = await this.registerUserService.isExistName(this.registerForm.getRawValue().name);
       if (isExistUser.exists) {
         this.setValueAlert("error", "El usuario ya existe");
         return;
       }
 
       const body: RegisterUser = {
-        name: this.registerForm.value.name,
-        email: this.registerForm.value.email,
-        password: this.registerForm.value.password,
+        name: this.registerForm.getRawValue().name,
+        email: this.registerForm.getRawValue().email,
+        password: this.registerForm.getRawValue().password,
         category: this.inputCheckedCategoryInterest
       }
 

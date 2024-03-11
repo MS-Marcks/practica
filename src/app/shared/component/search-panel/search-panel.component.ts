@@ -48,11 +48,11 @@ export class SearchPanelComponent {
       };
       if (this.target === "any") {
         const newDataSource = this.dataSource?.filter(
-          (item: any) => Object.values(item).some((value: any) => value.toString().toLowerCase().includes(this.form.value.text.toLowerCase())));
+          (item: any) => Object.values(item).some((value: any) => value.toString().toLowerCase().includes(this.form.getRawValue().text.toLowerCase())));
         this.filter.emit(newDataSource);
         return;
       }
-      const newDataSource = this.dataSource?.filter((item: any) => item[this.target].toString().toLowerCase().includes(this.form.value.text.toLowerCase()));
+      const newDataSource = this.dataSource?.filter((item: any) => item[this.target].toString().toLowerCase().includes(this.form.getRawValue().text.toLowerCase()));
       this.filter.emit(newDataSource);
     } catch (error) {
       this.filter.emit(this.dataSource);

@@ -57,9 +57,10 @@ export class LoginComponent {
 
     try {
       const body: LoginUser = {
-        username: this.loginForm.value.email,
-        password: this.loginForm.value.password,
+        username: this.loginForm.getRawValue().email,
+        password: this.loginForm.getRawValue().password,
       }
+
       const response = await this.loginUserService.login(body);
       this.loginUserService.saveToken(response);
       ResetForm.reset(this.loginForm);

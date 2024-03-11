@@ -1,0 +1,29 @@
+.bookregister {
+  &__header {
+    margin-bottom: 20px;
+  }
+
+  &__footer {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    &__button {
+      margin-left: 20px;
+
+    }
+  }
+}
+
+.textarea {
+  border: 1px solid var(--bp-grayScale200);
+  border-radius: 4px;
+  font-family: prelo, Helvetica, Arial, Sans, sans-serif;
+  width: calc(100%);
+  font-weight: 500;
+  line-height: 24px;
+  font-size: 14px;
+
+  &__description {
+    display: block;
+    margin-bottom: 5px;
+  }
+}

@@ -2,16 +2,19 @@
   <div class="bookshelf__header flex__display flex__justify-content-space-between">
     <h1>Tus libros</h1>
     <div>
-      <pichincha-button variant="secondary" label="Agregar Libro"></pichincha-button>
+      <pichincha-button variant="secondary" [routerLink]="['/admin/books/register']"
+        label="Agregar Libro"></pichincha-button>
     </div>
   </div>
   <div class="bookshelf__options flex__display flex__justify-content-space-between">
-    <shared-search-panel [dataSource]="books"  target="title" placeholder="Ej. Angular , React"
+    <shared-search-panel [dataSource]="books" target="title" placeholder="Ej. Angular , React"
       (filter)="onSearchInput($event)"></shared-search-panel>
-    <shared-search-panel [dataSource]="books" [dropdown]="categories" dropdown-label="description" dropdown-value="id"  target="idCategory" placeholder="Categoria"
-      (filter)="onSearchDropdown($event)" searchType="dropdown"></shared-search-panel>
+    <shared-search-panel [dataSource]="books" [dropdown]="categories" dropdown-label="description" dropdown-value="id"
+      target="idCategory" placeholder="Categoria" (filter)="onSearchDropdown($event)"
+      searchType="dropdown"></shared-search-panel>
   </div>
   <div class="bookshelf__body">
-    <library-covers (click)="onViewBook(book)" *ngFor="let book of booksShow; trackBy: trackByFn" [data]="book"></library-covers>
+    <library-covers (click)="onViewBook(book)" *ngFor="let book of booksShow; trackBy: trackByFn"
+      [data]="book"></library-covers>
   </div>
 </div>

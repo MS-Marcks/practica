@@ -1,6 +1,6 @@
 <div class="book">
   <div class="book__header d-flex">
-    <pichincha-button class="book__header__button" variant="secondary" size="xlarge" label="Volver"></pichincha-button>
+    <pichincha-button [routerLink]="['/admin/books']" class="book__header__button" variant="secondary" size="xlarge" label="Volver"></pichincha-button>
     <pichincha-button class="book__header__button" variant="primary" size="xlarge" label="Editar"></pichincha-button>
   </div>
   <div class="book__body">
@@ -18,10 +18,34 @@
       </div>
       <div class="book__body__description__element">
         <div>
+          <strong>Autor</strong>
+        </div>
+        <div>
+          {{book.author}}
+        </div>
+      </div>
+      <div class="book__body__description__element">
+        <div>
           <strong>Url del libro</strong>
         </div>
         <div>
           <a [href]="book.url" target="_blank">{{book.url}}</a>
+        </div>
+      </div>
+      <div class="book__body__description__element">
+        <div>
+          <strong>Resumen</strong>
+        </div>
+        <div>
+          {{book.summary}}
+        </div>
+      </div>
+      <div class="book__body__description__element">
+        <div>
+          <strong>Categorias</strong>
+        </div>
+        <div>
+          {{book.idCategory}}
         </div>
       </div>
     </div>

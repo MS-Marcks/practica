@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { categoriesInterest } from '../../configs/category-interest';
+import { categoriesInterest } from '../../../../shared/configs/category-interest';
 import { RegisterUserService } from '../../services/register-user.service';
 import { SpecialValidations } from '../../../../shared/validators/special-validations';
 import { RegisterUser } from '../../interfaces/register-user.interface';

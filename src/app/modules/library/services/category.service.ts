@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Category } from '../interfaces/category.interface';
 
 @Injectable({
@@ -13,8 +13,8 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  async getCategories(): Promise<Category[]> {
-    return lastValueFrom(this.http.get<Category[]>(`${this.urlbase}`).pipe());
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.urlbase}`).pipe();
   }
 
 }

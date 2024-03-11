@@ -6,9 +6,9 @@ import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@p
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { RegisterUserService } from '../../services/register-user.service';
 import { SpecialValidations } from '../../../../shared/validators/special-validations';
-import { RegisterUser } from '../../interfaces/register-user.interface';
 import { GetFormValidationErrors } from '../../../../shared/utils/get-form-validation-errors';
-import { ResetForm } from '../../../../shared/utils/reset-form';
+import { ResetForm } from 'src/app/shared/utils/reset-form';
+import { RegisterUser } from '../../interfaces/register-user.interface';
 
 @Component({
   templateUrl: './register.component.html',
@@ -31,7 +31,8 @@ export class RegisterComponent {
   states: any = {
     "name": {
       state: "",
-      required: false
+      required: false,
+      exist_username: false
     },
     "email": {
       state: "",
@@ -69,15 +70,27 @@ export class RegisterComponent {
 
   buildForm(): void {
     this.registerForm = this.fb.group({
-      name: [null, Validators.required],
+      name: [null, [Validators.required], SpecialValidations.isExistUserName(this.registerUserService)],
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8), SpecialValidations.password]],
       rePassword: [null, [Validators.required, Validators.minLength(8)]]
+    }, {
+      validator: SpecialValidations.match("password", "rePassword")
     });
   }
 
   async onSubmit(): Promise<void> {
     GetFormValidationErrors.Errors(this.registerForm, this.states);
+
+    if (this.registerForm.invalid) {
+      const errors: any = this.registerForm?.errors;
+      if (errors["mismatch"]) {
+        this.states["rePassword"].state = "error";
+        this.states["rePassword"].compare = true;
+      }
+      this.registerForm.markAllAsTouched();
+      return;
+    }
 
     if (this.inputCheckedCategoryInterest.length < 3) {
       this.states["categoryInterest"].state = "error";
@@ -85,24 +98,7 @@ export class RegisterComponent {
       return;
     }
 
-    if (this.registerForm.getRawValue().password !== this.registerForm.getRawValue().rePassword) {
-      this.states["rePassword"].state = "error";
-      this.states["rePassword"].compare = true;
-      return;
-    }
-
-    if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched();
-      return;
-    }
-
     try {
-      const isExistUser = await this.registerUserService.isExistName(this.registerForm.getRawValue().name);
-      if (isExistUser.exists) {
-        this.setValueAlert("error", "El usuario ya existe");
-        return;
-      }
-
       const body: RegisterUser = {
         name: this.registerForm.getRawValue().name,
         email: this.registerForm.getRawValue().email,
@@ -110,13 +106,19 @@ export class RegisterComponent {
         category: this.inputCheckedCategoryInterest
       }
 
-      const response = await this.registerUserService.Post(body);
-      if (response.message === "Created user") {
-        this.setValueAlert("success", "El usuario se creo correctamente");
-        ResetForm.reset(this.registerForm);
-        this.inputCheckedCategoryInterest = [];
-        this.categorySelected = [...CATEGORIESINTEREST];
-      }
+      this.registerUserService.registerUser(body).subscribe({
+        next: (response) => {
+          if (response.message === "Created user") {
+            this.setValueAlert("success", "El usuario se creo correctamente");
+          }
+        },
+        error: () => this.setValueAlert("error", "Ops... Ocurrio un problema"),
+        complete: () => {
+          ResetForm.reset(this.registerForm);
+          this.inputCheckedCategoryInterest = [];
+          this.categorySelected = [...CATEGORIESINTEREST];
+        }
+      })
 
     } catch (error: any) {
       this.setValueAlert("error", "Ops... Ocurrio un problema");

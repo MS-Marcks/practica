@@ -1,4 +1,6 @@
-import { AbstractControl } from "@angular/forms";
+import { AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors } from "@angular/forms";
+import { Observable, map } from "rxjs";
+import { RegisterUserService } from "src/app/modules/authentication/services/register-user.service";
 
 export class SpecialValidations {
 
@@ -16,5 +18,20 @@ export class SpecialValidations {
     const isURL = urlRegex.test(control?.value);
     if (isURL) return null;
     return { [`url_invalid_format`]: true };
+  }
+
+  static isExistUserName(registerUserService: RegisterUserService): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const username = (control.value as string).trim();
+      return registerUserService
+        .isExistName(username)
+        .pipe(map(isExisting => (isExisting.exists ? { [`exist_username`]: true } : null)));
+    };
+  }
+
+  static match(firstControlName: string, secondControlName: string) {
+    return (fg: FormGroup) => {
+      return fg.get(firstControlName)?.value === fg.get(secondControlName)?.value ? null : { ["mismatch"]: true };
+    };
   }
 }

@@ -35,18 +35,22 @@ export class BookShelfComponent implements OnInit {
     this.getCategories();
   }
 
-  async getBooks(): Promise<void> {
+  getBooks(): void {
     try {
-      const response = await this.bookService.getBooks(this.user.user.userId);
-      this.books = response;
-      this.booksShow = [...this.books];
+      this.bookService.getBooks(this.user.user.userId).subscribe({
+        next: (response) => this.books = response,
+        error: (err) => console.error(err),
+        complete: () => this.booksShow = [...this.books]
+      });
     } catch (error) { }
   }
 
-  async getCategories(): Promise<void> {
+  getCategories(): void {
     try {
-      const response = await this.categoryService.getCategories();
-      this.categories = response;
+      this.categoryService.getCategories().subscribe({
+        next: (response) => this.categories = response,
+        error: (err) => console.error(err)
+      });
     } catch (error) { }
   }
 
@@ -67,7 +71,6 @@ export class BookShelfComponent implements OnInit {
     this.booksSearch = event;
     if (this.booksDropdown.length === 0) {
       this.onFilter(this.booksSearch);
-
       return;
     }
     this.booksShow = [...this.books.filter((element: any) => this.booksSearch.includes(element) && this.booksDropdown.includes(element))];

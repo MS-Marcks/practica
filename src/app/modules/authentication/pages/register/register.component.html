@@ -11,8 +11,11 @@
       <form [formGroup]="registerForm">
         <div class="form__group">
           <pichincha-input state="{{states.name.state}}" label="Nombre del usuario" formControlName="name"
-            placeholder="Ej. makoto" error-helper="Nombre de usuario es requerido"
-            is-optional="false"></pichincha-input>
+            placeholder="Ej. makoto" is-optional="false"></pichincha-input>
+          <pichincha-input-message *ngIf="states.name.required" info-message=""
+            error-message="Nombre de usuario es requerido" state="error" single-line="false"></pichincha-input-message>
+          <pichincha-input-message *ngIf="states.name.exist_username" info-message=""
+            error-message="El nombre de usuario ya existe" state="error" single-line="false"></pichincha-input-message>
         </div>
         <div class="form__group">
           <pichincha-input state="{{states.email.state}}" label="Correo electronico" formControlName="email"

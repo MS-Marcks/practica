@@ -92,7 +92,7 @@ export class BookRegisterComponent {
     });
   }
 
-  async onSubmit(): Promise<void> {
+  onSubmit(): void {
     GetFormValidationErrors.Errors(this.bookRegisterForm, this.states);
 
     if (this.inputCheckedCategoryInterest.length < 3) {
@@ -118,19 +118,23 @@ export class BookRegisterComponent {
         userRegister: this.user.user.userId
       }
 
-      const response = await this.bookService.bookRegister(body);
-      this.setValueAlert("success", response.message);
-      this.inputCheckedCategoryInterest = [];
-      this.categorySelected = [...CATEGORIESINTEREST];
-      ResetForm.reset(this.bookRegisterForm);
+      this.bookService.bookRegister(body).subscribe({
+        next: (response) => this.setValueAlert("success", response.message),
+        error: (error) => {
+          if (error.status === 401) {
+            this.setValueAlert("error", error.error.message);
+            return;
+          }
+          this.setValueAlert("error", "Ops... Ocurrio un problema");
+        },
+        complete: () => {
+          this.inputCheckedCategoryInterest = [];
+          this.categorySelected = [...CATEGORIESINTEREST];
+          ResetForm.reset(this.bookRegisterForm);
+        }
+      });
 
-    } catch (error: any) {
-      if (error.status === 401) {
-        this.setValueAlert("error", error.error.message);
-        return;
-      }
-      this.setValueAlert("error", "Ops... Ocurrio un problema");
-    }
+    } catch (error: any) { }
   }
 
   getCategoryInterest(e: Event, index: number) {

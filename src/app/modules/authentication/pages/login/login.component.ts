@@ -54,22 +54,25 @@ export class LoginComponent {
       this.loginForm.markAllAsTouched();
       return;
     }
-
     try {
       const body: LoginUser = {
         username: this.loginForm.getRawValue().email,
         password: this.loginForm.getRawValue().password,
       }
 
-      const response = await this.loginUserService.login(body);
-      this.loginUserService.saveToken(response);
-      ResetForm.reset(this.loginForm);
+      this.loginUserService.login(body).subscribe({
+        next: (response) => this.loginUserService.saveToken(response),
+        error: (error) => {
+          if (error.status === 401) {
+            this.setValueAlert("error", error.error.message);
+            return;
+          }
+          this.setValueAlert("error", "Ops... Ocurrio un problema");
+        },
+        complete: () => ResetForm.reset(this.loginForm)
+      })
 
-    } catch (error: any) {
-      if (error.status === 401) {
-        this.setValueAlert("error", error.error.message);
-        return;
-      }
+    } catch (error) {
       this.setValueAlert("error", "Ops... Ocurrio un problema");
     }
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
 
@@ -27,6 +27,8 @@ import { RouterModule } from '@angular/router';
 export class BookRegisterComponent {
 
   bookRegisterForm!: FormGroup;
+  private bookService: BookService = inject(BookService);
+
   categorySelected = [...CATEGORIESINTEREST];
   inputCheckedCategoryInterest: any = [];
 
@@ -72,7 +74,7 @@ export class BookRegisterComponent {
   }
   user: User;
 
-  constructor(private fb: FormBuilder, private service: BookService) {
+  constructor(private fb: FormBuilder) {
     this.buildForm();
     this.user = JSON.parse(localStorage.getItem("user") || "[]");
 
@@ -115,7 +117,7 @@ export class BookRegisterComponent {
         userRegister: this.user.user.userId
       }
 
-      const response = await this.service.bookRegister(body);
+      const response = await this.bookService.bookRegister(body);
       this.setValueAlert("success", response.message);
       this.inputCheckedCategoryInterest = [];
       this.categorySelected = [...CATEGORIESINTEREST];

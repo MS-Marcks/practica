@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
@@ -24,6 +24,8 @@ import { ResetForm } from '../../../../shared/utils/reset-form';
 export class RegisterComponent {
 
   registerForm!: FormGroup;
+  private registerUserService: RegisterUserService = inject(RegisterUserService);
+
   inputCheckedCategoryInterest: any = [];
   categorySelected = [...CATEGORIESINTEREST];
   states: any = {
@@ -61,7 +63,7 @@ export class RegisterComponent {
   }
 
 
-  constructor(private fb: FormBuilder, private service: RegisterUserService) {
+  constructor(private fb: FormBuilder) {
     this.buildForm();
   }
 
@@ -95,7 +97,7 @@ export class RegisterComponent {
     }
 
     try {
-      const isExistUser = await this.service.isExistName(this.registerForm.value.name);
+      const isExistUser = await this.registerUserService.isExistName(this.registerForm.value.name);
       if (isExistUser.exists) {
         this.setValueAlert("error", "El usuario ya existe");
         return;
@@ -108,7 +110,7 @@ export class RegisterComponent {
         category: this.inputCheckedCategoryInterest
       }
 
-      const response = await this.service.Post(body);
+      const response = await this.registerUserService.Post(body);
       if (response.message === "Created user") {
         this.setValueAlert("success", "El usuario se creo correctamente");
         ResetForm.reset(this.registerForm);

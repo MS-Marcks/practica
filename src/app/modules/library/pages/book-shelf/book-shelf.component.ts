@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookService } from '../../services/book.service';
 import { CategoryService } from '../../services/category.service';
@@ -12,6 +12,9 @@ import { User } from '../../../../shared/interfaces/user.interface';
 })
 export class BookShelfComponent implements OnInit {
 
+  private bookService: BookService = inject(BookService)
+  private categoryService: CategoryService = inject(CategoryService)
+
   user: User;
   books!: Book[];
   booksSearch: Book[] = [];
@@ -20,9 +23,7 @@ export class BookShelfComponent implements OnInit {
 
   categories!: Category[];
 
-  constructor(private bookService: BookService,
-    private categoryService: CategoryService,
-    private router: Router) {
+  constructor(private router: Router) {
     this.user = JSON.parse(localStorage.getItem("user") || "[]");
   }
 

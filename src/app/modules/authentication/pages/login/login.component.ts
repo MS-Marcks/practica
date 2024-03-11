@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginUserService } from '../../services/login-user.service';
 import { SpecialValidations } from '../../../../shared/validators/special-validations';
@@ -8,10 +8,12 @@ import { ResetForm } from '../../../../shared/utils/reset-form';
 
 @Component({
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+
   loginForm!: FormGroup;
+  private loginUserService: LoginUserService = inject(LoginUserService);
 
   states: any = {
     "email": {
@@ -34,7 +36,7 @@ export class LoginComponent {
     closeTime: 5000
   }
 
-  constructor(private fb: FormBuilder, private service: LoginUserService) {
+  constructor(private fb: FormBuilder) {
     this.buildForm();
   }
 
@@ -58,8 +60,8 @@ export class LoginComponent {
         username: this.loginForm.value.email,
         password: this.loginForm.value.password,
       }
-      const response = await this.service.login(body);
-      this.service.saveToken(response);
+      const response = await this.loginUserService.login(body);
+      this.loginUserService.saveToken(response);
       ResetForm.reset(this.loginForm);
 
     } catch (error: any) {

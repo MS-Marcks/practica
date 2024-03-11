@@ -7,7 +7,6 @@ import { Category } from '../../interfaces/category.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
 
 @Component({
-  selector: 'library-book-shelf',
   templateUrl: './book-shelf.component.html',
   styleUrls: ['./book-shelf.component.scss']
 })

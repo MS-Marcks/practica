@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
+
 import { categoriesInterest } from '../../../../shared/configs/category-interest';
 import { RegisterUserService } from '../../services/register-user.service';
 import { SpecialValidations } from '../../../../shared/validators/special-validations';
@@ -8,9 +11,15 @@ import { GetFormValidationErrors } from '../../../../shared/utils/get-form-valid
 import { ResetForm } from '../../../../shared/utils/reset-form';
 
 @Component({
-  selector: 'auth-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    PichinchaDesignSystemModule,
+    PichinchaReactiveControlsModule,
+  ]
 })
 export class RegisterComponent {
 

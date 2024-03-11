@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Book } from '../../interfaces/book.interface';
 
 @Component({
-  selector: 'app-book',
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.scss']
 })

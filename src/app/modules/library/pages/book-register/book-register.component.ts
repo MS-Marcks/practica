@@ -1,18 +1,28 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
+
 import { categoriesInterest } from '../../../../shared/configs/category-interest';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { SpecialValidations } from 'src/app/shared/validators/special-validations';
 import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
 import { Book } from '../../interfaces/book.interface';
 import { User } from 'src/app/shared/interfaces/user.interface';
 import { ResetForm } from 'src/app/shared/utils/reset-form';
-//import { ResetForm } from 'src/app/shared/utils/reset-form';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-book-register',
   templateUrl: './book-register.component.html',
-  styleUrls: ['./book-register.component.scss']
+  styleUrls: ['./book-register.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    PichinchaDesignSystemModule,
+    PichinchaReactiveControlsModule,
+  ]
 })
 export class BookRegisterComponent {
 

@@ -7,7 +7,6 @@ import { GetFormValidationErrors } from '../../../../shared/utils/get-form-valid
 import { ResetForm } from '../../../../shared/utils/reset-form';
 
 @Component({
-  selector: 'auth-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

@@ -5,7 +5,6 @@ import { BookShelfComponent } from './pages/book-shelf/book-shelf.component';
 import { BookComponent } from './pages/book/book.component';
 
 import { BookResolver } from './resolvers/book.resolver';
-import { BookRegisterComponent } from './pages/book-register/book-register.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "books", pathMatch: "full" },
@@ -13,7 +12,7 @@ const routes: Routes = [
     path: "books", component: LibraryComponent,
     children: [
       { path: "", component: BookShelfComponent, },
-      { path: "register", component: BookRegisterComponent },
+      { path: "register", loadComponent: () => import("./pages/book-register/book-register.component").then(c => c.BookRegisterComponent) },
       {
         path: "view/:id", component: BookComponent, resolve: { book: BookResolver },
       }

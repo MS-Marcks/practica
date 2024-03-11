@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
 
-import { categoriesInterest } from '../../../../shared/configs/category-interest';
+import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { SpecialValidations } from 'src/app/shared/validators/special-validations';
@@ -27,7 +27,7 @@ import { RouterModule } from '@angular/router';
 export class BookRegisterComponent {
 
   bookRegisterForm!: FormGroup;
-  categorySelected = [...categoriesInterest];
+  categorySelected = [...CATEGORIESINTEREST];
   inputCheckedCategoryInterest: any = [];
 
   states: any = {
@@ -118,7 +118,7 @@ export class BookRegisterComponent {
       const response = await this.service.bookRegister(body);
       this.setValueAlert("success", response.message);
       this.inputCheckedCategoryInterest = [];
-      this.categorySelected = [...categoriesInterest];
+      this.categorySelected = [...CATEGORIESINTEREST];
       ResetForm.reset(this.bookRegisterForm);
 
     } catch (error: any) {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
 
-import { categoriesInterest } from '../../../../shared/configs/category-interest';
+import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { RegisterUserService } from '../../services/register-user.service';
 import { SpecialValidations } from '../../../../shared/validators/special-validations';
 import { RegisterUser } from '../../interfaces/register-user.interface';
@@ -25,7 +25,7 @@ export class RegisterComponent {
 
   registerForm!: FormGroup;
   inputCheckedCategoryInterest: any = [];
-  categorySelected = [...categoriesInterest];
+  categorySelected = [...CATEGORIESINTEREST];
   states: any = {
     "name": {
       state: "",
@@ -113,7 +113,7 @@ export class RegisterComponent {
         this.setValueAlert("success", "El usuario se creo correctamente");
         ResetForm.reset(this.registerForm);
         this.inputCheckedCategoryInterest = [];
-        this.categorySelected = [...categoriesInterest];
+        this.categorySelected = [...CATEGORIESINTEREST];
       }
 
     } catch (error: any) {

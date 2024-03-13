@@ -1,13 +1,17 @@
 <form [formGroup]="form">
-  <ng-container *ngIf="searchType === 'text'; else elseSearch">
-    <input type="text" value="" class="search" placeholder="{{placeholder}}" formControlName="text"
-      (keyup)="change()">
+  <ng-container *ngIf="searchType === 'text';">
+    <input type="text" value="" class="search" placeholder="{{placeholder}}" formControlName="text" (keyup)="change()">
   </ng-container>
-  <ng-template #elseSearch>
+  <ng-container *ngIf="searchType === 'dropdown';">
     <select class="search" (change)="change()" formControlName="text">
       <option value="">{{placeholder}}</option>
       <option value="" *ngFor="let item of dropdown;let i = index; trackBy: trackByFn" value="{{item[dropdownValue]}}">
         {{item[dropdownLabel]}}</option>
     </select>
-  </ng-template>
+  </ng-container>
+  <ng-container *ngIf="searchType === 'checkbox';">
+    <div class="form__group" *ngFor="let item of checkbox; let i=index;">
+      <input type="checkbox" class="form__checkbox" (change)="selectedCheckbox($event)" [value]="item[checkboxValue]">{{item[checkboxLabel]}}
+    </div>
+  </ng-container>
 </form>

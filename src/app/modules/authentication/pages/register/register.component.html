@@ -41,7 +41,7 @@
     <div class="card__footer">
       <div class="d-flex justify-content-between align-items-center">
         <div>
-          <a routerLink="/auth/login">Iniciar sesión</a>
+          <a [routerLink]="['/admin/books']">Iniciar sesión</a>
         </div>
         <div>
           <pichincha-button (clickEvent)="submit()" size="large" label="Registrar"></pichincha-button>

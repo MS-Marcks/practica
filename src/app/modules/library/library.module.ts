@@ -10,12 +10,14 @@ import { LibraryRoutingModule } from './library-routing.module';
 import { SearchPanelComponent } from '../../shared/component/search-panel/search-panel.component';
 import { BookComponent } from './pages/book/book.component';
 import { BookRegisterComponent } from './pages/book-register/book-register.component';
+import { PublicLibraryComponent } from './pages/public-library/public-library.component';
 
 @NgModule({
   declarations: [
     LibraryComponent,
     BookShelfComponent,
-    BookComponent
+    BookComponent,
+    PublicLibraryComponent
   ],
   imports: [
     CommonModule,

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
+import { RouterModule } from '@angular/router';
 
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { RegisterUserService } from '../../services/register-user.service';
@@ -16,6 +17,7 @@ import { GetFormControlError } from 'src/app/shared/utils/get-form-control-error
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     ReactiveFormsModule,
     PichinchaDesignSystemModule,
     PichinchaReactiveControlsModule,

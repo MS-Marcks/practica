@@ -14,11 +14,15 @@ export class BookService {
   constructor(private http: HttpClient) { }
 
   bookRegister(book: Book): Observable<Book> {
-   return this.http.post<Book>(`${this.urlbase}`, book).pipe();
+    return this.http.post<Book>(`${this.urlbase}`, book).pipe();
   }
 
-  getBooks(owner: string): Observable<Book[]> {
-   return this.http.get<Book[]>(`${this.urlbase}/owner/${owner}`).pipe();
+  getBooks(owner: string, count: number = -1): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.urlbase}/owner/${owner}/${count}`).pipe();
+  }
+
+  getPublicBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.urlbase}/public`).pipe();
   }
 
   getBook(id: string): Observable<Book> {

@@ -1,0 +1,38 @@
+<div class="bookshelf">
+  <div class="bookshelf__header flex__display flex__justify-content-space-between">
+    <h1>Tus libros</h1>
+  </div>
+  <div class="bookshelf__body">
+    <library-covers (click)="viewBook(book)" *ngFor="let book of books; trackBy: trackByFn"
+      [data]="book"></library-covers>
+  </div>
+  <div class="bookshelf__options flex__display flex__justify-content-space-between">
+    <pichincha-button variant="secondary" size="small" [routerLink]="['/admin/books']"
+      label="Ver más"></pichincha-button>
+  </div>
+</div>
+
+<div class="bookshelf">
+  <div class="bookshelf__header flex__display flex__justify-content-space-between">
+    <h1>Publicaciones</h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="bookshelf__body">
+        <library-covers (click)="viewBook(book)" *ngFor="let book of booksShow; trackBy: trackByFn"
+          [data]="book"></library-covers>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card" style="padding: 20px;">
+        <strong>Buscar</strong>
+        <shared-search-panel [dataSource]="booksPublic" target="title" placeholder="Ej. Angular , React"
+          (filter)="searchInput($event)"></shared-search-panel>
+        <h2>Categorias</h2>
+        <shared-search-panel [checkbox]="categories" checkbox-label="label" checkbox-value="label" searchType="checkbox"
+          [dataSource]="booksPublic" target="idCategory" placeholder="Ej. Angular , React"
+          (filter)="searchCheckBox($event)"></shared-search-panel>
+      </div>
+    </div>
+  </div>
+</div>

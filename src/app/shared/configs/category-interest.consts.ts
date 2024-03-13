@@ -1,4 +1,4 @@
-export const categoriesInterest = [
+export const CATEGORIESINTEREST = [
   { value: false, label: "Anime" },
   { value: false, label: "Ciencia Ficción" },
   { value: false, label: "Novelas" },

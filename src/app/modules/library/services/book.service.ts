@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Book } from 'src/app/modules/library/interfaces/book.interface';
 
 @Injectable({
@@ -13,16 +13,20 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  async bookRegister(book: Book): Promise<Book> {
-    return lastValueFrom(this.http.post<Book>(`${this.urlbase}`, book).pipe());
+  bookRegister(book: Book): Observable<Book> {
+    return this.http.post<Book>(`${this.urlbase}`, book).pipe();
   }
 
-  async getBooks(owner: string): Promise<Book[]> {
-    return lastValueFrom(this.http.get<Book[]>(`${this.urlbase}/owner/${owner}`).pipe());
+  getBooks(owner: string, count: number = -1): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.urlbase}/owner/${owner}/${count}`).pipe();
   }
 
-  async getBook(id: string): Promise<Book> {
-    return lastValueFrom(this.http.get<Book>(`${this.urlbase}/${id}`).pipe());
+  getPublicBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.urlbase}/public`).pipe();
+  }
+
+  getBook(id: string): Observable<Book> {
+    return this.http.get<Book>(`${this.urlbase}/${id}`).pipe();
   }
 
 }

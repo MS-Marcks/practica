@@ -1,56 +1,50 @@
-import { Component } from '@angular/core';
-import { categoriesInterest } from '../../../../shared/configs/category-interest';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
+import { RouterModule } from '@angular/router';
+
+import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { SpecialValidations } from 'src/app/shared/validators/special-validations';
-import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
 import { Book } from '../../interfaces/book.interface';
-import { User } from 'src/app/shared/interfaces/user.interface';
-import { ResetForm } from 'src/app/shared/utils/reset-form';
-//import { ResetForm } from 'src/app/shared/utils/reset-form';
+import { User } from '../../../../shared/interfaces/user.interface';
+import { ResetForm } from '../../../../shared/utils/reset-form';
+import { UserService } from '../../../../shared/services/user.service';
+import { GetFormControlError } from 'src/app/shared/utils/get-form-control-error';
 
 @Component({
-  selector: 'app-book-register',
   templateUrl: './book-register.component.html',
-  styleUrls: ['./book-register.component.scss']
+  styleUrls: ['./book-register.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    PichinchaDesignSystemModule,
+    PichinchaReactiveControlsModule,
+  ]
 })
 export class BookRegisterComponent {
 
   bookRegisterForm!: FormGroup;
-  categorySelected = [...categoriesInterest];
+  private bookService: BookService = inject(BookService);
+  private userService: UserService = inject(UserService);
+
+  categorySelected = JSON.parse(JSON.stringify(CATEGORIESINTEREST));
   inputCheckedCategoryInterest: any = [];
 
   states: any = {
-    "title": {
-      state: "",
-      required: false
-    },
-    "author": {
-      state: "",
-      required: false
-    },
-    "url": {
-      state: "",
-      required: false,
-      url_invalid_format: false
-    },
-    "image": {
-      state: "",
-      required: false,
-      url_invalid_format: false
-    },
-    "summary": {
-      state: "",
-      required: false
-    },
-    "publish": {
-      state: "",
-      required: false
-    },
-    "categoryInterest": {
-      state: "",
-      required: false
-    }
+    title: { state: "", error: "" },
+    author: { state: "", error: "" },
+    url: { state: "", error: "" },
+    image: { state: "", error: "" },
+    summary: { state: "", error: "" }
+  }
+
+  specialStates: any = {
+
+    categoryInterest: { state: "", required: false }
   }
 
   alert = {
@@ -62,65 +56,68 @@ export class BookRegisterComponent {
   }
   user: User;
 
-  constructor(private fb: FormBuilder, private service: BookService) {
+  constructor(private fb: FormBuilder) {
     this.buildForm();
-    this.user = JSON.parse(localStorage.getItem("user") || "[]");
-
+    this.user = this.userService.getUserCurrent();
   }
 
   buildForm(): void {
     this.bookRegisterForm = this.fb.group({
-      title: [null, [Validators.required]],
-      author: [null, [Validators.required]],
-      url: [null, [Validators.required, SpecialValidations.url]],
-      image: [null, [Validators.required, SpecialValidations.url]],
-      summary: [null, [Validators.required]],
+      title: [null, [SpecialValidations.required("Nombre de libro requerido")]],
+      author: [null, [SpecialValidations.required("Nombre de autor requerido")]],
+      url: [null, [SpecialValidations.required("Url del libro requerido"), SpecialValidations.url("Formato de la url no valida")]],
+      image: [null, [SpecialValidations.required("Url de la imagen del libro requerido"), SpecialValidations.url("Formato de la url de la imagen no valida")]],
+      summary: [null, [SpecialValidations.required()]],
       publish: [false],
     });
   }
 
-  async onSubmit(): Promise<void> {
-    GetFormValidationErrors.Errors(this.bookRegisterForm, this.states);
+  submit(): void {
 
-    if (this.inputCheckedCategoryInterest.length < 3) {
-      this.states["categoryInterest"].state = "error";
-      this.states["categoryInterest"].required = true;
+    this.getError();
+    if (this.bookRegisterForm.invalid) {
+      this.bookRegisterForm.markAllAsTouched();
       return;
     }
 
-    if (!this.bookRegisterForm.valid) {
-      this.bookRegisterForm.markAllAsTouched();
+    if (this.inputCheckedCategoryInterest.length < 3) {
+      this.specialStates["categoryInterest"].state = "error";
+      this.specialStates["categoryInterest"].required = true;
       return;
     }
 
     try {
       const body: Book = {
-        title: this.bookRegisterForm.value.title,
-        author: this.bookRegisterForm.value.author,
-        url: this.bookRegisterForm.value.url,
-        image: this.bookRegisterForm.value.image,
-        summary: this.bookRegisterForm.value.summary,
-        idCategory: this.categorySelected.filter((e) => e.value === true).map(e => e.label),
-        publish: this.bookRegisterForm.value.publish,
+        title: this.bookRegisterForm.getRawValue().title,
+        author: this.bookRegisterForm.getRawValue().author,
+        url: this.bookRegisterForm.getRawValue().url,
+        image: this.bookRegisterForm.getRawValue().image,
+        summary: this.bookRegisterForm.getRawValue().summary,
+        idCategory: this.categorySelected.filter((e: any) => e.value === true).map((e: any) => e.label),
+        publish: this.bookRegisterForm.getRawValue().publish,
         userRegister: this.user.user.userId
       }
 
-      const response = await this.service.bookRegister(body);
-      this.setValueAlert("success", response.message);
-      this.inputCheckedCategoryInterest = [];
-      this.categorySelected = [...categoriesInterest];
-      ResetForm.reset(this.bookRegisterForm);
+      this.bookService.bookRegister(body).subscribe({
+        next: (response) => this.setValueAlert("success", response.message),
+        error: (error) => {
+          if (error.status === 401) {
+            this.setValueAlert("error", error.error.message);
+            return;
+          }
+          this.setValueAlert("error", "Ops... Ocurrio un problema");
+        },
+        complete: () => {
+          this.inputCheckedCategoryInterest = [];
+          this.categorySelected = JSON.parse(JSON.stringify(CATEGORIESINTEREST));
+          ResetForm.reset(this.bookRegisterForm);
+        }
+      });
 
-    } catch (error: any) {
-      if (error.status === 401) {
-        this.setValueAlert("error", error.error.message);
-        return;
-      }
-      this.setValueAlert("error", "Ops... Ocurrio un problema");
-    }
+    } catch (error: any) { }
   }
 
-  getCategoryInterest(e: Event, index: number) {
+  getCategoryInterest(e: Event, index: number): void {
     const { detail } = e as unknown as CustomEvent;
 
     if (detail.checked === true) {
@@ -134,17 +131,25 @@ export class BookRegisterComponent {
     })
   }
 
+  getError(): void {
+    Object.keys(this.states).forEach((key: string) => {
+      const getError = GetFormControlError.error(this.bookRegisterForm.controls[key]);
+      this.states[key] = getError;
+    })
+  }
+
+
   setValueAlert(alertType: string, message: any): void {
     this.alert.type = alertType;
     this.alert.description = message;
     this.alert.show = true;
   }
 
-  handleClickCloseEvent() {
+  handleClickCloseEvent(): void {
     this.alert.show = false;
   }
 
-  trackByFn(index: number) {
+  trackByFn(index: number): number {
     return index;
   }
 

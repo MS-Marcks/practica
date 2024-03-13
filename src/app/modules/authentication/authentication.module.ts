@@ -12,15 +12,15 @@ import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
-    LoginComponent,
-    RegisterComponent
+    LoginComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AuthenticationRoutingModule,
     PichinchaDesignSystemModule,
-    PichinchaReactiveControlsModule
+    PichinchaReactiveControlsModule,
+    RegisterComponent
   ]
 })
 export class AuthenticationModule { }

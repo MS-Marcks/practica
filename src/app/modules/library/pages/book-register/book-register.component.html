@@ -11,40 +11,30 @@
       <div class="row form__group">
         <div class="col-sm">
           <pichincha-input [state]="states.title.state" label="Nombre de libro" formControlName="title"
-            placeholder="Ej. Angular + NGRX" type="text" is-optional="false"
-            error-helper="Nombre de libro requerido"></pichincha-input>
+            placeholder="Ej. Angular + NGRX" type="text" [errorHelper]="states.title.error" is-optional="false"
+            error-helper=""></pichincha-input>
         </div>
         <div class="col-sm">
           <pichincha-input [state]="states.author.state" label="Nombre del autor" formControlName="author"
             placeholder="Ej. Kevin Suárez" type="text" is-optional="false"
-            error-helper="Nombre de autor requerido"></pichincha-input>
+            [errorHelper]="states.author.error"></pichincha-input>
         </div>
       </div>
       <div class="row form__group">
         <div class="col-sm">
           <pichincha-input label="URL del libro" [state]="states.url.state" formControlName="url"
-            placeholder="Ej. https://book-all.com/sabhjxm2kk" type="text" is-optional="false"></pichincha-input>
-          <pichincha-input-message *ngIf="states.url.required" info-message="" error-message="Url del libro requerido"
-            state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="states.url.url_invalid_format" info-message=""
-            error-message="Formato de la url no valida" state="error" single-line="false"></pichincha-input-message>
+            placeholder="Ej. https://book-all.com/sabhjxm2kk"  [errorHelper]="states.url.error" type="text" is-optional="false"></pichincha-input>
         </div>
         <div class="col-sm">
           <pichincha-input label="Imagen de portada" [state]="states.image.state" formControlName="image"
-            placeholder="Ej. https://book-all.com/sabhjxm2kk/img" type="text" is-optional="false"></pichincha-input>
-          <pichincha-input-message *ngIf="states.image.required" info-message=""
-            error-message="Url de la imagen del libro requerido" state="error"
-            single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="states.image.url_invalid_format" info-message=""
-            error-message="Formato de la url de la imagen no valida" state="error"
-            single-line="false"></pichincha-input-message>
+            placeholder="Ej. https://book-all.com/sabhjxm2kk/img" [errorHelper]="states.image.error" type="text" is-optional="false"></pichincha-input>
         </div>
       </div>
       <div class="row form__group">
         <div class="col-sm">
           <label for="" class="textarea__description">Resumen del libro</label>
           <textarea class="textarea" formControlName="summary"></textarea>
-          <pichincha-input-message *ngIf="states.summary.required" info-message=""
+          <pichincha-input-message *ngIf="states.summary.state" info-message=""
             error-message="Resumen del libro requerido" state="error" single-line="false"></pichincha-input-message>
         </div>
         <div class="col-sm form__group">
@@ -65,6 +55,6 @@
     <pichincha-button class="bookregister__footer__button" [routerLink]="['/admin/books']" variant="secondary"
       size="medium" label="Cancelar"></pichincha-button>
     <pichincha-button class="bookregister__footer__button" variant="primary" size="medium" label="Registrar"
-      (clickEvent)="onSubmit()"></pichincha-button>
+      (clickEvent)="submit()"></pichincha-button>
   </div>
 </div>

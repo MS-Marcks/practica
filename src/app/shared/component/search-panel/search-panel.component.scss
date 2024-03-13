@@ -1,8 +1,19 @@
 .search {
   padding: 0.375rem 0.75rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
   line-height: 1.5;
   color: #495057;
   background-color: #fff;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
+  width: 100%;
+}
+.form {
+  &__group {
+    margin-top: 0.75rem;
+  }
+  &__checkbox{
+    margin-right: 0.75rem;
+  }
 }

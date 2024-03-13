@@ -4,14 +4,14 @@ import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@p
 import { RouterModule } from '@angular/router';
 
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { SpecialValidations } from 'src/app/shared/validators/special-validations';
-import { GetFormValidationErrors } from 'src/app/shared/utils/get-form-validation-errors';
 import { Book } from '../../interfaces/book.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
 import { ResetForm } from '../../../../shared/utils/reset-form';
 import { UserService } from '../../../../shared/services/user.service';
+import { GetFormControlError } from 'src/app/shared/utils/get-form-control-error';
 
 @Component({
   templateUrl: './book-register.component.html',
@@ -31,40 +31,20 @@ export class BookRegisterComponent {
   private bookService: BookService = inject(BookService);
   private userService: UserService = inject(UserService);
 
-  categorySelected = [...CATEGORIESINTEREST];
+  categorySelected = JSON.parse(JSON.stringify(CATEGORIESINTEREST));
   inputCheckedCategoryInterest: any = [];
 
-  states = {
-    "title": {
-      state: "",
-      required: false
-    },
-    "author": {
-      state: "",
-      required: false
-    },
-    "url": {
-      state: "",
-      required: false,
-      url_invalid_format: false
-    },
-    "image": {
-      state: "",
-      required: false,
-      url_invalid_format: false
-    },
-    "summary": {
-      state: "",
-      required: false
-    },
-    "publish": {
-      state: "",
-      required: false
-    },
-    "categoryInterest": {
-      state: "",
-      required: false
-    }
+  states: any = {
+    title: { state: "", error: "" },
+    author: { state: "", error: "" },
+    url: { state: "", error: "" },
+    image: { state: "", error: "" },
+    summary: { state: "", error: "" }
+  }
+
+  specialStates: any = {
+
+    categoryInterest: { state: "", required: false }
   }
 
   alert = {
@@ -83,26 +63,26 @@ export class BookRegisterComponent {
 
   buildForm(): void {
     this.bookRegisterForm = this.fb.group({
-      title: [null, [Validators.required]],
-      author: [null, [Validators.required]],
-      url: [null, [Validators.required, SpecialValidations.url]],
-      image: [null, [Validators.required, SpecialValidations.url]],
-      summary: [null, [Validators.required]],
+      title: [null, [SpecialValidations.required("Nombre de libro requerido")]],
+      author: [null, [SpecialValidations.required("Nombre de autor requerido")]],
+      url: [null, [SpecialValidations.required("Url del libro requerido"), SpecialValidations.url("Formato de la url no valida")]],
+      image: [null, [SpecialValidations.required("Url de la imagen del libro requerido"), SpecialValidations.url("Formato de la url de la imagen no valida")]],
+      summary: [null, [SpecialValidations.required()]],
       publish: [false],
     });
   }
 
   submit(): void {
-    GetFormValidationErrors.Errors(this.bookRegisterForm, this.states);
 
-    if (this.inputCheckedCategoryInterest.length < 3) {
-      this.states["categoryInterest"].state = "error";
-      this.states["categoryInterest"].required = true;
+    this.getError();
+    if (this.bookRegisterForm.invalid) {
+      this.bookRegisterForm.markAllAsTouched();
       return;
     }
 
-    if (this.bookRegisterForm.invalid) {
-      this.bookRegisterForm.markAllAsTouched();
+    if (this.inputCheckedCategoryInterest.length < 3) {
+      this.specialStates["categoryInterest"].state = "error";
+      this.specialStates["categoryInterest"].required = true;
       return;
     }
 
@@ -113,7 +93,7 @@ export class BookRegisterComponent {
         url: this.bookRegisterForm.getRawValue().url,
         image: this.bookRegisterForm.getRawValue().image,
         summary: this.bookRegisterForm.getRawValue().summary,
-        idCategory: this.categorySelected.filter((e) => e.value === true).map(e => e.label),
+        idCategory: this.categorySelected.filter((e: any) => e.value === true).map((e: any) => e.label),
         publish: this.bookRegisterForm.getRawValue().publish,
         userRegister: this.user.user.userId
       }
@@ -129,7 +109,7 @@ export class BookRegisterComponent {
         },
         complete: () => {
           this.inputCheckedCategoryInterest = [];
-          this.categorySelected = [...CATEGORIESINTEREST];
+          this.categorySelected = JSON.parse(JSON.stringify(CATEGORIESINTEREST));
           ResetForm.reset(this.bookRegisterForm);
         }
       });
@@ -150,6 +130,14 @@ export class BookRegisterComponent {
       return e !== (index + 1);
     })
   }
+
+  getError(): void {
+    Object.keys(this.states).forEach((key: string) => {
+      const getError = GetFormControlError.error(this.bookRegisterForm.controls[key]);
+      this.states[key] = getError;
+    })
+  }
+
 
   setValueAlert(alertType: string, message: any): void {
     this.alert.type = alertType;

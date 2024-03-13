@@ -11,42 +11,31 @@
       <form [formGroup]="registerForm">
         <div class="form__group">
           <pichincha-input state="{{states.name.state}}" label="Nombre del usuario" formControlName="name"
-            placeholder="Ej. makoto" is-optional="false"></pichincha-input>
-          <pichincha-input-message *ngIf="states.name.required" info-message=""
-            error-message="Nombre de usuario es requerido" state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="states.name.exist_username" info-message=""
-            error-message="El nombre de usuario ya existe" state="error" single-line="false"></pichincha-input-message>
+            placeholder="Ej. makoto" is-optional="false" [errorHelper]="states.name.error"></pichincha-input>
         </div>
         <div class="form__group">
           <pichincha-input state="{{states.email.state}}" label="Correo electronico" formControlName="email"
-            placeholder="Ej. name@example.com" type="email" is-optional="false"></pichincha-input>
-          <pichincha-input-message *ngIf="states.email.required" info-message="" error-message="Correo es requerido"
-            state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="states.email.email" info-message=""
-            error-message="Formato del correo no válido" state="error" single-line="false"></pichincha-input-message>
+            placeholder="Ej. name@example.com" type="email" is-optional="false"
+            [errorHelper]="states.email.error"></pichincha-input>
         </div>
         <div class="form__group">
           <pichincha-input state="{{states.password.state}}" label="Contraseña" formControlName="password"
-            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"></pichincha-input>
-          <pichincha-input-message *ngIf="states.password.required" info-message=""
-            error-message="Contraseña es requerido" state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="states.password.password_invalid_format" info-message=""
-            error-message="Contraseña no cumple con los requisitos" state="error"
-            single-line="false"></pichincha-input-message>
+            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"
+            [errorHelper]="states.password.error"></pichincha-input>
         </div>
         <div class="form__group">
           <pichincha-input state="{{states.rePassword.state}}" label="Confirmar contraseña" formControlName="rePassword"
-            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"></pichincha-input>
-          <pichincha-input-message *ngIf="states.rePassword.required" info-message=""
-            error-message="Contraseña es requerido" state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="states.rePassword.compare" info-message=""
-            error-message="Contraseña no coinciden" state="error" single-line="false"></pichincha-input-message>
+            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"
+            [errorHelper]="states.rePassword.error"></pichincha-input>
         </div>
         <h2>Categorias</h2>
-        <div class="form__group" *ngFor="let item of categorySelected; let i=index; trackBy: trackByFn">
+        <div class="form__group" *ngFor="let item of categorySelected; let i=index;">
           <pichincha-check-box [checked]="item.value" idElement="categoryInterest-{{i}}" value="{{i+1}}"
             (clickCheck)="getCategoryInterest($event,i)" text="{{item.label}}"></pichincha-check-box>
         </div>
+        <pichincha-input-message *ngIf="specialState.categoryInterest.required" info-message=""
+          error-message="Debe seleccionar al menos 3 categorias" state="error"
+          single-line="false"></pichincha-input-message>
       </form>
     </div>
     <div class="card__footer">

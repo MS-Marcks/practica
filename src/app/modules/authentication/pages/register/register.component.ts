@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
 
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { RegisterUserService } from '../../services/register-user.service';
 import { SpecialValidations } from '../../../../shared/validators/special-validations';
-import { GetFormValidationErrors } from '../../../../shared/utils/get-form-validation-errors';
 import { ResetForm } from 'src/app/shared/utils/reset-form';
 import { RegisterUser } from '../../interfaces/register-user.interface';
+import { GetFormControlError } from 'src/app/shared/utils/get-form-control-error';
 
 @Component({
   templateUrl: './register.component.html',
@@ -27,32 +27,16 @@ export class RegisterComponent {
   private registerUserService: RegisterUserService = inject(RegisterUserService);
 
   inputCheckedCategoryInterest: any = [];
-  categorySelected = [...CATEGORIESINTEREST];
+  categorySelected = JSON.parse(JSON.stringify(CATEGORIESINTEREST));
+
   states: any = {
-    "name": {
-      state: "",
-      required: false,
-      exist_username: false
-    },
-    "email": {
-      state: "",
-      required: false,
-      email: false
-    },
-    "password": {
-      state: "",
-      required: false,
-      password_invalid_format: false
-    },
-    "rePassword": {
-      state: "",
-      required: false,
-      compare: false
-    },
-    "categoryInterest": {
-      state: "",
-      required: false
-    }
+    name: { state: "", error: "" },
+    email: { state: "", error: "" },
+    password: { state: "", error: "" },
+    rePassword: { state: "", error: "" }
+  }
+  specialState: any = {
+    categoryInterest: { state: "", required: false }
   }
 
   alert = {
@@ -70,33 +54,37 @@ export class RegisterComponent {
 
   buildForm(): void {
     this.registerForm = this.fb.group({
-      name: [null, [Validators.required], SpecialValidations.isExistUserName(this.registerUserService)],
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.minLength(8), SpecialValidations.password]],
-      rePassword: [null, [Validators.required, Validators.minLength(8)]]
+      name: [null, [SpecialValidations.required("Nombre de usuario es requerido")], SpecialValidations.isExistUserName(this.registerUserService, "El nombre de usuario ya existe")],
+      email: [null, [SpecialValidations.required("Correo es requerido"), SpecialValidations.email("Formato del correo no válido")]],
+      password: [null, [SpecialValidations.required("Contraseña es requerido"), SpecialValidations.password("Contraseña no cumple con los requisitos")]],
+      rePassword: [null, [SpecialValidations.required("Contraseña es requerido"), SpecialValidations.password("Contraseña no cumple con los requisitos")]]
     }, {
-      validator: SpecialValidations.match("password", "rePassword")
+      validator: SpecialValidations.match("password", "rePassword", "Las contraseñsa no conciden")
     });
   }
 
   submit(): void {
-    GetFormValidationErrors.Errors(this.registerForm, this.states);
+    this.getError();
+    let error: boolean = false;
 
     if (this.registerForm.invalid) {
       const errors: any = this.registerForm?.errors;
-      if (errors["mismatch"]) {
-        this.states["rePassword"].state = "error";
-        this.states["rePassword"].compare = true;
-      }
+      if (errors)
+        if (errors["mismatch"]) {
+          this.states["rePassword"].state = "error";
+          this.states["rePassword"].error = errors.mismatch;
+        }
       this.registerForm.markAllAsTouched();
-      return;
+      error = true;
     }
 
     if (this.inputCheckedCategoryInterest.length < 3) {
-      this.states["categoryInterest"].state = "error";
-      this.states["categoryInterest"].required = true;
-      return;
+      this.specialState["categoryInterest"].state = "error";
+      this.specialState["categoryInterest"].required = true;
+      error = true;
     }
+
+    if (error) return;
 
     try {
       const body: RegisterUser = {
@@ -116,13 +104,14 @@ export class RegisterComponent {
         complete: () => {
           ResetForm.reset(this.registerForm);
           this.inputCheckedCategoryInterest = [];
-          this.categorySelected = [...CATEGORIESINTEREST];
+          this.categorySelected = JSON.parse(JSON.stringify(CATEGORIESINTEREST));
         }
       })
 
     } catch (error: any) {
       this.setValueAlert("error", "Ops... Ocurrio un problema");
     }
+
   }
 
   getCategoryInterest(e: Event, index: number): void {
@@ -139,6 +128,13 @@ export class RegisterComponent {
     })
   }
 
+  getError(): void {
+    Object.keys(this.states).forEach((key: string) => {
+      const getError = GetFormControlError.error(this.registerForm.controls[key]);
+      this.states[key] = getError;
+    })
+  }
+
   setValueAlert(alertType: string, message: string): void {
     this.alert.type = alertType;
     this.alert.description = message;
@@ -147,10 +143,6 @@ export class RegisterComponent {
 
   handleClickCloseEvent(): void {
     this.alert.show = false;
-  }
-
-  trackByFn(index: number): number {
-    return index;
   }
 
 }

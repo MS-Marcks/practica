@@ -10,21 +10,13 @@
       </pichincha-alerts>
       <form [formGroup]="loginForm">
         <div class="form__group">
-          <pichincha-input state="{{states.email.state}}" label="Correo electronico" formControlName="email"
-            placeholder="Ej. name@example.com" type="email" is-optional="false"></pichincha-input>
-          <pichincha-input-message id="username-help" *ngIf="states.email.required" info-message="" error-message="Correo es requerido"
-            state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="states.email.email" info-message=""
-            error-message="Formato del correo no válido" state="error" single-line="false"></pichincha-input-message>
+          <pichincha-input [state]="states.email.state" label="Correo electronico" formControlName="email"
+            placeholder="Ej. name@example.com" [errorHelper]="states.email.error" type="email"
+            is-optional="false"></pichincha-input>
         </div>
         <div class="form__group">
-          <pichincha-input state="{{states.password.state}}" label="Contraseña" formControlName="password"
-            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"></pichincha-input>
-          <pichincha-input-message *ngIf="states.password.required" info-message=""
-            error-message="Contraseña es requerido" state="error" single-line="false"></pichincha-input-message>
-          <pichincha-input-message *ngIf="states.password.password_invalid_format" info-message=""
-            error-message="Contraseña no cumple con los requisitos" state="error"
-            single-line="false"></pichincha-input-message>
+          <pichincha-input [state]="states.password.state" label="Contraseña" formControlName="password" type="password"
+            is-optional="false" [errorHelper]="states.email.error" placeholder="Ej. @Ab1Abc@"></pichincha-input>
         </div>
       </form>
     </div>

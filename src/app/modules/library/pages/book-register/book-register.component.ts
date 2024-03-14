@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +28,9 @@ import { GetFormControlError } from 'src/app/shared/utils/get-form-control-error
 export class BookRegisterComponent {
 
   bookRegisterForm!: FormGroup;
+  bookUpdate!: Book;
+  isUpdate: boolean = false;
+
   private bookService: BookService = inject(BookService);
   private userService: UserService = inject(UserService);
 
@@ -43,7 +46,6 @@ export class BookRegisterComponent {
   }
 
   specialStates: any = {
-
     categoryInterest: { state: "", required: false }
   }
 
@@ -54,22 +56,43 @@ export class BookRegisterComponent {
     autoClose: true,
     closeTime: 5000
   }
+
   user: User;
 
-  constructor(private fb: FormBuilder) {
-    this.buildForm();
+  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
     this.user = this.userService.getUserCurrent();
+  }
+
+  ngOnInit(): void {
+    this.route.data.subscribe(({ book }) => {
+      if (!book) return;
+      this.isUpdate = true;
+      this.bookUpdate = book;
+    });
+    this.buildForm();
   }
 
   buildForm(): void {
     this.bookRegisterForm = this.fb.group({
-      title: [null, [SpecialValidations.required("Nombre de libro requerido")]],
-      author: [null, [SpecialValidations.required("Nombre de autor requerido")]],
-      url: [null, [SpecialValidations.required("Url del libro requerido"), SpecialValidations.url("Formato de la url no valida")]],
-      image: [null, [SpecialValidations.required("Url de la imagen del libro requerido"), SpecialValidations.url("Formato de la url de la imagen no valida")]],
-      summary: [null, [SpecialValidations.required()]],
-      publish: [false],
+      id: [(this.bookUpdate === undefined) ? null : this.bookUpdate.id],
+      title: [(this.bookUpdate === undefined) ? null : this.bookUpdate.title, [SpecialValidations.required("Nombre de libro requerido")]],
+      author: [(this.bookUpdate === undefined) ? null : this.bookUpdate.author, [SpecialValidations.required("Nombre de autor requerido")]],
+      url: [(this.bookUpdate === undefined) ? null : this.bookUpdate.url, [SpecialValidations.required("Url del libro requerido"), SpecialValidations.url("Formato de la url no valida")]],
+      image: [(this.bookUpdate === undefined) ? null : this.bookUpdate.image, [SpecialValidations.required("Url de la imagen del libro requerido"), SpecialValidations.url("Formato de la url de la imagen no valida")]],
+      summary: [(this.bookUpdate === undefined) ? null : this.bookUpdate.summary, [SpecialValidations.required()]],
+      publish: [(this.bookUpdate === undefined) ? false : this.bookUpdate.publish],
     });
+
+    if (this.isUpdate) {
+      this.categorySelected.forEach((e: any, index: number) => {
+        this.bookUpdate.idCategory?.forEach((ei: any) => {
+          if (ei === e.label) {
+            this.inputCheckedCategoryInterest.push((index + 1));
+            this.categorySelected[index].value = true;
+          }
+        })
+      })
+    }
   }
 
   submit(): void {
@@ -88,6 +111,7 @@ export class BookRegisterComponent {
 
     try {
       const body: Book = {
+        id: this.bookRegisterForm.getRawValue().id,
         title: this.bookRegisterForm.getRawValue().title,
         author: this.bookRegisterForm.getRawValue().author,
         url: this.bookRegisterForm.getRawValue().url,
@@ -96,6 +120,20 @@ export class BookRegisterComponent {
         idCategory: this.categorySelected.filter((e: any) => e.value === true).map((e: any) => e.label),
         publish: this.bookRegisterForm.getRawValue().publish,
         userRegister: this.user.user.userId
+      }
+
+      if (this.isUpdate) {
+        this.bookService.bookUpdate(body).subscribe({
+          next: (response) => this.setValueAlert("success", response.message),
+          error: (error) => {
+            if (error.status === 401) {
+              this.setValueAlert("error", error.error.message);
+              return;
+            }
+            this.setValueAlert("error", "Ops... Ocurrio un problema");
+          }
+        });
+        return;
       }
 
       this.bookService.bookRegister(body).subscribe({

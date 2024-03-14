@@ -1,6 +1,6 @@
 <div class="bookregister">
   <div class="bookregister__header flex__display flex__justify-content-space-between">
-    <h1>Registro Libro</h1>
+    <h1>{{isUpdate?'Editar': 'Registro'}} Libro</h1>
     <div></div>
   </div>
   <div>
@@ -23,11 +23,13 @@
       <div class="row form__group">
         <div class="col-sm">
           <pichincha-input label="URL del libro" [state]="states.url.state" formControlName="url"
-            placeholder="Ej. https://book-all.com/sabhjxm2kk"  [errorHelper]="states.url.error" type="text" is-optional="false"></pichincha-input>
+            placeholder="Ej. https://book-all.com/sabhjxm2kk" [errorHelper]="states.url.error" type="text"
+            is-optional="false"></pichincha-input>
         </div>
         <div class="col-sm">
           <pichincha-input label="Imagen de portada" [state]="states.image.state" formControlName="image"
-            placeholder="Ej. https://book-all.com/sabhjxm2kk/img" [errorHelper]="states.image.error" type="text" is-optional="false"></pichincha-input>
+            placeholder="Ej. https://book-all.com/sabhjxm2kk/img" [errorHelper]="states.image.error" type="text"
+            is-optional="false"></pichincha-input>
         </div>
       </div>
       <div class="row form__group">
@@ -54,7 +56,7 @@
   <div class="bookregister__footer d-flex justify-content-end">
     <pichincha-button class="bookregister__footer__button" [routerLink]="['/library/books']" variant="secondary"
       size="medium" label="Cancelar"></pichincha-button>
-    <pichincha-button class="bookregister__footer__button" variant="primary" size="medium" label="Registrar"
-      (clickEvent)="submit()"></pichincha-button>
+    <pichincha-button class="bookregister__footer__button" variant="primary" size="medium"
+      label="{{isUpdate?'Editar': 'Registrar'}}" (clickEvent)="submit()"></pichincha-button>
   </div>
 </div>

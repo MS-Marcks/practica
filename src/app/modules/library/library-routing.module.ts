@@ -14,6 +14,7 @@ const routes: Routes = [
     children: [
       { path: "", component: BookShelfComponent, },
       { path: "register", loadComponent: () => import("./pages/book-register/book-register.component").then(c => c.BookRegisterComponent) },
+      { path: "register/:id", resolve: { book: BookResolver }, loadComponent: () => import("./pages/book-register/book-register.component").then(c => c.BookRegisterComponent) },
       {
         path: "view/:id", component: BookComponent, resolve: { book: BookResolver },
       },

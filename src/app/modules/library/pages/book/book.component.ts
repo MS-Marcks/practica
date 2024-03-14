@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '../../interfaces/book.interface';
 import { UserService } from 'src/app/shared/services/user.service';
 import { User } from 'src/app/shared/interfaces/user.interface';
@@ -13,7 +13,7 @@ export class BookComponent implements OnInit {
   private userService: UserService = inject(UserService);
   user: User
   book!: Book;
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.user = this.userService.getUserCurrent();
   }
 
@@ -25,6 +25,14 @@ export class BookComponent implements OnInit {
 
   isAuthor(): boolean {
     return this.book.userRegister === this.user.user.userId;
+  }
+
+  editBook(): void {
+    this.router.navigate(["library/books/register/" + this.book.id]);
+  }
+
+  back(): void {
+    window.history.back();
   }
 
 }

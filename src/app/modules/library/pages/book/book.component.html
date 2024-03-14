@@ -1,8 +1,8 @@
 <div class="book">
   <div class="book__header d-flex">
-    <pichincha-button [routerLink]="['/library/books']" class="book__header__button" variant="secondary" size="xlarge"
+    <pichincha-button  (click)="back()"class="book__header__button" variant="secondary" size="xlarge"
       label="Volver"></pichincha-button>
-    <pichincha-button *ngIf="isAuthor()" class="book__header__button" variant="primary" size="xlarge"
+    <pichincha-button *ngIf="isAuthor()" (click)="editBook()" class="book__header__button" variant="primary" size="xlarge"
       label="Editar"></pichincha-button>
   </div>
   <div class="book__body">

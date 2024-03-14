@@ -17,6 +17,10 @@ export class BookService {
     return this.http.post<Book>(`${this.urlbase}`, book).pipe();
   }
 
+  bookUpdate(book: Book): Observable<Book> {
+    return this.http.put<Book>(`${this.urlbase}`, book).pipe();
+  }
+
   getBooks(owner: string, count: number = -1): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.urlbase}/owner/${owner}/${count}`).pipe();
   }

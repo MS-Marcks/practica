@@ -14,7 +14,12 @@
       searchType="dropdown"></shared-search-panel>
   </div>
   <div class="bookshelf__body">
-    <library-covers (click)="viewBook(book)" *ngFor="let book of booksShow; trackBy: trackByFn"
-      [data]="book"></library-covers>
+    <ng-container *ngIf="isLoading; else elseSkeletonBooks">
+      <library-covers *ngFor="let book of skeletonBooks; trackBy: trackByFn" [data]="book"></library-covers>
+    </ng-container>
+    <ng-template #elseSkeletonBooks>
+      <library-covers (click)="viewBook(book)" *ngFor="let book of booksShow; trackBy: trackByFn"
+        [data]="book"></library-covers>
+    </ng-template>
   </div>
 </div>

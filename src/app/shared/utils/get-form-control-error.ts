@@ -1,10 +1,12 @@
 import { AbstractControl } from "@angular/forms";
 
-// TODO: CAMBIAR EL TIPADO
 const ERROS_DEFAULT: any = {
   required: "Este campo es requerido",
   email: "Formato del correo electronico invalido",
-  passowrd: "Contraseña no cumple con los requisitos"
+  passowrd: "Contraseña no cumple con los requisitos",
+  url: "Url requerido",
+  mismatch: "Los campos deben ser iguales",
+  existField: "Ya existe el campo"
 }
 
 export class GetFormControlError {

@@ -8,7 +8,7 @@ import { BookResolver } from './resolvers/book.resolver';
 import { PublicLibraryComponent } from './pages/public-library/public-library.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "books", pathMatch: "full" },
+  { path: "", redirectTo: "books/public", pathMatch: "full" },
   {
     path: "books", component: LibraryComponent,
     children: [
@@ -17,7 +17,7 @@ const routes: Routes = [
       {
         path: "view/:id", component: BookComponent, resolve: { book: BookResolver },
       },
-      { path: "public", component: PublicLibraryComponent },
+      { path: "public", component: PublicLibraryComponent }
     ]
   }
 ];

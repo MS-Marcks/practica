@@ -57,7 +57,7 @@ export class BookShelfComponent implements OnInit {
   }
 
   viewBook(book: Book): void {
-    this.router.navigate(["admin/books/view/" + book.id]);
+    this.router.navigate(["library/books/view/" + book.id]);
   }
 
   searchInput(event: any): void {

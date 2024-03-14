@@ -1,9 +1,16 @@
 <header class="header flex__display flex__justify-content-space-between header--gray">
-  <div class="header__logo header__logo--big">
-    Biblotecta
+  <div class="header__nav">
+    <div class="header__logo header__logo--big">
+      Biblotecta
+    </div>
+    <ul class="header__nav__list">
+      <li class="header__nav__list__element"> <a [routerLink]="['/library/books']">Mis libros</a></li>
+      <li class="header__nav__list__element"> <a [routerLink]="['/library/books/public']">Bibloteca pública</a></li>
+    </ul>
+
   </div>
   <div class="header__info header__info header__info--big">
-    Kevin Suarez
+    {{user.user.username}}
   </div>
 </header>
 <main class="main">

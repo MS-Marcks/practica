@@ -6,6 +6,7 @@ import { Book } from '../../interfaces/book.interface';
 import { Category } from '../../interfaces/category.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
 import { UserService } from 'src/app/shared/services/user.service';
+import { BOOKSKELETONDATA } from '../../config/book.data';
 
 @Component({
   templateUrl: './book-shelf.component.html',
@@ -22,8 +23,10 @@ export class BookShelfComponent implements OnInit {
   booksSearch: Book[] = [];
   booksDropdown: Book[] = [];
   booksShow!: Book[];
-
   categories!: Category[];
+
+  skeletonBooks: Book[] = BOOKSKELETONDATA;
+  isLoading: boolean = true;
 
   constructor(private router: Router) {
     this.user = this.userService.getUserCurrent()
@@ -39,7 +42,7 @@ export class BookShelfComponent implements OnInit {
       this.bookService.getBooks(this.user.user.userId).subscribe({
         next: (response) => this.books = response,
         error: (err) => console.error(err),
-        complete: () => this.booksShow = [...this.books]
+        complete: () => { this.booksShow = [...this.books]; this.isLoading = false }
       });
     } catch (error) { }
   }
@@ -54,7 +57,7 @@ export class BookShelfComponent implements OnInit {
   }
 
   viewBook(book: Book): void {
-    this.router.navigate(["admin/books/view/" + book.id]);
+    this.router.navigate(["library/books/view/" + book.id]);
   }
 
   searchInput(event: any): void {

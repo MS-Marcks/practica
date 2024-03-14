@@ -5,6 +5,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { Book } from '../../interfaces/book.interface';
 import { BookService } from '../../services/book.service';
 import { CATEGORIESINTEREST } from 'src/app/shared/configs/category-interest.consts';
+import { BOOKSKELETONDATA } from '../../config/book.data';
 
 @Component({
   templateUrl: './public-library.component.html',
@@ -25,6 +26,10 @@ export class PublicLibraryComponent implements OnInit {
 
   categories = JSON.parse(JSON.stringify(CATEGORIESINTEREST))
 
+  skeletonBooks: Book[] = BOOKSKELETONDATA;
+  isLoadingMyBook: boolean = true;
+  isLoadingPublicBook: boolean = true;
+
   constructor(private router: Router) {
     this.user = this.userService.getUserCurrent()
   }
@@ -39,7 +44,7 @@ export class PublicLibraryComponent implements OnInit {
       this.bookService.getBooks(this.user.user.userId, 4).subscribe({
         next: (response) => this.books = response,
         error: (err) => console.error(err),
-        complete: () => {}
+        complete: () => { this.isLoadingMyBook = false }
       });
     } catch (error) { }
   }
@@ -49,13 +54,13 @@ export class PublicLibraryComponent implements OnInit {
       this.bookService.getPublicBooks().subscribe({
         next: (response) => this.booksPublic = response,
         error: (err) => console.error(err),
-        complete: () =>  this.booksShow = [...this.booksPublic]
+        complete: () => { this.booksShow = [...this.booksPublic]; this.isLoadingPublicBook = false }
       });
     } catch (error) { }
   }
 
   viewBook(book: Book): void {
-    this.router.navigate(["admin/books/view/" + book.id]);
+    this.router.navigate(["library/books/view/" + book.id]);
   }
 
   searchInput(event: any): void {

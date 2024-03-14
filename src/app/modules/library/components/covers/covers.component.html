@@ -1,3 +1,4 @@
-<div class="covers">
-  <img class="covers__image" src="{{data.image}}" />
+<div class="covers{{highlight?'--border_shador':''}}">
+  <img class="covers__image" [hidden]="isLoading" (load)="load()" (error)="error($event)" src="{{data.image}}" />
+  <img *ngIf="isLoading" class="covers__image" src="./assets/img/placeholder.png" />
 </div>

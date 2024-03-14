@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from '../../interfaces/book.interface';
+import { UserService } from 'src/app/shared/services/user.service';
+import { User } from 'src/app/shared/interfaces/user.interface';
 
 @Component({
   templateUrl: './book.component.html',
@@ -8,8 +10,12 @@ import { Book } from '../../interfaces/book.interface';
 })
 export class BookComponent implements OnInit {
 
+  private userService: UserService = inject(UserService);
+  user: User
   book!: Book;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {
+    this.user = this.userService.getUserCurrent();
+  }
 
   ngOnInit(): void {
     this.route.data.subscribe(({ book }) => {
@@ -17,7 +23,8 @@ export class BookComponent implements OnInit {
     });
   }
 
-  loadImage(event: any): void {
-    console.log(event);
+  isAuthor(): boolean {
+    return this.book.userRegister === this.user.user.userId;
   }
+
 }

@@ -14,10 +14,21 @@ export class LoginUserService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Description: function to make a HTTP request to log in to the system
+   *
+   * @param {LoginUser} body login information
+   * @returns {Observable<User>} returns the request in an observable
+   */
   login(body: LoginUser): Observable<User> {
     return this.http.post<User>(this.urlbase + "/login", body).pipe();
   }
 
+  /**
+   * Description: function to store the token and data of the current user in the localstorage
+   *
+   * @param {User} user
+   */
   saveToken(user: User): void {
     localStorage.setItem("user", JSON.stringify(user));
   }

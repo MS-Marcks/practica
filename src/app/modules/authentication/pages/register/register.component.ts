@@ -66,6 +66,8 @@ export class RegisterComponent {
   }
 
   submit(): void {
+
+    //gets the form errors
     this.getError();
     let error: boolean = false;
 
@@ -80,6 +82,7 @@ export class RegisterComponent {
       error = true;
     }
 
+    // customized validation for categories
     if (this.inputCheckedCategoryInterest.length < 3) {
       this.specialState["categoryInterest"].state = "error";
       this.specialState["categoryInterest"].required = true;
@@ -119,12 +122,16 @@ export class RegisterComponent {
   getCategoryInterest(e: Event, index: number): void {
     const { detail } = e as unknown as CustomEvent;
 
+    // add if a checkbox was checked
     if (detail.checked === true) {
       this.inputCheckedCategoryInterest.push((index + 1));
       this.categorySelected[index].value = true;
       return;
     }
+
     this.categorySelected[index].value = false;
+
+    // remove if a checkbox was unchecked
     this.inputCheckedCategoryInterest = this.inputCheckedCategoryInterest.filter((e: any) => {
       return e !== (index + 1);
     })

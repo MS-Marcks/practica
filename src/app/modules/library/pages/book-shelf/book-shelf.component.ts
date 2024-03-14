@@ -61,40 +61,36 @@ export class BookShelfComponent implements OnInit {
   }
 
   searchInput(event: any): void {
-    if (this.booksDropdown.length === 0 && event.length === this.books.length) {
-      this.booksShow = [...this.books];
-      return;
-    }
-    if (event.length === this.books.length) {
-      this.booksSearch = [];
-      this.filter(this.booksDropdown);
-      return;
-    }
-    this.booksSearch = event;
-    if (this.booksDropdown.length === 0) {
-      this.filter(this.booksSearch);
-      return;
-    }
-    this.booksShow = [...this.books.filter((element: any) => this.booksSearch.includes(element) && this.booksDropdown.includes(element))];
+    this.search(event, this.booksSearch, this.booksDropdown);
   }
 
   searchDropdown(event: any): void {
-    if (event.length === this.books.length && this.booksSearch.length === 0) {
+    this.search(event, this.booksDropdown, this.booksSearch);
+  }
+
+  search(event: any, current: any, other: any): void {
+
+    // returns all books if there are no filters in place
+    if (event.length === this.books.length && other.length === 0) {
       this.booksShow = [...this.books];
       return;
     }
 
+    // filters only one filter and the other one is empty.
     if (event.length === this.books.length) {
-      this.booksDropdown = [];
-      this.filter(this.booksSearch);
+      current = [];
+      this.filter(other);
       return;
     }
-    this.booksDropdown = event;
-    if (this.booksSearch.length === 0) {
-      this.filter(this.booksDropdown);
+
+    current = event;
+
+    if (other.length === 0) {
+      this.filter(current);
       return;
     }
-    this.booksShow = [...this.books.filter((element: any) => this.booksSearch.includes(element) && this.booksDropdown.includes(element))];
+
+    this.booksShow = [...this.books.filter((element: any) => other.includes(element) && current.includes(element))];
   }
 
   filter(array: any): void {

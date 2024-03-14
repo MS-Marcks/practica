@@ -12,5 +12,11 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 10px;
     margin-bottom: 14px;
+
+    &::after {
+      content: "";
+      grid-column: span 3;
+      visibility: hidden;
+    }
   }
 }

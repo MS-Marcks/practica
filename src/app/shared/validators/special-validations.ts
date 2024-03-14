@@ -2,6 +2,7 @@ import { AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, Validat
 import { Observable, map } from "rxjs";
 import { RegisterUserService } from "src/app/modules/authentication/services/register-user.service";
 
+
 const VALIDATOR_MESSAGE_DEFAULT = {
   required: "Este campo es requerido",
   email: "Formato del correo electronico invalido",
@@ -11,8 +12,17 @@ const VALIDATOR_MESSAGE_DEFAULT = {
   existField: "Ya existe el campo"
 }
 
+
+
 export class SpecialValidations {
 
+  /**
+   * Description: custom function to validate if a field is required, in which a custom message for the error can be placed
+   *
+   * @static function
+   * @param {?string} [message] message that will be displayed if the error exists
+   * @returns {ValidatorFn} Returns error validation
+   */
   static required(message?: string): ValidatorFn {
     return (control: AbstractControl) => {
       const error = Validators.required(control);
@@ -20,6 +30,13 @@ export class SpecialValidations {
     }
   }
 
+  /**
+   * Description: custom function to validate if a field complies with being an email, in which you can put a custom message for the error
+   *
+   * @static function
+   * @param {?string} [message] message that will be displayed if the error exists
+   * @returns {ValidatorFn} Returns error validation
+   */
   static email(message?: string): ValidatorFn {
     return (control: AbstractControl) => {
       const error = Validators.email(control);
@@ -27,6 +44,13 @@ export class SpecialValidations {
     }
   }
 
+  /**
+   * Description: custom function to validate if a field meets the requirements of a secure password, in which a custom message for the error can be placed
+   *
+   * @static function
+   * @param {?string} [message] message that will be displayed if the error exists
+   * @returns {ValidatorFn} Returns error validation
+   */
   static password(message?: string): ValidatorFn {
     return (control: AbstractControl) => {
       const urlRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@!$%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -34,8 +58,15 @@ export class SpecialValidations {
       if (isCorrect) return null;
       return { passowrd: this.getMessage("passowrd", message) }
     }
-  };
+  }
 
+  /**
+   * Description: custom function to validate if a field complies with the format of a link, in which a custom message can be set for the error
+   *
+   * @static function
+   * @param {?string} [message] message that will be displayed if the error exists
+   * @returns {ValidatorFn} Returns error validation
+   */
   static url(message?: string): ValidatorFn {
     return (control: AbstractControl) => {
       const urlRegex = /^https:\/\/[^ "]+$/;
@@ -45,16 +76,32 @@ export class SpecialValidations {
     }
   }
 
+  /**
+   * Description: custom function to validate if two fields have the same value, in which you can put a custom message for the error
+   *
+   * @static function
+   * @param {string} firstControlName name control form
+   * @param {string} secondControlName  name control form
+   * @param {?string} [message] message that will be displayed if the error exists
+   * @returns {(fg: FormGroup) => { mismatch: string; }}  Returns error validation
+   */
   static match(firstControlName: string, secondControlName: string, message?: string) {
     return (fg: FormGroup) => {
       if (fg.get(firstControlName)?.value === fg.get(secondControlName)?.value) {
         return null;
       }
-
       return { mismatch: this.getMessage("url", message) }
     }
   }
 
+  /**
+   * Description:  custom function to validate if a record has already been created, in which a custom message can be set for the error
+   *
+   * @static function
+   * @param {RegisterUserService} registerUserService service
+   * @param {?string} [message] message that will be displayed if the error exists
+   * @returns {AsyncValidatorFn} Returns error validation
+   */
   static isExistUserName(registerUserService: RegisterUserService, message?: string): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       const username = (control.value as string).trim();
@@ -71,6 +118,16 @@ export class SpecialValidations {
     };
   }
 
+  /**
+   * Description: obtain the value of the default error if in each case a custom one does not exist
+   *
+   * @private
+   * @static function
+   * @param {keyof typeof VALIDATOR_MESSAGE_DEFAULT} type error control
+   * @param {?string} [message] message that will be displayed if the error exists
+   * @param {?{ [key: string]: unknown }[]} [paramsMessage] message that will be displayed if the error exists
+   * @returns {string} new message error control
+   */
   private static getMessage(
     control: keyof typeof VALIDATOR_MESSAGE_DEFAULT,
     message?: string,

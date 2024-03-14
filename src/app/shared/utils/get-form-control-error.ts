@@ -9,8 +9,16 @@ const ERROS_DEFAULT: any = {
   existField: "Ya existe el campo"
 }
 
+
 export class GetFormControlError {
 
+  /**
+   * Description: function to obtain the first error in the list
+   *
+   * @static function
+   * @param {AbstractControl} form control you want to get the first error in the list
+   * @returns {{ error: string, state: string }} return error
+   */
   static error(formControl: AbstractControl): { error: string, state: string } {
     if (!formControl.errors) return { error: "", state: "" };
 

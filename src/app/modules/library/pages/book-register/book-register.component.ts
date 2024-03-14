@@ -64,6 +64,7 @@ export class BookRegisterComponent {
   }
 
   ngOnInit(): void {
+    //check if a book is to be edited
     this.route.data.subscribe(({ book }) => {
       if (!book) return;
       this.isUpdate = true;
@@ -97,12 +98,14 @@ export class BookRegisterComponent {
 
   submit(): void {
 
+    //gets the errors
     this.getError();
     if (this.bookRegisterForm.invalid) {
       this.bookRegisterForm.markAllAsTouched();
       return;
     }
 
+    // customized validation for categories
     if (this.inputCheckedCategoryInterest.length < 3) {
       this.specialStates["categoryInterest"].state = "error";
       this.specialStates["categoryInterest"].required = true;
@@ -122,6 +125,7 @@ export class BookRegisterComponent {
         userRegister: this.user.user.userId
       }
 
+      // editing is enabled
       if (this.isUpdate) {
         this.bookService.bookUpdate(body).subscribe({
           next: (response) => this.setValueAlert("success", response.message),
@@ -158,12 +162,15 @@ export class BookRegisterComponent {
   getCategoryInterest(e: Event, index: number): void {
     const { detail } = e as unknown as CustomEvent;
 
+    // add if a checkbox was checked
     if (detail.checked === true) {
       this.inputCheckedCategoryInterest.push((index + 1));
       this.categorySelected[index].value = true;
       return;
     }
     this.categorySelected[index].value = false;
+
+    // remove if a checkbox was unchecked
     this.inputCheckedCategoryInterest = this.inputCheckedCategoryInterest.filter((e: any) => {
       return e !== (index + 1);
     })
@@ -175,7 +182,6 @@ export class BookRegisterComponent {
       this.states[key] = getError;
     })
   }
-
 
   setValueAlert(alertType: string, message: any): void {
     this.alert.type = alertType;

@@ -41,7 +41,9 @@ export class LoginComponent {
 
   submit(): void {
 
+    // gets the form errors
     this.getError();
+
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;

@@ -32,7 +32,6 @@ describe('LoginUserService', () => {
     }
     loginUserservice.login(body).subscribe({
       next: (response: User) => {
-        console.log(response)
         expect(response.user.userId).not.toBeNull()
         done()
       },

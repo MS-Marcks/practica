@@ -5,7 +5,7 @@ import { CategoryService } from '../../services/category.service';
 import { Book } from '../../interfaces/book.interface';
 import { Category } from '../../interfaces/category.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
-import { UserService } from 'src/app/shared/services/user.service';
+import { UserService } from '../../../../shared/services/user.service';
 import { BOOKSKELETONDATA } from '../../config/book.data';
 
 @Component({

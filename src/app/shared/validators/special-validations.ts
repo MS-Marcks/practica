@@ -107,14 +107,12 @@ export class SpecialValidations {
       const username = (control.value as string).trim();
       return registerUserService
         .isExistName(username)
-        .pipe(
-          map(isExisting => {
-            if (!isExisting.exists) {
-              return null;
-            }
-            return { existField: this.getMessage("existField", message) }
-          })
-        )
+        .pipe(map(isExisting => {
+          if (!isExisting.exists) {
+            return null;
+          }
+          return { existField: this.getMessage("existField", message) }
+        }))
     };
   }
 

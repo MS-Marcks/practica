@@ -1,31 +1,32 @@
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="container d-flex justify-content-center align-items-center register"  >
   <div class="card" style="width: 400px;">
     <div class="card__header">
       <h1>Registrarse</h1>
       <pichincha-divider></pichincha-divider>
     </div>
     <div class="card__body">
-      <pichincha-alerts [type]="alert.type" [description]="alert.description" [show]="alert.show"
+      <pichincha-alerts data-test="alert" [type]="alert.type" [description]="alert.description" [show]="alert.show"
         [autoClose]="alert.autoClose" [closeTime]="alert.closeTime" (clickCloseEvent)="handleClickCloseEvent()">
       </pichincha-alerts>
       <form [formGroup]="registerForm">
         <div class="form__group">
-          <pichincha-input state="{{states.name.state}}" label="Nombre del usuario" formControlName="name"
-            placeholder="Ej. makoto" is-optional="false" [errorHelper]="states.name.error"></pichincha-input>
+          <pichincha-input data-test="name" state="{{states.name.state}}" label="Nombre del usuario"
+            formControlName="name" placeholder="Ej. makoto" is-optional="false"
+            [errorHelper]="states.name.error"></pichincha-input>
         </div>
         <div class="form__group">
-          <pichincha-input state="{{states.email.state}}" label="Correo electronico" formControlName="email"
-            placeholder="Ej. name@example.com" type="email" is-optional="false"
+          <pichincha-input data-test="email" state="{{states.email.state}}" label="Correo electronico"
+            formControlName="email" placeholder="Ej. name@example.com" type="email" is-optional="false"
             [errorHelper]="states.email.error"></pichincha-input>
         </div>
         <div class="form__group">
-          <pichincha-input state="{{states.password.state}}" label="Contraseña" formControlName="password"
-            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"
+          <pichincha-input data-test="password" state="{{states.password.state}}" label="Contraseña"
+            formControlName="password" type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"
             [errorHelper]="states.password.error"></pichincha-input>
         </div>
         <div class="form__group">
-          <pichincha-input state="{{states.rePassword.state}}" label="Confirmar contraseña" formControlName="rePassword"
-            type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"
+          <pichincha-input data-test="rePassword" state="{{states.rePassword.state}}" label="Confirmar contraseña"
+            formControlName="rePassword" type="password" is-optional="false" placeholder="Ej. @Ab1Abc@"
             [errorHelper]="states.rePassword.error"></pichincha-input>
         </div>
         <h2>Categorias</h2>
@@ -33,7 +34,7 @@
           <pichincha-check-box [checked]="item.value" idElement="categoryInterest-{{i}}" value="{{i+1}}"
             (clickCheck)="getCategoryInterest($event,i)" text="{{item.label}}"></pichincha-check-box>
         </div>
-        <pichincha-input-message *ngIf="specialState.categoryInterest.required" info-message=""
+        <pichincha-input-message data-test="category" *ngIf="specialState.categoryInterest.required" info-message=""
           error-message="Debe seleccionar al menos 3 categorias" state="error"
           single-line="false"></pichincha-input-message>
       </form>
@@ -41,7 +42,7 @@
     <div class="card__footer">
       <div class="d-flex justify-content-between align-items-center">
         <div>
-          <a [routerLink]="['/library/books']">Iniciar sesión</a>
+          <a [routerLink]="['/auth/login']">Iniciar sesión</a>
         </div>
         <div>
           <pichincha-button (clickEvent)="submit()" size="large" label="Registrar"></pichincha-button>

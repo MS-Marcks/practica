@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { LoginUserService } from '../../services/login-user.service';
 import { LoginUser } from '../../../../shared/interfaces/login-user.interface';
 import { ResetForm } from '../../../../shared/utils/reset-form';
-import { GetFormControlError } from 'src/app/shared/utils/get-form-control-error';
-import { SpecialValidations } from 'src/app/shared/validators/special-validations';
+import { GetFormControlError } from '../../../../shared/utils/get-form-control-error';
+import { SpecialValidations } from '../../../../shared/validators/special-validations';
 
 @Component({
   templateUrl: './login.component.html',
@@ -21,7 +21,7 @@ export class LoginComponent {
   }
 
   alert = {
-    type: "error",
+    type: "",
     description: "",
     show: false,
     autoClose: true,

@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '../../interfaces/book.interface';
-import { UserService } from 'src/app/shared/services/user.service';
-import { User } from 'src/app/shared/interfaces/user.interface';
+import { UserService } from '../../../../shared/services/user.service';
+import { User } from '../../../../shared/interfaces/user.interface';
 
 @Component({
   templateUrl: './book.component.html',

@@ -7,9 +7,9 @@ import { RouterModule } from '@angular/router';
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { RegisterUserService } from '../../services/register-user.service';
 import { SpecialValidations } from '../../../../shared/validators/special-validations';
-import { ResetForm } from 'src/app/shared/utils/reset-form';
+import { ResetForm } from '../../../../shared/utils/reset-form';
 import { RegisterUser } from '../../interfaces/register-user.interface';
-import { GetFormControlError } from 'src/app/shared/utils/get-form-control-error';
+import { GetFormControlError } from '../../../../shared/utils/get-form-control-error';
 
 @Component({
   templateUrl: './register.component.html',
@@ -57,11 +57,11 @@ export class RegisterComponent {
   buildForm(): void {
     this.registerForm = this.fb.group({
       name: [null, [SpecialValidations.required("Nombre de usuario es requerido")], SpecialValidations.isExistUserName(this.registerUserService, "El nombre de usuario ya existe")],
-      email: [null, [SpecialValidations.required("Correo es requerido"), SpecialValidations.email("Formato del correo no válido")]],
+      email: [null, [SpecialValidations.required("Correo electronico es requerido"), SpecialValidations.email("Formato del correo no válido")]],
       password: [null, [SpecialValidations.required("Contraseña es requerido"), SpecialValidations.password("Contraseña no cumple con los requisitos")]],
       rePassword: [null, [SpecialValidations.required("Contraseña es requerido"), SpecialValidations.password("Contraseña no cumple con los requisitos")]]
     }, {
-      validator: SpecialValidations.match("password", "rePassword", "Las contraseñsa no conciden")
+      validator: SpecialValidations.match("password", "rePassword", "Las contraseñsa no son iguales")
     });
   }
 

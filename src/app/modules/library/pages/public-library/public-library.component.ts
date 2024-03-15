@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/shared/interfaces/user.interface';
-import { UserService } from 'src/app/shared/services/user.service';
+import { User } from '../../../../shared/interfaces/user.interface';
+import { UserService } from '../../../../shared/services/user.service';
 import { Book } from '../../interfaces/book.interface';
 import { BookService } from '../../services/book.service';
-import { CATEGORIESINTEREST } from 'src/app/shared/configs/category-interest.consts';
+import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { BOOKSKELETONDATA } from '../../config/book.data';
 
 @Component({

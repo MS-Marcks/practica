@@ -6,12 +6,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../../services/book.service';
-import { SpecialValidations } from 'src/app/shared/validators/special-validations';
+import { SpecialValidations } from '../../../../shared/validators/special-validations';
 import { Book } from '../../interfaces/book.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
 import { ResetForm } from '../../../../shared/utils/reset-form';
 import { UserService } from '../../../../shared/services/user.service';
-import { GetFormControlError } from 'src/app/shared/utils/get-form-control-error';
+import { GetFormControlError } from '../../../../shared/utils/get-form-control-error';
 
 @Component({
   templateUrl: './book-register.component.html',

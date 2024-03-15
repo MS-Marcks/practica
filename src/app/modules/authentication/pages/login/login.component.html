@@ -5,18 +5,18 @@
       <pichincha-divider></pichincha-divider>
     </div>
     <div class="card__body">
-      <pichincha-alerts [type]="alert.type" [description]="alert.description" [show]="alert.show"
+      <pichincha-alerts data-test="alert" [type]="alert.type" [description]="alert.description" [show]="alert.show"
         [autoClose]="alert.autoClose" [closeTime]="alert.closeTime" (clickCloseEvent)="handleClickCloseEvent()">
       </pichincha-alerts>
       <form [formGroup]="loginForm">
-        <div class="form__group">
-          <pichincha-input [state]="states.email.state" label="Correo electronico" formControlName="email"
+        <div class="form__group" >
+          <pichincha-input data-test="email" [state]="states.email.state" label="Correo electronico" formControlName="email"
             placeholder="Ej. name@example.com" [errorHelper]="states.email.error" type="email"
             is-optional="false"></pichincha-input>
         </div>
         <div class="form__group">
-          <pichincha-input [state]="states.password.state" label="Contraseña" formControlName="password" type="password"
-            is-optional="false" [errorHelper]="states.email.error" placeholder="Ej. @Ab1Abc@"></pichincha-input>
+          <pichincha-input data-test="password" [state]="states.password.state" label="Contraseña" formControlName="password" type="password"
+            is-optional="false" [errorHelper]="states.password.error" placeholder="Ej. @Ab1Abc@"></pichincha-input>
         </div>
       </form>
     </div>

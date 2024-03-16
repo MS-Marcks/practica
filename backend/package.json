@@ -1,0 +1,47 @@
+{
+  "name": "demo.apinube",
+  "version": "0.0.1",
+  "description": "Api Rest",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev  --respawn --transpile-only ./src/index.ts",
+    "debug": "ts-node-dev %NODE_DEBUG_OPTION% --respawn --transpileOnly ./src/index.ts",
+    "prod": "tsc && node dist/index.js",
+    "postinstall": "tsc",
+    "start": "node dist/index.js",
+    "deploy": "git add . && git commit -m Heroku && git push"
+  },
+  "author": "Kevin Suarez",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/body-parser": "^1.19.1",
+    "@types/express": "^4.17.13",
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.2",
+    "@types/koa-router": "^7.4.4",
+    "@types/multer": "^1.4.7",
+    "typescript": "^3.3.3",
+    "ts-node-dev": "^1.0.0-pre.39"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-multer": "^1.0.2",
+    "koa-router": "^10.0.0",
+    "multer": "^1.4.2",
+    "reflect-metadata": "^0.1.13",
+    "routing-controllers": "^0.9.0",
+    "jsonwebtoken": "^8.5.1",
+    "@types/bcryptjs": "^2.4.2",
+    "bcryptjs": "^2.4.3"
+  },
+  "engines": {
+    "node": "14.17.3"
+  }
+}

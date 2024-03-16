@@ -1,0 +1,25 @@
+[
+  {
+    "id": "w7qfsa5f21",
+    "name": "ksuarez",
+    "email": "albert-dominguez@gmail.com",
+    "password": "$2a$12$iP5HyCLN3yrEvDycBRDNw.ZLpFMotZvZaFSGmuC64ECJZsR96ak1K",
+    "category": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "r6acf4cacg",
+    "name": "g",
+    "email": "g@gmail.com",
+    "password": "$2a$12$iP5HyCLN3yrEvDycBRDNw.ZLpFMotZvZaFSGmuC64ECJZsR96ak1K",
+    "category": [
+      1,
+      2,
+      3,
+      4
+    ]
+  }
+]

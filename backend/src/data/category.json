@@ -1,0 +1,226 @@
+[
+  {
+    "id": 1,
+    "description": "Action and adventure"
+  },
+  {
+    "id": 2,
+    "description": "Alternate history"
+  },
+  {
+    "id": 3,
+    "description": "Anthology"
+  },
+  {
+    "id": 4,
+    "description": "Chick lit"
+  },
+  {
+    "id": 5,
+    "description": "Children"
+  },
+  {
+    "id": 6,
+    "description": "Classic"
+  },
+  {
+    "id": 7,
+    "description": "Comic book"
+  },
+  {
+    "id": 8,
+    "description": "Coming-of-age"
+  },
+  {
+    "id": 9,
+    "description": "Crime"
+  },
+  {
+    "id": 10,
+    "description": "Drama"
+  },
+  {
+    "id": 11,
+    "description": "Fairytale"
+  },
+  {
+    "id": 12,
+    "description": "Fantasy"
+  },
+  {
+    "id": 13,
+    "description": "Graphic novel"
+  },
+  {
+    "id": 14,
+    "description": "Historical fiction"
+  },
+  {
+    "id": 15,
+    "description": "Horror"
+  },
+  {
+    "id": 16,
+    "description": "Mystery"
+  },
+  {
+    "id": 17,
+    "description": "Paranormal romance"
+  },
+  {
+    "id": 18,
+    "description": "Picture book"
+  },
+  {
+    "id": 19,
+    "description": "Poetry"
+  },
+  {
+    "id": 20,
+    "description": "Political thriller"
+  },
+  {
+    "id": 21,
+    "description": "Romance"
+  },
+  {
+    "id": 22,
+    "description": "Satire"
+  },
+  {
+    "id": 23,
+    "description": "Science fiction"
+  },
+  {
+    "id": 24,
+    "description": "Short story"
+  },
+  {
+    "id": 25,
+    "description": "Suspense"
+  },
+  {
+    "id": 26,
+    "description": "Thriller"
+  },
+  {
+    "id": 27,
+    "description": "Western"
+  },
+  {
+    "id": 28,
+    "description": "Young adult"
+  },
+  {
+    "id": 29,
+    "description": "Art/architecture"
+  },
+  {
+    "id": 30,
+    "description": "Autobiography"
+  },
+  {
+    "id": 31,
+    "description": "Biography"
+  },
+  {
+    "id": 32,
+    "description": "Business/economics"
+  },
+  {
+    "id": 33,
+    "description": "Crafts/hobbies"
+  },
+  {
+    "id": 34,
+    "description": "Cookbook"
+  },
+  {
+    "id": 35,
+    "description": "Diary"
+  },
+  {
+    "id": 36,
+    "description": "Dictionary"
+  },
+  {
+    "id": 37,
+    "description": "Encyclopedia"
+  },
+  {
+    "id": 38,
+    "description": "Guide"
+  },
+  {
+    "id": 39,
+    "description": "Health/fitness"
+  },
+  {
+    "id": 40,
+    "description": "History"
+  },
+  {
+    "id": 41,
+    "description": "Home and garden"
+  },
+  {
+    "id": 42,
+    "description": "Humor"
+  },
+  {
+    "id": 43,
+    "description": "Journal"
+  },
+  {
+    "id": 44,
+    "description": "Math"
+  },
+  {
+    "id": 45,
+    "description": "Memoir"
+  },
+  {
+    "id": 46,
+    "description": "Philosophy"
+  },
+  {
+    "id": 47,
+    "description": "Prayer"
+  },
+  {
+    "id": 48,
+    "description": "Religion, spirituality, and new age"
+  },
+  {
+    "id": 49,
+    "description": "Textbook"
+  },
+  {
+    "id": 50,
+    "description": "True crime"
+  },
+  {
+    "id": 51,
+    "description": "Review"
+  },
+  {
+    "id": 52,
+    "description": "Science"
+  },
+  {
+    "id": 53,
+    "description": "Self help"
+  },
+  {
+    "id": 54,
+    "description": "Sports and leisure"
+  },
+  {
+    "id": 55,
+    "description": "Travel"
+  },
+  {
+    "id": 56,
+    "description": "True crime"
+  }
+]

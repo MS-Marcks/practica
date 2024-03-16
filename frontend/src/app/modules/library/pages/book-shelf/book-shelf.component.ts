@@ -61,28 +61,28 @@ export class BookShelfComponent implements OnInit {
   }
 
   searchInput(event: any): void {
-    this.search(event, this.booksSearch, this.booksDropdown);
+    this.booksSearch = event;
+    this.search(this.booksSearch, this.booksDropdown);
   }
 
   searchDropdown(event: any): void {
-    this.search(event, this.booksDropdown, this.booksSearch);
+    this.booksDropdown = event;
+    this.search(this.booksDropdown, this.booksSearch);
   }
 
-  search(event: any, current: any, other: any): void {
+  search(current: any, other: any): void {
     // returns all books if there are no filters in place
-    if (event.length === this.books.length && other.length === 0) {
+    if (current.length === 0 && other.length === 0) {
       this.booksShow = [...this.books];
       return;
     }
 
     // filters only one filter and the other one is empty.
-    if (event.length === this.books.length) {
+    if (current.length === 0) {
       current = [];
       this.filter(other);
       return;
     }
-
-    current = event;
 
     if (other.length === 0) {
       this.filter(current);

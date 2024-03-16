@@ -49,7 +49,7 @@ export class SearchPanelComponent {
   change(): void {
     try {
       if (this.form.invalid) {
-        this.filter.emit(this.dataSource);
+        this.filter.emit([]);
         return;
       };
       if (this.target === "any") {
@@ -61,7 +61,7 @@ export class SearchPanelComponent {
       const newDataSource = this.dataSource?.filter((item: any) => item[this.target].toString().toLowerCase().includes(this.form.getRawValue().text.toLowerCase()));
       this.filter.emit(newDataSource);
     } catch (error) {
-      this.filter.emit(this.dataSource);
+      this.filter.emit([]);
     }
   }
 
@@ -73,9 +73,7 @@ export class SearchPanelComponent {
         this.selectedCheckBoxForm = this.selectedCheckBoxForm.filter((e: any) => e !== event.target.value);
       }
       if (this.selectedCheckBoxForm.length === 0) {
-        console.log(this.selectedCheckBoxForm)
-        console.log(this.dataSource)
-        this.filter.emit(this.dataSource);
+        this.filter.emit([]);
         return;
       }
       const newDataSource = this.dataSource?.filter((item: any) => {
@@ -86,7 +84,7 @@ export class SearchPanelComponent {
       });
       this.filter.emit(newDataSource);
     } catch (error) {
-      this.filter.emit(this.dataSource);
+      this.filter.emit([]);
     }
   }
 

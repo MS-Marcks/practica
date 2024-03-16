@@ -64,32 +64,32 @@ export class PublicLibraryComponent implements OnInit {
   }
 
   searchInput(event: any): void {
-    this.search(event, this.booksSearch, this.booksCheckBox);
+    this.booksSearch = event;
+    this.search(this.booksSearch, this.booksCheckBox);
+
   }
 
   searchCheckBox(event: any): void {
-    this.search(event, this.booksCheckBox, this.booksSearch);
+    this.booksCheckBox = event;
+    this.search(this.booksCheckBox, this.booksSearch);
   }
 
-  search(event: any, current: any, other: any): void {
-
+  search(current: any, other: any): void {
     // returns all books if there are no filters in place
-    if (event.length === this.booksPublic.length && other.length === 0) {
-      this.booksShow = [...this.books];
+    if (current.length === 0 && other.length === 0) {
+      this.booksShow = [...this.booksPublic];
       return;
     }
 
     // filters only one filter and the other one is empty.
-    if (event.length === this.booksPublic.length) {
-      console.log(event.length)
-      current = [];
+    if (current.length === 0) {
+      console.log("cuando lo buscado no coinciden con nada")
       this.filter(other);
       return;
     }
 
-    current = event;
-
     if (other.length === 0) {
+      console.log("cuando el segundo lo buscado no coinciden con nada")
       this.filter(current);
       return;
     }

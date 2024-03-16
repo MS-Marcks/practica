@@ -5,7 +5,10 @@ import { PrincipalInterceptorService } from '../../../shared/interceptors/princi
 import { LoginUser } from '../../../shared/interfaces/login-user.interface';
 import { User } from '../../../shared/interfaces/user.interface';
 
-
+const body: LoginUser = {
+  username: "albert-dominguez1@gmail.com",
+  password: "@Dd1234567"
+}
 describe('LoginUserService', () => {
   let loginUserservice: LoginUserService;
 
@@ -26,10 +29,6 @@ describe('LoginUserService', () => {
   });
 
   test('Successfully logged in', (done) => {
-    const body: LoginUser = {
-      username: "albert-dominguez@gmail.com",
-      password: "@Dd1234567"
-    }
     loginUserservice.login(body).subscribe({
       next: (response: User) => {
         expect(response.user.userId).not.toBeNull()
@@ -41,10 +40,6 @@ describe('LoginUserService', () => {
   });
 
   test('Failed to log in correctly', (done) => {
-    const body: LoginUser = {
-      username: "albert-dominguez1@gmail.com",
-      password: "@Dd1234567"
-    }
     loginUserservice.login(body).subscribe({
       next: (response: User) => { },
       error: (error) => {

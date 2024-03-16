@@ -1,0 +1,9 @@
+/.idea
+assets
+node_modules
+dist
+src/**/*.js
+src/**/*.js.map
+ormlogs.log
+public/temp
+package-lock.json

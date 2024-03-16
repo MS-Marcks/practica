@@ -1,0 +1,229 @@
+[
+  {
+    "id": "l18xkdsmox",
+    "title": "Practical MongoDB",
+    "subtitle": "Architecting, Developing, and Administering MongoDB",
+    "isbn13": 9781484206485,
+    "price": "$41.57",
+    "image": "https://itbook.store/img/books/9781484206485.png",
+    "url": "https://itbook.store/books/9781484206485",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 1
+  },
+  {
+    "id": "qq8yhv2qlh",
+    "title": "The Definitive Guide to MongoDB, 3rd Edition",
+    "subtitle": "A complete guide to dealing with Big Data using MongoDB",
+    "isbn13": 9781484211830,
+    "price": "$49.99",
+    "image": "https://itbook.store/img/books/9781484211830.png",
+    "url": "https://itbook.store/books/9781484211830",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 2
+  },
+  {
+    "id": "paokhmdwbdq",
+    "title": "MongoDB Performance Tuning",
+    "subtitle": "Optimizing MongoDB Databases and their Applications",
+    "isbn13": 9781484268780,
+    "price": "$37.24",
+    "image": "https://itbook.store/img/books/9781484268780.png",
+    "url": "https://itbook.store/books/9781484268780",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 2
+  },
+  {
+    "id": "l583tql723i",
+    "title": "MongoDB in Action, 2nd Edition",
+    "subtitle": "Covers MongoDB version 3.0",
+    "isbn13": 9781617291609,
+    "price": "$19.99",
+    "image": "https://itbook.store/img/books/9781617291609.png",
+    "url": "https://itbook.store/books/9781617291609",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 3
+  },
+  {
+    "id": "dsni0zlllh6",
+    "title": "Pentaho Analytics for MongoDB",
+    "subtitle": "Combine Pentaho Analytics and MongoDB to create powerful analysis and reporting solutions",
+    "isbn13": 9781782168355,
+    "price": "$16.99",
+    "image": "https://itbook.store/img/books/9781782168355.png",
+    "url": "https://itbook.store/books/9781782168355",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 5
+  },
+  {
+    "id": "pfhb18vyegm",
+    "title": "Pentaho Analytics for MongoDB Cookbook",
+    "subtitle": "Over 50 recipes to learn how to use Pentaho Analytics and MongoDB to create powerful analysis and reporting solutions",
+    "isbn13": 9781783553273,
+    "price": "$35.99",
+    "image": "https://itbook.store/img/books/9781783553273.png",
+    "url": "https://itbook.store/books/9781783553273",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 5
+  },
+  {
+    "id": "d34byj2ib6p",
+    "title": "Web Development with MongoDB and NodeJS, 2nd Edition",
+    "subtitle": "Build an interactive and full-featured web application from scratch using Node.js and MongoDB",
+    "isbn13": 9781785287527,
+    "price": "$38.01",
+    "image": "https://itbook.store/img/books/9781785287527.png",
+    "url": "https://itbook.store/books/9781785287527",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 6
+  },
+  {
+    "id": "hevn1gtyrp4",
+    "title": "MongoDB Cookbook, 2nd Edition",
+    "subtitle": "Harness the latest features of MongoDB 3 with this collection of 80 recipes - from managing cloud platforms to app development, this book is a vital resource",
+    "isbn13": 9781785289989,
+    "price": "$44.99",
+    "image": "https://itbook.store/img/books/9781785289989.png",
+    "url": "https://itbook.store/books/9781785289989",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 1
+  },
+  {
+    "id": "tpag7ci3rm",
+    "title": "The Little MongoDB Book",
+    "subtitle": "",
+    "isbn13": 1001592208320,
+    "price": "$0.00",
+    "image": "https://itbook.store/img/books/1001592208320.png",
+    "url": "https://itbook.store/books/1001592208320",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 3
+  },
+  {
+    "id": "ises5wpwru",
+    "title": "Learning MongoDB",
+    "subtitle": "",
+    "isbn13": 1001629462276,
+    "price": "$0.00",
+    "image": "https://itbook.store/img/books/1001629462276.png",
+    "url": "https://itbook.store/books/1001629462276",
+    "userRegister": "q4qffw5f22",
+    "idCategory": 4
+  },
+  {
+    "id": "2ac4ly00oen",
+    "title": "Learning Angular, 2nd Edition",
+    "subtitle": "A Hands-On Guide to Angular 2 and Angular 4",
+    "isbn13": 9780134576978,
+    "price": "$15.00",
+    "image": "https://itbook.store/img/books/9780134576978.png",
+    "url": "https://itbook.store/books/9780134576978",
+    "userRegister": "w7qfsa5f21",
+    "idCategory": 6
+  },
+  {
+    "id": "zv0gskqufve",
+    "title": "Progressive Web Apps with Angular",
+    "subtitle": "Create Responsive, Fast and Reliable PWAs Using Angular",
+    "isbn13": 9781484244470,
+    "price": "$34.59",
+    "image": "https://itbook.store/img/books/9781484244470.png",
+    "url": "https://itbook.store/books/9781484244470",
+    "userRegister": "w7qfsa5f21",
+    "idCategory": 6
+  },
+  {
+    "id": "nkizz2ctq0o",
+    "title": "Angular for Material Design",
+    "subtitle": "Leverage Angular Material and TypeScript to Build a Rich User Interface for Web Apps",
+    "isbn13": 9781484254332,
+    "price": "$30.39",
+    "image": "https://itbook.store/img/books/9781484254332.png",
+    "url": "https://itbook.store/books/9781484254332",
+    "userRegister": "w7qfsa5f21",
+    "idCategory": 3
+  },
+  {
+    "id": "lf3lw1307f",
+    "title": "Angular: Up and Running",
+    "subtitle": "Learning Angular, Step by Step",
+    "isbn13": 9781491999837,
+    "price": "$29.98",
+    "image": "https://itbook.store/img/books/9781491999837.png",
+    "url": "https://itbook.store/books/9781491999837",
+    "userRegister": "w7qfsa5f21",
+    "idCategory": 4
+  },
+  {
+    "title": "Mongo",
+    "author": "Gerson Ramos",
+    "url": "https://itbook.store/books/9781617291609",
+    "image": "https://itbook.store/img/books/9781617291609.png",
+    "summary": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "idCategory": [
+      "Ciencia Ficción",
+      "Novelas",
+      "Drama"
+    ],
+    "publish": true,
+    "userRegister": "w7qfsa5f21",
+    "id": "oh3kk5mojo"
+  },
+  {
+    "title": "Angular",
+    "author": "Gerson Ramos",
+    "url": "https://itbook.store/books/9781617291609",
+    "image": "https://itbook.store/img/books/9781617291609.png",
+    "summary": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "idCategory": [
+      "Ciencia Ficción",
+      "Novelas",
+      "Drama"
+    ],
+    "publish": true,
+    "userRegister": "w7qfsa5f21",
+    "id": "oh3kk5moj1"
+  },
+  {
+    "title": "React",
+    "author": "Gerson Ramos",
+    "url": "https://itbook.store/books/9781617291609",
+    "image": "https://itbook.store/img/books/9781617291609.png",
+    "summary": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "idCategory": [
+      "Ciencia Ficción",
+      "Novelas",
+      "Drama"
+    ],
+    "publish": true,
+    "userRegister": "w7qfsa5f21",
+    "id": "oh3kk5moj2"
+  },
+  {
+    "title": "Vuejs",
+    "author": "Gerson Ramos",
+    "url": "https://itbook.store/books/9781617291609",
+    "image": "https://itbook.store/img/books/9781617291609.png",
+    "summary": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "idCategory": [
+      "Novelas",
+      "Drama"
+    ],
+    "publish": true,
+    "userRegister": "w7qfsa5f211",
+    "id": "oh3kk5moj3"
+  },
+  {
+    "title": "Clean Code",
+    "author": "Gerson Ramos",
+    "url": "https://itbook.store/books/9781617291609",
+    "image": "https://itbook.store/img/books/9781617291609.png",
+    "summary": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "idCategory": [
+      "Novelas",
+      "Drama"
+    ],
+    "publish": true,
+    "userRegister": "w7qfsa5f21",
+    "id": "oh3kk5moj4"
+  }
+]

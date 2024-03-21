@@ -42,6 +42,10 @@
 .form {
   &__group {
     margin-top: 0.75rem;
+    &--two-columns{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
   }
 }
 

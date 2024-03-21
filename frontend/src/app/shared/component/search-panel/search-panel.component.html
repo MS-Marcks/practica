@@ -10,8 +10,10 @@
     </select>
   </ng-container>
   <ng-container *ngIf="searchType === 'checkbox';">
-    <div class="form__group" *ngFor="let item of checkbox; let i=index;">
-      <input type="checkbox" class="form__checkbox" (change)="selectedCheckbox($event)" [value]="item[checkboxValue]">{{item[checkboxLabel]}}
+    <div class="form__group--two-columns">
+      <div class="form__group" *ngFor="let item of checkbox; let i=index;">
+        <input type="checkbox" class="form__checkbox" (change)="selectedCheckbox($event)" [value]="item[checkboxValue]">{{item[checkboxLabel]}}
+      </div>
     </div>
   </ng-container>
 </form>

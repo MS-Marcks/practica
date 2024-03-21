@@ -23,7 +23,7 @@
   </div>
   <div class="row">
     <div class="col-sm-8">
-      <div class="bookshelf__body">
+      <div class="bookshelf__body{{(isSearch)?'--public':''}}">
         <ng-container *ngIf="isLoadingPublicBook; else elseSkeletonPublicBooks">
           <library-covers *ngFor="let book of skeletonBooks; trackBy: trackByFn" [data]="book"></library-covers>
         </ng-container>

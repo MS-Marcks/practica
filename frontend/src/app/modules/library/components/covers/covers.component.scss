@@ -1,9 +1,9 @@
 .covers {
   display: flex;
   justify-content: center;
-  width: 100%;
 
-  &--border_shador{
+
+  &--border_shadow{
     box-shadow: 0px 0px 5px 1px rgba(75, 75, 75, 0.25);
   }
 
@@ -11,7 +11,7 @@
     width: 100%;
   }
 
-  &--border_shador:hover {
+  &--border_shadow:hover {
     opacity: 0.5;
   }
 }

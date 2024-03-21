@@ -9,14 +9,21 @@
 
   &__body {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 10px;
     margin-bottom: 14px;
 
-    &::after {
-      content: "";
-      grid-column: span 4;
-      visibility: hidden;
+    &--public {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+
+      &::after {
+        content: "";
+        grid-column: span ;
+        visibility: hidden;
+      }
     }
   }
 }

@@ -27,6 +27,7 @@ export class BookShelfComponent implements OnInit {
 
   skeletonBooks: Book[] = BOOKSKELETONDATA;
   isLoading: boolean = true;
+  isSearch:boolean = false;
 
   constructor(private router: Router) {
     this.user = this.userService.getUserCurrent()
@@ -73,10 +74,11 @@ export class BookShelfComponent implements OnInit {
   search(current: any, other: any): void {
     // returns all books if there are no filters in place
     if (current.length === 0 && other.length === 0) {
+      this.isSearch = false;
       this.booksShow = [...this.books];
       return;
     }
-
+    this.isSearch = true;
     // filters only one filter and the other one is empty.
     if (current.length === 0) {
       current = [];

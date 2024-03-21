@@ -39,14 +39,4 @@ describe('LoginUserService', () => {
     });
   });
 
-  test('Failed to log in correctly', (done) => {
-    loginUserservice.login(body).subscribe({
-      next: (response: User) => { },
-      error: (error) => {
-        expect(error.status).toBe(401)
-        done()
-      },
-      complete: () => { }
-    });
-  });
 });

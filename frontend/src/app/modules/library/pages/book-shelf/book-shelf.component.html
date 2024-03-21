@@ -13,7 +13,7 @@
       target="idCategory" placeholder="Categoria" (filter)="searchDropdown($event)"
       searchType="dropdown"></shared-search-panel>
   </div>
-  <div class="bookshelf__body">
+  <div class="bookshelf__body{{(isSearch)?'--search':''}}">
     <ng-container *ngIf="isLoading; else elseSkeletonBooks">
       <library-covers *ngFor="let book of skeletonBooks; trackBy: trackByFn" [data]="book"></library-covers>
     </ng-container>

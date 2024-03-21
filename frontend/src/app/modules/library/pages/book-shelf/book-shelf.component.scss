@@ -12,10 +12,17 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 10px;
 
-    &::after {
-      content: "";
-      grid-column: span 4;
-      visibility: hidden;
+    &--search{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-auto-rows: auto;
+      gap: 10px;
+
+      &::after {
+        content: "";
+        grid-column: span 4;
+        visibility: hidden;
+      }
     }
   }
 }

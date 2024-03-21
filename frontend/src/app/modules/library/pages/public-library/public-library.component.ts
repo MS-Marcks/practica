@@ -29,6 +29,7 @@ export class PublicLibraryComponent implements OnInit {
   skeletonBooks: Book[] = BOOKSKELETONDATA;
   isLoadingMyBook: boolean = true;
   isLoadingPublicBook: boolean = true;
+  isSearch: boolean = false;
 
   constructor(private router: Router) {
     this.user = this.userService.getUserCurrent()
@@ -66,7 +67,6 @@ export class PublicLibraryComponent implements OnInit {
   searchInput(event: any): void {
     this.booksSearch = event;
     this.search(this.booksSearch, this.booksCheckBox);
-
   }
 
   searchCheckBox(event: any): void {
@@ -77,19 +77,18 @@ export class PublicLibraryComponent implements OnInit {
   search(current: any, other: any): void {
     // returns all books if there are no filters in place
     if (current.length === 0 && other.length === 0) {
+      this.isSearch = false;
       this.booksShow = [...this.booksPublic];
       return;
     }
-
+    this.isSearch = true;
     // filters only one filter and the other one is empty.
     if (current.length === 0) {
-      console.log("cuando lo buscado no coinciden con nada")
       this.filter(other);
       return;
     }
 
     if (other.length === 0) {
-      console.log("cuando el segundo lo buscado no coinciden con nada")
       this.filter(current);
       return;
     }

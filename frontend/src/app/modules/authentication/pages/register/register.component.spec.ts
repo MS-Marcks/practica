@@ -142,5 +142,13 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
     expect(service).toHaveBeenCalled()
   });
+
+
+  test('The value of the alert was correctly changed to false', () => {
+    component.alert.show = true;
+    expect(component.alert.show).toEqual(true);
+    component.handleClickCloseEvent();
+    expect(component.alert.show).toEqual(false);
+  });
 });
 

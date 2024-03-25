@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { RegisterUserService } from '../../services/register-user.service';
-import { SpecialValidations } from '../../../../shared/validators/special-validations';
+import { CustomValidations } from '../../../../shared/validations/custom-validations.validations';
 import { ResetForm } from '../../../../shared/utils/reset-form';
 import { RegisterUser } from '../../interfaces/register-user.interface';
 import { GetFormControlError } from '../../../../shared/utils/get-form-control-error';
@@ -56,12 +56,12 @@ export class RegisterComponent {
 
   buildForm(): void {
     this.registerForm = this.fb.group({
-      name: [null, [SpecialValidations.required("Nombre de usuario es requerido")], SpecialValidations.isExistUserName(this.registerUserService, "El nombre de usuario ya existe")],
-      email: [null, [SpecialValidations.required("Correo electronico es requerido"), SpecialValidations.email("Formato del correo no válido")]],
-      password: [null, [SpecialValidations.required("Contraseña es requerido"), SpecialValidations.password("Contraseña no cumple con los requisitos")]],
-      rePassword: [null, [SpecialValidations.required("Contraseña es requerido"), SpecialValidations.password("Contraseña no cumple con los requisitos")]]
+      name: [null, [CustomValidations.required("Nombre de usuario es requerido")], CustomValidations.isExistUserName(this.registerUserService, "El nombre de usuario ya existe")],
+      email: [null, [CustomValidations.required("Correo electronico es requerido"), CustomValidations.email("Formato del correo no válido")]],
+      password: [null, [CustomValidations.required("Contraseña es requerido"), CustomValidations.password("Contraseña no cumple con los requisitos")]],
+      rePassword: [null, [CustomValidations.required("Contraseña es requerido"), CustomValidations.password("Contraseña no cumple con los requisitos")]]
     }, {
-      validator: SpecialValidations.match("password", "rePassword", "Las contraseñsa no son iguales")
+      validator: CustomValidations.match("password", "rePassword", "Las contraseñsa no son iguales")
     });
   }
 

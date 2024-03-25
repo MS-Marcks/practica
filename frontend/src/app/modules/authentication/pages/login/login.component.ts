@@ -4,7 +4,7 @@ import { LoginUserService } from '../../services/login-user.service';
 import { LoginUser } from '../../../../shared/interfaces/login-user.interface';
 import { ResetForm } from '../../../../shared/utils/reset-form';
 import { GetFormControlError } from '../../../../shared/utils/get-form-control-error';
-import { SpecialValidations } from '../../../../shared/validators/special-validations';
+import { CustomValidations } from '../../../../shared/validations/custom-validations.validations';
 import { Router } from '@angular/router';
 
 @Component({
@@ -35,8 +35,8 @@ export class LoginComponent {
 
   buildForm(): void {
     this.loginForm = this.fb.group({
-      email: [null, [SpecialValidations.required("El correo electronico es requerido"), SpecialValidations.email("Formato del correo no válido")]],
-      password: [null, [SpecialValidations.required("La contraseña es requerido"), SpecialValidations.password()]]
+      email: [null, [CustomValidations.required("El correo electronico es requerido"), CustomValidations.email("Formato del correo no válido")]],
+      password: [null, [CustomValidations.required("La contraseña es requerido"), CustomValidations.password()]]
     });
   }
 

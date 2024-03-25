@@ -6,15 +6,13 @@ import { RegisterUserService } from "src/app/modules/authentication/services/reg
 const VALIDATOR_MESSAGE_DEFAULT = {
   required: "Este campo es requerido",
   email: "Formato del correo electronico invalido",
-  passowrd: "Contraseña no cumple con los requisitos",
+  password: "Contraseña no cumple con los requisitos",
   url: "Url requerido",
   mismatch: "Los campos deben ser iguales",
   existField: "Ya existe el campo"
 }
 
-
-
-export class SpecialValidations {
+export class CustomValidations {
 
   /**
    * Description: custom function to validate if a field is required, in which a custom message for the error can be placed
@@ -56,7 +54,7 @@ export class SpecialValidations {
       const urlRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@!$%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
       const isCorrect = urlRegex.test(control?.value);
       if (isCorrect) return null;
-      return { passowrd: this.getMessage("passowrd", message) }
+      return { password: this.getMessage("password", message) }
     }
   }
 
@@ -90,7 +88,7 @@ export class SpecialValidations {
       if (fg.get(firstControlName)?.value === fg.get(secondControlName)?.value) {
         return null;
       }
-      return { mismatch: this.getMessage("url", message) }
+      return { mismatch: this.getMessage("mismatch", message) }
     }
   }
 

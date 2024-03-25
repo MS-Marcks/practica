@@ -1,6 +1,6 @@
 <div class="bookregister">
   <div class="bookregister__header flex__display flex__justify-content-space-between">
-    <h1>{{isUpdate?'Editar': 'Registro'}} Libro</h1>
+    <h1 data-test="bookregister-title">{{isUpdate?'Editar': 'Registro'}} Libro</h1>
     <div></div>
   </div>
   <div>
@@ -58,7 +58,7 @@
   <div class="bookregister__footer d-flex justify-content-end">
     <pichincha-button class="bookregister__footer__button" [routerLink]="['/library/books']" variant="secondary"
       size="medium" label="Cancelar"></pichincha-button>
-    <pichincha-button class="bookregister__footer__button" variant="primary" size="medium"
+    <pichincha-button  class="bookregister__footer__button" variant="primary" size="medium"
       label="{{isUpdate?'Editar': 'Registrar'}}" (clickEvent)="submit()"></pichincha-button>
   </div>
 </div>

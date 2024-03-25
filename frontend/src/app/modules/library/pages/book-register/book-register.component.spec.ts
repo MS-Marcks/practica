@@ -130,6 +130,12 @@ describe('BookRegisterComponent Default', () => {
     expect(five).toBe(5);
   });
 
+  test('Displays the message to register successfully when not in edit mode', () => {
+    const h1 = compiled.querySelector("h1[data-test='bookregister-title']");
+    fixture.detectChanges();
+    expect(h1.textContent).toContain("Registro");
+  });
+
 });
 
 
@@ -193,6 +199,12 @@ describe('BookRegisterComponent Update', () => {
     expect(image).toBe(DATA.image)
     expect(summary).toBe(DATA.summary)
     expect(publish).toBe(DATA.publish)
+  });
+
+  test('Displays the Edit Successful message when in edit mode.', () => {
+    const h1 = compiled.querySelector("h1[data-test='bookregister-title']");
+    fixture.detectChanges();
+    expect(h1.textContent).toContain("Editar");
   });
 
 

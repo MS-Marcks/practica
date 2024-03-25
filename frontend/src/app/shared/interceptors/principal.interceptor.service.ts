@@ -10,7 +10,9 @@ export class PrincipalInterceptorService implements HttpInterceptor {
   constructor() { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const clone = req.clone({
-      setHeaders: {}
+      setHeaders: {
+        "ID": "test"
+      }
     });
     return next.handle(clone);
   }

@@ -6,7 +6,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../../services/book.service';
-import { SpecialValidations } from '../../../../shared/validators/special-validations';
+import { CustomValidations } from '../../../../shared/validations/custom-validations.validations';
 import { Book } from '../../interfaces/book.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
 import { ResetForm } from '../../../../shared/utils/reset-form';
@@ -80,11 +80,11 @@ export class BookRegisterComponent {
   buildForm(): void {
     this.bookRegisterForm = this.fb.group({
       id: [(this.bookUpdate === undefined) ? null : this.bookUpdate.id],
-      title: [(this.bookUpdate === undefined) ? null : this.bookUpdate.title, [SpecialValidations.required("Nombre de libro requerido")]],
-      author: [(this.bookUpdate === undefined) ? null : this.bookUpdate.author, [SpecialValidations.required("Nombre de autor requerido")]],
-      url: [(this.bookUpdate === undefined) ? null : this.bookUpdate.url, [SpecialValidations.required("Url del libro requerido"), SpecialValidations.url("Formato de la url no valida")]],
-      image: [(this.bookUpdate === undefined) ? null : this.bookUpdate.image, [SpecialValidations.required("Url de la imagen del libro requerido"), SpecialValidations.url("Formato de la url de la imagen no valida")]],
-      summary: [(this.bookUpdate === undefined) ? null : this.bookUpdate.summary, [SpecialValidations.required()]],
+      title: [(this.bookUpdate === undefined) ? null : this.bookUpdate.title, [CustomValidations.required("Nombre de libro requerido")]],
+      author: [(this.bookUpdate === undefined) ? null : this.bookUpdate.author, [CustomValidations.required("Nombre de autor requerido")]],
+      url: [(this.bookUpdate === undefined) ? null : this.bookUpdate.url, [CustomValidations.required("Url del libro requerido"), CustomValidations.url("Formato de la url no valida")]],
+      image: [(this.bookUpdate === undefined) ? null : this.bookUpdate.image, [CustomValidations.required("Url de la imagen del libro requerido"), CustomValidations.url("Formato de la url de la imagen no valida")]],
+      summary: [(this.bookUpdate === undefined) ? null : this.bookUpdate.summary, [CustomValidations.required()]],
       publish: [(this.bookUpdate === undefined) ? false : this.bookUpdate.publish],
     });
 

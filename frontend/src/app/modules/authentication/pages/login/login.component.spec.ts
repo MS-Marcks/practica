@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
@@ -8,23 +8,27 @@ import { LoginUserService } from '../../services/login-user.service';
 import { PrincipalInterceptorService } from '../../../../shared/interceptors/principal.interceptor.service';
 import { LoginUser } from '../../../../shared/interfaces/login-user.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { DATA_LOGIN_USER, USER } from '../../mocks/login-user.mock';
+import { Observable } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let compiled: any;
 
-  let loginUserservice: LoginUserService;
+  let loginUserService: LoginUserService;
+  let httpMock: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [],
       imports: [
-        HttpClientModule,
         CommonModule,
         ReactiveFormsModule,
         PichinchaDesignSystemModule,
-        PichinchaReactiveControlsModule
+        PichinchaReactiveControlsModule,
+        HttpClientTestingModule
       ],
       providers: [{
         provide: HTTP_INTERCEPTORS,
@@ -39,7 +43,12 @@ describe('LoginComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     compiled = fixture.nativeElement;
-    loginUserservice = TestBed.inject(LoginUserService);
+    loginUserService = TestBed.inject(LoginUserService);
+    httpMock = TestBed.inject(HttpTestingController);
+  })
+
+  afterEach(() => {
+    httpMock.verify();
   })
 
   it('the component is created correctly', () => {
@@ -103,16 +112,25 @@ describe('LoginComponent', () => {
     expect(component.alert.show).toBe(false);
   });
 
-  test('Successfully logged in', () => {
-    const body: LoginUser = {
-      username: "albert-dominguez@gmail.com",
-      password: "@Dd1234567"
-    }
-    component.loginForm.get("email")?.setValue(body.username);
-    component.loginForm.get("password")?.setValue(body.password);
-    const service = jest.spyOn(loginUserservice, "login");
-    component.submit();
-    fixture.detectChanges();
-    expect(service).toHaveBeenCalled()
-  });
+  test("Should send Login request", () => {
+    const body: LoginUser = DATA_LOGIN_USER;
+    const user: User = USER;
+
+    jest.spyOn(loginUserService, "login").mockReturnValue(new Observable<User>((suscriber) => {
+      suscriber.next(user)
+      suscriber.complete();
+    }))
+
+    loginUserService.login(body).subscribe(response => {
+      expect(response).toEqual(user);
+    })
+  })
+
+  test("Should save token to localStorage", () => {
+    const user: User = USER;
+    jest.spyOn(localStorage, "setItem");
+    loginUserService.saveToken(user);
+    expect(localStorage.setItem).toHaveBeenLastCalledWith("user", JSON.stringify(user))
+  })
+
 });

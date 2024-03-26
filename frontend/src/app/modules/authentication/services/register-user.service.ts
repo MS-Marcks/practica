@@ -10,7 +10,7 @@ import { ExtraRegister } from '../interfaces/extra-register.interface';
 })
 export class RegisterUserService {
 
-  private urlbase: string = `${environment.URLBASE}users`;
+  urlbase: string = `${environment.URLBASE}users`;
 
   constructor(private http: HttpClient) {
   }
@@ -32,7 +32,7 @@ export class RegisterUserService {
    * @returns {Observable<ExtraRegister>}  returns the request in an observable
    */
   registerUser(user: RegisterUser): Observable<ExtraRegister> {
-    return this.http.post<ExtraRegister>(`${this.urlbase}/`, user).pipe();
+    return this.http.post<ExtraRegister>(`${this.urlbase}`, user).pipe();
   }
 
 }

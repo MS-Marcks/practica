@@ -9,7 +9,7 @@ import { Category } from '../interfaces/category.interface';
 })
 export class CategoryService {
 
-  private urlbase: string = `${environment.URLBASE}category`;
+  urlbase: string = `${environment.URLBASE}category`;
 
   constructor(private http: HttpClient) { }
 

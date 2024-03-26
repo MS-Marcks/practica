@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
@@ -10,13 +10,19 @@ import { RegisterUserService } from '../../services/register-user.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PrincipalInterceptorService } from '../../../../shared/interceptors/principal.interceptor.service';
 import { RegisterUser } from '../../interfaces/register-user.interface';
+import { Observable } from 'rxjs';
+import { ExtraRegister } from '../../interfaces/extra-register.interface';
+import { BODY_REGISTER, BODY_USER_EXIST, DATA_REGISTER, DATA_USER_EXIST } from '../../mocks/register-user.mock';
 
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   let compiled: any;
-  let registerService: RegisterUserService
+
+  let registerService: RegisterUserService;
+  let httpMock: HttpTestingController;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [],
@@ -42,7 +48,8 @@ describe('RegisterComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     compiled = fixture.nativeElement;
-    registerService = TestBed.inject(RegisterUserService)
+    registerService = TestBed.inject(RegisterUserService);
+    httpMock = TestBed.inject(HttpTestingController);
   })
 
   it('the component is created correctly', () => {
@@ -124,25 +131,33 @@ describe('RegisterComponent', () => {
   });
 
 
-  test('Successfully Register', () => {
-    const body: RegisterUser = {
-      name: "gq",
-      email: "pruebaa@gmail.com",
-      password: "@qQs12321312",
-      category: [1, 2, 3]
-    }
-    component.registerForm.get("name")?.setValue(body.name);
-    component.registerForm.get("email")?.setValue(body.email);
-    component.registerForm.get("password")?.setValue(body.password);
-    component.registerForm.get("rePassword")?.setValue(body.password);
-    component.inputCheckedCategoryInterest = body.category;
-    const service = jest.spyOn(registerService, "registerUser");
+  test('Check if user name exists', () => {
+    const body = BODY_USER_EXIST;
 
-    component.submit();
-    fixture.detectChanges();
-    expect(service).toHaveBeenCalled()
+    jest.spyOn(registerService, "isExistName").mockReturnValue(new Observable<ExtraRegister>((suscriber) => {
+      suscriber.next(DATA_USER_EXIST)
+      suscriber.complete();
+    }))
+
+    registerService.isExistName(body).subscribe(response => {
+      expect(response).toEqual(DATA_USER_EXIST);
+    })
+
   });
 
+  test('register a new User', () => {
+    const body = BODY_REGISTER;
+
+    jest.spyOn(registerService, "registerUser").mockReturnValue(new Observable<ExtraRegister>((suscriber) => {
+      suscriber.next(DATA_REGISTER)
+      suscriber.complete();
+    }))
+
+    registerService.registerUser(body).subscribe(response => {
+      expect(response).toEqual(DATA_REGISTER);
+    })
+
+  });
 
   test('The value of the alert was correctly changed to false', () => {
     component.alert.show = true;

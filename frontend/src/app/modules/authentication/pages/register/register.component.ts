@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
@@ -10,6 +10,7 @@ import { CustomValidations } from '../../../../shared/validations/custom-validat
 import { ResetForm } from '../../../../shared/utils/reset-form';
 import { RegisterUser } from '../../interfaces/register-user.interface';
 import { GetFormControlError } from '../../../../shared/utils/get-form-control-error';
+import { ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
   templateUrl: './register.component.html',
@@ -23,11 +24,13 @@ import { GetFormControlError } from '../../../../shared/utils/get-form-control-e
     PichinchaReactiveControlsModule,
   ]
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
 
-  registerForm!: FormGroup;
+  private readonly destroyed = new ReplaySubject<void>();
   private registerUserService: RegisterUserService = inject(RegisterUserService);
 
+
+  registerForm!: FormGroup;
   inputCheckedCategoryInterest: any = [];
   categorySelected = JSON.parse(JSON.stringify(CATEGORIESINTEREST));
 
@@ -52,6 +55,11 @@ export class RegisterComponent {
 
   constructor(private fb: FormBuilder) {
     this.buildForm();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
   }
 
   buildForm(): void {
@@ -99,7 +107,7 @@ export class RegisterComponent {
         category: this.inputCheckedCategoryInterest
       }
 
-      this.registerUserService.registerUser(body).subscribe({
+      this.registerUserService.registerUser(body).pipe(takeUntil(this.destroyed)).subscribe({
         next: (response) => {
           if (response.message === "Created user") {
             this.setValueAlert("success", "El usuario se creo correctamente");

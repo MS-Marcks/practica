@@ -8,7 +8,7 @@ import { CoversComponent } from './components/covers/covers.component';
 import { LibraryComponent } from './library.component';
 import { LibraryRoutingModule } from './library-routing.module';
 import { SearchPanelComponent } from '../../shared/component/search-panel/search-panel.component';
-import { BookComponent } from './pages/book/book.component';
+import { BookViewDetailComponent } from './pages/book-view-detail/book-view-detail.component';
 import { BookRegisterComponent } from './pages/book-register/book-register.component';
 import { PublicLibraryComponent } from './pages/public-library/public-library.component';
 
@@ -16,7 +16,7 @@ import { PublicLibraryComponent } from './pages/public-library/public-library.co
   declarations: [
     LibraryComponent,
     BookShelfComponent,
-    BookComponent,
+    BookViewDetailComponent,
     PublicLibraryComponent
   ],
   imports: [

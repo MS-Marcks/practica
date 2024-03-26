@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
 import { Book } from '../../interfaces/book.interface';
-import { BookComponent } from './book.component';
+import { BookComponent } from './book-view-detail.component';
 import { CoversComponent } from '../../components/covers/covers.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

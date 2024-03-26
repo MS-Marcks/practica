@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class LoginUserService {
 
-  private urlbase: string = `${environment.URLBASE}users`;
+  urlbase: string = `${environment.URLBASE}users`;
 
   constructor(private http: HttpClient) { }
 

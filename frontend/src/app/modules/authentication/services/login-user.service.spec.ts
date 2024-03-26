@@ -1,42 +1,48 @@
 import { TestBed } from '@angular/core/testing';
 import { LoginUserService } from './login-user.service';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PrincipalInterceptorService } from '../../../shared/interceptors/principal.interceptor.service';
 import { LoginUser } from '../../../shared/interfaces/login-user.interface';
-import { User } from '../../../shared/interfaces/user.interface';
+import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { DATA_LOGIN_USER, USER } from '../mocks/login-user.mock';
 
-const body: LoginUser = {
-  username: "albert-dominguez1@gmail.com",
-  password: "@Dd1234567"
-}
+
 describe('LoginUserService', () => {
-  let loginUserservice: LoginUserService;
+  let loginUserService: LoginUserService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [HttpClientTestingModule],
       providers: [{
         provide: HTTP_INTERCEPTORS,
         useClass: PrincipalInterceptorService,
         multi: true
-      }],
+      }, LoginUserService],
     });
-    loginUserservice = TestBed.inject(LoginUserService);
   });
+
+  beforeEach(() => {
+    loginUserService = TestBed.inject(LoginUserService);
+    httpMock = TestBed.inject(HttpTestingController);
+  })
+
+  afterEach(() => {
+    httpMock.verify();
+  })
 
   test('The service is created correctly', () => {
-    expect(loginUserservice).toBeTruthy();
+    expect(loginUserService).toBeTruthy();
   });
 
-  test('Successfully logged in', (done) => {
-    loginUserservice.login(body).subscribe({
-      next: (response: User) => {
-        expect(response.user.userId).not.toBeNull()
-        done()
-      },
-      error: (error) => { },
-      complete: () => { }
-    });
-  });
+  test("should login a user", () => {
+    const body: LoginUser = DATA_LOGIN_USER;
+    loginUserService.login(body).subscribe(response => {
+      expect(response).toEqual(USER);
+    })
+    const request = httpMock.expectOne(`${loginUserService.urlbase}/login`);
+    expect(request.request.method).toBe("POST");
+    request.flush(USER);
+  })
 
 });

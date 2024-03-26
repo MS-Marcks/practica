@@ -1,98 +1,99 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PrincipalInterceptorService } from '../../../shared/interceptors/principal.interceptor.service';
 import { BookService } from './book.service';
 import { Book } from '../interfaces/book.interface';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { DATA_BOOK_REGISTER } from '../mocks/book.mock';
 
-let DATA: Book = {
-  title: "React",
-  author: "example",
-  url: "https://itbook.store/books/9781617291609",
-  image: "https://itbook.store/img/books/9781617291609.png",
-  summary: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  idCategory: [
-    "Ciencia Ficción",
-    "Novelas",
-    "Drama"
-  ],
-  publish: true,
-  userRegister: "w7qfsa5f21",
-  id: "oh3kk5moj2"
-}
 
-describe('bookService', () => {
+
+describe('BookService', () => {
   let bookService: BookService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [HttpClientTestingModule],
       providers: [{
         provide: HTTP_INTERCEPTORS,
         useClass: PrincipalInterceptorService,
         multi: true
-      }],
+      }, BookService],
     });
-    bookService = TestBed.inject(BookService);
   });
+
+  beforeEach(() => {
+    bookService = TestBed.inject(BookService);
+    httpMock = TestBed.inject(HttpTestingController);
+  })
+
+  afterEach(() => {
+    httpMock.verify();
+  })
 
   test('The service is created correctly', () => {
     expect(bookService).toBeTruthy();
   });
 
-  test('a book is created correctly', (done) => {
-    bookService.bookRegister(DATA).subscribe({
-      next: (response: Book) => {
-        expect(response.message).toBe("Se registro un nuevo libro")
-        done()
-      },
-      error: (error) => { },
-      complete: () => { }
-    });
-  });
+  test("should register a new book", () => {
+    const book: Book = DATA_BOOK_REGISTER;
+    bookService.bookRegister(book).subscribe(response => {
+      expect(response.message).toEqual("Se registro un nuevo libro");
+    })
+    const request = httpMock.expectOne(`${bookService.urlbase}`);
+    expect(request.request.method).toBe("POST");
+    request.flush(book);
+  })
 
-  test('a book is updated correctly', (done) => {
-    DATA.author = "prueba";
-    bookService.bookUpdate(DATA).subscribe({
-      next: (response: Book) => {
-        expect(response.message).toBe("Se actualizo un libro")
-        done()
-      },
-      error: (error) => { },
-      complete: () => { }
-    });
-  });
+  test("should update a book", () => {
+    const book: Book = DATA_BOOK_REGISTER;
+    bookService.bookUpdate(book).subscribe(response => {
+      expect(response.message).toEqual("Se actualizo un libro");
+    })
+    const request = httpMock.expectOne(`${bookService.urlbase}`);
+    expect(request.request.method).toBe("PUT");
+    request.flush(book);
+  })
 
-  test('a users books are retrieved correctly', (done) => {
-    bookService.getBooks("w7qfsa5f21").subscribe({
-      next: (response: Book[]) => {
-        expect(response.length).toBeGreaterThanOrEqual(0);
-        done()
-      },
-      error: (error) => { },
-      complete: () => { }
-    });
-  });
 
-  test('a public books are retrieved correctly', (done) => {
-    bookService.getPublicBooks().subscribe({
-      next: (response: Book[]) => {
-        expect(response.length).toBeGreaterThanOrEqual(0);
-        done()
-      },
-      error: (error) => { },
-      complete: () => { }
-    });
-  });
+  test("should get book of a user", () => {
+    const owner: string | any = DATA_BOOK_REGISTER.userRegister;
+    const count = 1;
+    const book: Book = DATA_BOOK_REGISTER;
 
-  test('the data of a book is obtained correctly', (done) => {
-    bookService.getBook("oh3kk5moj2").subscribe({
-      next: (response: Book) => {
-        expect(response.id).not.toBeNull();
-        done()
-      },
-      error: (error) => { },
-      complete: () => { }
-    });
-  });
+    bookService.getBooks(owner, count).subscribe(response => {
+      expect(response).toEqual(book);
+    })
+
+    const request = httpMock.expectOne(`${bookService.urlbase}/owner/${owner}/${count}`);
+    expect(request.request.method).toBe("GET");
+    request.flush(book);
+  })
+
+  test("should get public books", () => {
+    const book: Book = DATA_BOOK_REGISTER;
+
+    bookService.getPublicBooks().subscribe(response => {
+      expect(response).toEqual(book);
+    })
+
+    const request = httpMock.expectOne(`${bookService.urlbase}/public`);
+    expect(request.request.method).toBe("GET");
+    request.flush(book);
+  })
+
+  test("should get a book by its ID", () => {
+    const ID: string | any = DATA_BOOK_REGISTER.id;
+    const book: Book = DATA_BOOK_REGISTER;
+
+    bookService.getBook(ID).subscribe(response => {
+      expect(response).toEqual(book);
+    })
+
+    const request = httpMock.expectOne(`${bookService.urlbase}/${ID}`);
+    expect(request.request.method).toBe("GET");
+    request.flush(book);
+  })
 
 });

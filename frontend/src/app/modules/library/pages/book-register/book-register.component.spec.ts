@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from "@angular/router/testing";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { ReactiveFormsModule } from '@angular/forms';
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
 import { BookRegisterComponent } from './book-register.component';
@@ -9,29 +9,20 @@ import { Book } from '../../interfaces/book.interface';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { PrincipalInterceptorService } from '../../../../shared/interceptors/principal.interceptor.service';
+import { DATA_BOOK_REGISTER } from '../../mocks/book.mock';
+import { BookService } from '../../services/book.service';
 
-let DATA: Book = {
-  title: "React",
-  author: "example",
-  url: "https://itbook.store/books/9781617291609",
-  image: "https://itbook.store/img/books/9781617291609.png",
-  summary: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  idCategory: [
-    "Ciencia Ficción",
-    "Novelas",
-    "Drama"
-  ],
-  publish: true,
-  userRegister: "w7qfsa5f21",
-  id: "oh3kk5moj2"
-}
+let DATA: Book = DATA_BOOK_REGISTER;
 
 describe('BookRegisterComponent Default', () => {
   let component: BookRegisterComponent;
   let fixture: ComponentFixture<BookRegisterComponent>;
   let compiled: any;
+
+  let bookService: BookService;
+  let httpMock: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -45,8 +36,12 @@ describe('BookRegisterComponent Default', () => {
         PichinchaReactiveControlsModule,
         BookRegisterComponent
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA]
+      providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: PrincipalInterceptorService,
+        multi: true
+      }, BookService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   });
@@ -56,6 +51,13 @@ describe('BookRegisterComponent Default', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     compiled = fixture.nativeElement;
+
+    bookService = TestBed.inject(BookService);
+    httpMock = TestBed.inject(HttpTestingController)
+  })
+
+  afterEach(() => {
+    httpMock.verify();
   })
 
   it('the component is created correctly', () => {
@@ -136,6 +138,19 @@ describe('BookRegisterComponent Default', () => {
     expect(h1.textContent).toContain("Registro");
   });
 
+  test("Should add a new book", () => {
+    const body: Book = DATA_BOOK_REGISTER;
+
+    jest.spyOn(bookService, "bookRegister").mockReturnValue(new Observable<Book>((suscriber) => {
+      suscriber.next(body)
+      suscriber.complete();
+    }))
+
+    bookService.bookRegister(body).subscribe(response => {
+      expect(response).toEqual(body);
+    })
+  })
+
 });
 
 
@@ -143,6 +158,9 @@ describe('BookRegisterComponent Update', () => {
   let component: BookRegisterComponent;
   let fixture: ComponentFixture<BookRegisterComponent>;
   let compiled: any;
+
+  let bookService: BookService;
+  let httpMock: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -155,18 +173,18 @@ describe('BookRegisterComponent Update', () => {
         PichinchaDesignSystemModule,
         PichinchaReactiveControlsModule,
         BookRegisterComponent
-      ], providers: [{
+      ],
+      providers: [{
         provide: HTTP_INTERCEPTORS,
         useClass: PrincipalInterceptorService,
         multi: true
-      }, {
+      },
+      {
         provide: ActivatedRoute,
         useValue: { data: of({ book: DATA }) }
-      },],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
-      ]
+      }, BookService
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   });
@@ -176,6 +194,13 @@ describe('BookRegisterComponent Update', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     compiled = fixture.nativeElement;
+
+    bookService = TestBed.inject(BookService);
+    httpMock = TestBed.inject(HttpTestingController)
+  })
+
+  afterEach(() => {
+    httpMock.verify();
   })
 
   it('the component is created correctly', () => {
@@ -207,5 +232,18 @@ describe('BookRegisterComponent Update', () => {
     expect(h1.textContent).toContain("Editar");
   });
 
+
+  test("Should update a book", () => {
+    const body: Book = DATA_BOOK_REGISTER;
+
+    jest.spyOn(bookService, "bookUpdate").mockReturnValue(new Observable<Book>((suscriber) => {
+      suscriber.next(body)
+      suscriber.complete();
+    }))
+
+    bookService.bookUpdate(body).subscribe(response => {
+      expect(response).toEqual(body);
+    })
+  })
 
 });

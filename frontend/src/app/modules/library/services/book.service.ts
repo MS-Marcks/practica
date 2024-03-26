@@ -10,7 +10,7 @@ import { Book } from '../../../modules/library/interfaces/book.interface';
 })
 export class BookService {
 
-  private urlbase: string = `${environment.URLBASE}books`;
+  urlbase: string = `${environment.URLBASE}books`;
 
   constructor(private http: HttpClient) { }
 

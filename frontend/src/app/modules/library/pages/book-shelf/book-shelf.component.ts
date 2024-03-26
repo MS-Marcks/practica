@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookService } from '../../services/book.service';
 import { CategoryService } from '../../services/category.service';
@@ -7,13 +7,15 @@ import { Category } from '../../interfaces/category.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
 import { UserService } from '../../../../shared/services/user.service';
 import { BOOKSKELETONDATA } from '../../config/book.data';
+import { ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
   templateUrl: './book-shelf.component.html',
   styleUrls: ['./book-shelf.component.scss']
 })
-export class BookShelfComponent implements OnInit {
+export class BookShelfComponent implements OnInit,OnDestroy {
 
+  private readonly destroyed = new ReplaySubject<void>();
   private bookService: BookService = inject(BookService)
   private categoryService: CategoryService = inject(CategoryService)
   private userService: UserService = inject(UserService)
@@ -38,9 +40,14 @@ export class BookShelfComponent implements OnInit {
     this.getCategories();
   }
 
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
+
   getBooks(): void {
     try {
-      this.bookService.getBooks(this.user.user.userId).subscribe({
+      this.bookService.getBooks(this.user.user.userId).pipe(takeUntil(this.destroyed)).subscribe({
         next: (response) => this.books = response,
         error: (err) => console.error(err),
         complete: () => { this.booksShow = [...this.books]; this.isLoading = false }
@@ -50,7 +57,7 @@ export class BookShelfComponent implements OnInit {
 
   getCategories(): void {
     try {
-      this.categoryService.getCategories().subscribe({
+      this.categoryService.getCategories().pipe(takeUntil(this.destroyed)).subscribe({
         next: (response) => this.categories = response,
         error: (err) => console.error(err)
       });

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../../../shared/interfaces/user.interface';
 import { UserService } from '../../../../shared/services/user.service';
@@ -6,13 +6,15 @@ import { Book } from '../../interfaces/book.interface';
 import { BookService } from '../../services/book.service';
 import { CATEGORIESINTEREST } from '../../../../shared/configs/category-interest.consts';
 import { BOOKSKELETONDATA } from '../../config/book.data';
+import { ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
   templateUrl: './public-library.component.html',
   styleUrls: ['./public-library.component.scss']
 })
-export class PublicLibraryComponent implements OnInit {
+export class PublicLibraryComponent implements OnInit, OnDestroy {
 
+  private readonly destroyed = new ReplaySubject<void>();
   private bookService: BookService = inject(BookService)
   private userService: UserService = inject(UserService)
 
@@ -40,9 +42,14 @@ export class PublicLibraryComponent implements OnInit {
     this.getPublicBooks();
   }
 
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
+
   getBooks(): void {
     try {
-      this.bookService.getBooks(this.user.user.userId, 4).subscribe({
+      this.bookService.getBooks(this.user.user.userId, 4).pipe(takeUntil(this.destroyed)).subscribe({
         next: (response) => this.books = response,
         error: (err) => console.error(err),
         complete: () => { this.isLoadingMyBook = false }
@@ -52,7 +59,7 @@ export class PublicLibraryComponent implements OnInit {
 
   getPublicBooks(): void {
     try {
-      this.bookService.getPublicBooks().subscribe({
+      this.bookService.getPublicBooks().pipe(takeUntil(this.destroyed)).subscribe({
         next: (response) => this.booksPublic = response,
         error: (err) => console.error(err),
         complete: () => { this.booksShow = [...this.booksPublic]; this.isLoadingPublicBook = false }

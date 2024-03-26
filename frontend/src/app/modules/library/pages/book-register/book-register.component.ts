@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, NO_ERRORS_SCHEMA, inject } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, NO_ERRORS_SCHEMA, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PichinchaDesignSystemModule, PichinchaReactiveControlsModule } from '@pichincha/ds-angular';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -12,6 +12,7 @@ import { User } from '../../../../shared/interfaces/user.interface';
 import { ResetForm } from '../../../../shared/utils/reset-form';
 import { UserService } from '../../../../shared/services/user.service';
 import { GetFormControlError } from '../../../../shared/utils/get-form-control-error';
+import { ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
   templateUrl: './book-register.component.html',
@@ -29,12 +30,13 @@ import { GetFormControlError } from '../../../../shared/utils/get-form-control-e
     NO_ERRORS_SCHEMA
   ]
 })
-export class BookRegisterComponent {
+export class BookRegisterComponent implements OnDestroy {
 
   bookRegisterForm!: FormGroup;
   bookUpdate!: Book;
   isUpdate: boolean = false;
 
+  private readonly destroyed = new ReplaySubject<void>();
   private bookService: BookService = inject(BookService);
   private userService: UserService = inject(UserService);
 
@@ -75,6 +77,11 @@ export class BookRegisterComponent {
       this.bookUpdate = book;
     });
     this.buildForm();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
   }
 
   buildForm(): void {
@@ -131,7 +138,7 @@ export class BookRegisterComponent {
 
       // editing is enabled
       if (this.isUpdate) {
-        this.bookService.bookUpdate(body).subscribe({
+        this.bookService.bookUpdate(body).pipe(takeUntil(this.destroyed)).subscribe({
           next: (response) => this.setValueAlert("success", response.message),
           error: (error) => {
             if (error.status === 401) {
@@ -144,7 +151,7 @@ export class BookRegisterComponent {
         return;
       }
 
-      this.bookService.bookRegister(body).subscribe({
+      this.bookService.bookRegister(body).pipe(takeUntil(this.destroyed)).subscribe({
         next: (response) => this.setValueAlert("success", response.message),
         error: (error) => {
           if (error.status === 401) {
@@ -200,5 +207,6 @@ export class BookRegisterComponent {
   trackByFn(index: number): number {
     return index;
   }
+
 
 }

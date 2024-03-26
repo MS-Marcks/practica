@@ -5,10 +5,10 @@ import { UserService } from '../../../../shared/services/user.service';
 import { User } from '../../../../shared/interfaces/user.interface';
 
 @Component({
-  templateUrl: './book.component.html',
-  styleUrls: ['./book.component.scss']
+  templateUrl: './book-view-detail.component.html',
+  styleUrls: ['./book-view-detail.component.scss']
 })
-export class BookComponent implements OnInit {
+export class BookViewDetailComponent implements OnInit {
 
   private userService: UserService = inject(UserService);
 

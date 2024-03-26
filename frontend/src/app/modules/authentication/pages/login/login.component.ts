@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { LoginUserService } from '../../services/login-user.service';
 import { LoginUser } from '../../../../shared/interfaces/login-user.interface';
@@ -6,15 +6,18 @@ import { ResetForm } from '../../../../shared/utils/reset-form';
 import { GetFormControlError } from '../../../../shared/utils/get-form-control-error';
 import { CustomValidations } from '../../../../shared/validations/custom-validations.validations';
 import { Router } from '@angular/router';
+import { ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
+
+  private readonly destroyed = new ReplaySubject<void>();
+  private loginUserService: LoginUserService = inject(LoginUserService);
 
   loginForm!: FormGroup;
-  private loginUserService: LoginUserService = inject(LoginUserService);
 
   states: any = {
     email: { state: "", error: "" },
@@ -31,6 +34,11 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.buildForm()
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
   }
 
   buildForm(): void {
@@ -56,7 +64,7 @@ export class LoginComponent {
         password: this.loginForm.getRawValue().password,
       }
 
-      this.loginUserService.login(body).subscribe({
+      this.loginUserService.login(body).pipe(takeUntil(this.destroyed)).subscribe({
         next: (response) => this.loginUserService.saveToken(response),
         error: (error) => {
           if (error.status === 401) {
